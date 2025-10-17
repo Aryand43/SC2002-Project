@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"models","l":"User.TypesOfUser"},{"p":"models","l":"User"},{"p":"models","l":"UserManager"}];updateSearchResults();
