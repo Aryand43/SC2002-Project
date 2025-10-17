@@ -1,42 +1,52 @@
 import java.util.Scanner;
 
 public class User {
-    private int ID;
-    private String name;
+    private final String ID;
+    private final String name;
     private String password;
 
     /** 
     * Class constructor.
     */
-    public User(int ID, String name, String pw){
+    public User(String ID, String name, String pw){
         this.ID = ID;
         this.name = name;
         this.password = pw;
     }
 
-    public int getID(){return this.ID;}
+    // Getters
+    public String getID(){return this.ID;}
     public String getUserName(){return this.name;}
     public String getPassword(){return this.password;}
 
+    //Setters
     public String setUserName(){return this.name;}
+
     public boolean setPassword(String oldPass){
         Scanner sc = new Scanner(System.in);
         while(true){
             if (oldPass.compareTo(this.password) == 0){
-                System.out.print("\nEnter new password: ");
+                System.out.print("\nEnter new password (Blank password to exit): ");
                 String newPass = sc.nextLine();
                 if (isValidPassword(newPass)) {
                     this.password = newPass;
                     break;
-                } 
+                }
+                else if(newPass.compareTo("") == 0){
+                    return false;
+                }
                 else {
                     System.out.println("- At least 8 characters");
                     System.out.println("- At least one uppercase letter");
                     System.out.println("- At least one digit");
                     System.out.println("- At least one special character");
                 }
+            }   
+            else {
+                System.out.println("\nWrong Password Entered!");
+                return false;
             }
-        }   
+        }
         sc.close();
         return true;
     }
