@@ -23,7 +23,7 @@ import java.util.Scanner;
  */
 public class User {
     /**
-    * Contains different user account types - User, Student, CareerCenterStaff, CompanyRepresentative<br>
+    * Enum that contains different user account types - User, Student, CareerCenterStaff, CompanyRepresentative<br>
     * User objects of type "Student" and "Career Center Staff" are automatically assigned their respective types from the sample excel file.<br><br>
     * The default type "User" is initiated first, as in the case of "Company Representative" they must be approved by a user<br>
     * that is a "Career Center Staffs" type first, before officially becoming a "Company Representative".
@@ -115,7 +115,7 @@ public class User {
      * @return 
      * <ol> 
      * <li>true with system message: "Valid new password"</li>
-     * <li>false with system message: "Invalid password" and returns false</li>
+     * <li>false with system message: "Invalid new password" and returns false</li>
      * </ol>
      */
     public static boolean isValidPassword(String password) {
