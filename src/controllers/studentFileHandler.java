@@ -1,12 +1,12 @@
 package controllers;
-import models.User;
-import java.util.Scanner;
-import java.io.FileNotFoundException;
 import java.io.File;
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+import models.User;
 
-public class studentFileHandler extends FileHandler{
+public class StudentFileHandler extends FileHandler{
 	private String filePath = "assets/testcases/sample_student_list.csv";
 	private String line;
 	private String[] rowData;

@@ -37,6 +37,7 @@ public class User {
     protected final String email;
     protected String password;
     protected TypesOfUser userType;
+    protected boolean isLoggedIn;
 
      /**
      * Class Constructor
@@ -51,6 +52,7 @@ public class User {
         this.email = email;
         this.password = "password";
         this.userType = TypesOfUser.User;
+        this.isLoggedIn = false;
     }
 
     /**
@@ -58,22 +60,44 @@ public class User {
      * @return ID
      */
     public String getID(){return this.ID;}
+
     /**
      * Getter Function
      * @return Name
      */
     public String getUserName(){return this.name;}
+
     /**
      * Getter Function
      * @return Email
      */
     public String getEmail(){return this.email;}
+
     /**
      * Getter Function
      * @return Password
      */
     public String getPassword(){return this.password;}
 
+    /**
+     * Getter Function
+     * @return Type of user, used in conjuction with user manager
+     */
+    public TypesOfUser getUserType(){return this.userType;}
+
+    /**
+     * Getter Function
+     * @return Login state of user
+     */
+    public boolean isLoggedIn(){return this.isLoggedIn;}
+
+    /**
+     * Setter Function
+     * Sets user's login status to true. <br>
+     * Login status is set true with @see {@link managers.UserManager}, upon a successful login.<br>
+     * Login status is set to false with @see {@link managers.UserManager}, when user logs out.
+     */
+    public void setLogin(boolean b){this.isLoggedIn = b;}
     /**
      * Set/Change user's password <br>
      * @param oldPass Takes in user's old password to enable password change.
@@ -86,11 +110,9 @@ public class User {
      * <li>At least 1 Special Character</li>
      * </ul>
      * @return 
-     * <ol>
-     * <li>true if password successfully set </li>
-     * <li>false if user wants to exit or enters invalid password. </li>
+     * User's new password
      */
-    public boolean setPassword(String oldPass){
+    public String setPassword(String oldPass){
         Scanner sc = new Scanner(System.in);
         while(true){
             if (oldPass.compareTo(this.password) == 0){
@@ -98,10 +120,10 @@ public class User {
                 String newPass = sc.nextLine();
                 if (isValidPassword(newPass)) {
                     this.password = newPass;
-                    return true;
+                    return newPass;
                 }
-                else if(newPass.compareTo("") == 0){
-                    return false;
+                else if(newPass.equals("")){
+                    return "";
                 }
                 else {
                     System.out.println("- At least 8 characters");
@@ -112,7 +134,6 @@ public class User {
             }   
             else {
                 System.out.println("\nWrong Password Entered!");
-                return false;
             }
             sc.close();
         }
@@ -137,12 +158,12 @@ public class User {
 
         // ALL conditions met before able to change password
         if (length && upper && digit && special) {
-            System.out.println("Valid new password.");
+            System.out.println("Valid new password. Password successfully changed.\n");
             return true;
         } 
         
         else {
-            System.out.println("Invalid new password.");
+            System.out.println("Invalid new password.\n");
             return false;
         }
     }

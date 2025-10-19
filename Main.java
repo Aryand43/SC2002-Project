@@ -1,18 +1,29 @@
-import models.User;
-import controllers.studentFileHandler;
+import controllers.CompanyFileHandler;
+import controllers.StaffFileHandler;
+import controllers.StudentFileHandler;
 import java.util.ArrayList;
+import managers.UserManager;
+import models.User;
 public class Main {
 	private static ArrayList<User> userList = new ArrayList<>();
     public static void main (String args[]){
     	
-        
-        // user class testing (not part of project)
-        User user1 = new User("U1234567", "Johnny","testemai@gmail.com");
-        user1.setPassword("randompasstest");
-        user1.setPassword("password");
+        // Initialise all users as objects
+        StudentFileHandler student_fh = new StudentFileHandler();
+        CompanyFileHandler company_fh = new CompanyFileHandler();
+        StaffFileHandler staff_fh = new StaffFileHandler();
 
+        ArrayList<User> studentList = student_fh.readFromFile();
+        ArrayList<User> repList = company_fh.readFromFile();
+        ArrayList<User> staffList = staff_fh.readFromFile();
+        UserManager UM = new UserManager(studentList, repList, staffList);
         
-        studentFileHandler studentfileHandler = new studentFileHandler();
-        studentfileHandler.readFromFile();
+        User user1 = studentList.get(1); 
+        System.out.println(user1.getID());
+        user1.setPassword("password");
+        UM.login(user1.getID(), user1.getPassword());
+        System.out.println("CURRENT USER IS: " + UM.getCurrentUser().getUserName());
+        UM.logout();
+
     }
 }

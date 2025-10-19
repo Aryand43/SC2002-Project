@@ -1,10 +1,10 @@
 package controllers;
-import models.User;
-import java.util.Scanner;
-import java.io.FileNotFoundException;
 import java.io.File;
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+import models.User;
 
 public class StaffFileHandler extends FileHandler{
 	private String filePath = "assets/testcases/sample_staff_list.csv";
@@ -20,7 +20,7 @@ public class StaffFileHandler extends FileHandler{
 				User user = new User(rowData[0], rowData[1],rowData[4]);
 				userList.add(user);
 				System.out.println(rowData[0] + " " + rowData[1]);
-			};
+			}
 			
 		}
 		catch (FileNotFoundException e) {
