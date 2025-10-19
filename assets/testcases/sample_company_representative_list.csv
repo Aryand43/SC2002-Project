@@ -1,0 +1,11 @@
+CompanyRepID,Name,CompanyName,Department,Position,Email,Status
+CR001,Sarah Johnson,Tech Innovations Pte Ltd,Human Resources,HR Manager,sarah.johnson@techinnovations.com.sg,Approved
+CR002,Michael Chen,Singapore Digital Bank,Talent Acquisition,Senior Recruiter,michael.chen@sgdigitalbank.com,Approved
+CR003,Priya Sharma,Global Engineering Solutions,Engineering,Technical Lead,priya.sharma@globaleng.com,Pending
+CR004,David Tan,Quantum Analytics,Data Science,Head of Analytics,david.tan@quantumanalytics.sg,Approved
+CR005,Emily Wong,GreenTech Industries,Sustainability,Sustainability Manager,emily.wong@greentech.com.sg,Rejected
+CR006,John Lim,CyberSecure Systems,Security Operations,Security Director,john.lim@cybersecure.com,Approved
+CR007,Amanda Lee,Creative Media Hub,Creative Department,Creative Director,amanda.lee@creativemedia.sg,Approved
+CR008,Raj Kumar,Smart Manufacturing Co,Operations,Operations Manager,raj.kumar@smartmfg.com.sg,Pending
+CR009,Lisa Ng,FinTech Solutions Asia,Finance,Finance Manager,lisa.ng@fintechasia.com,Approved
+CR010,James Koh,Robotics Dynamics,Research & Development,R&D Lead,james.koh@roboticsdynamics.sg,Approved
