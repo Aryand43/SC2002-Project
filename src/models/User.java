@@ -40,8 +40,9 @@ public class User {
 
      /**
      * Class Constructor
-     * @param ID Sets the user ID.
-     * @param name Sets the user name.<br><br>
+     * @param ID Sets the user ID
+     * @param name Sets the user name
+     * @param email Sets the user email<br><br>
      * For new User objects, set user's password to default: "password".
      */
     public User(String ID, String name, String email){
