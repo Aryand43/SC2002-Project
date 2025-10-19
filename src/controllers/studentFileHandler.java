@@ -17,7 +17,7 @@ public class studentFileHandler extends FileHandler{
 			while(sc.hasNextLine()) {
 				line = sc.nextLine();
 				rowData = line.split(",");
-				User user = new User(rowData[0], rowData[1]);
+				User user = new User(rowData[0], rowData[1], rowData[4]);
 				userList.add(user);
 				System.out.println(rowData[0] + " " + rowData[1]);
 			};
