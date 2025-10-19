@@ -7,7 +7,9 @@ import java.util.Scanner;
  * <ol>   
  * <li>User ID</li>
  * <li>Name</li>
- * <li>User's Password</li>
+ * <li>Password</li>
+ * <li>Email</li>
+ * <li>Type of User</li>
  * </ol><br>
  * A User object can be one of the types below:
  * <ol>
@@ -32,6 +34,7 @@ public class User {
     public enum TypesOfUser {User, Student, CareerCenterStaff, CompanyRepresentative};
     protected final String ID;
     protected final String name;
+    protected final String email;
     protected String password;
     protected TypesOfUser userType;
 
@@ -41,26 +44,32 @@ public class User {
      * @param name Sets the user name.<br><br>
      * For new User objects, set user's password to default: "password".
      */
-    public User(String ID, String name){
+    public User(String ID, String name, String email){
         this.ID = ID;
         this.name = name;
+        this.email = email;
         this.password = "password";
         this.userType = TypesOfUser.User;
     }
 
     /**
      * Getter Function
-     * @return User's ID
+     * @return ID
      */
     public String getID(){return this.ID;}
     /**
      * Getter Function
-     * @return User's name
+     * @return Name
      */
     public String getUserName(){return this.name;}
     /**
      * Getter Function
-     * @return User's password
+     * @return Email
+     */
+    public String getEmail(){return this.email;}
+    /**
+     * Getter Function
+     * @return Password
      */
     public String getPassword(){return this.password;}
 
