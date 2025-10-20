@@ -1,15 +1,15 @@
 import controllers.CompanyFileHandler;
 import controllers.StaffFileHandler;
-import controllers.StudentFileHandler;
+import controllers.studentFileHandler;
 import java.util.ArrayList;
-import managers.UserManager;
+import models.UserManager;
 import models.User;
 public class Main {
 	private static ArrayList<User> userList = new ArrayList<>();
     public static void main (String args[]){
     	
         // Initialise all users as objects
-        StudentFileHandler student_fh = new StudentFileHandler();
+        studentFileHandler student_fh = new StudentFileHandler();
         CompanyFileHandler company_fh = new CompanyFileHandler();
         StaffFileHandler staff_fh = new StaffFileHandler();
 
