@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import models.User;
 
-public class StudentFileHandler extends FileHandler{
+public class studentFileHandler extends FileHandler{
 	private String filePath = "assets/testcases/sample_student_list.csv";
 	private String line;
 	private String[] rowData;

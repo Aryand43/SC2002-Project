@@ -45,19 +45,19 @@ public class CompanyFileHandler extends FileHandler{
 			e.getMessage();
 		}
 	}
-	public void writeToPendingRepsFile(ArrayList<User> pendingList) {
-		this.clearRowData();
-		try(PrintWriter pw = new PrintWriter(pendingRepsFile)){
-			pw.println("Name,Company,Position,Email");
+	//public void writeToPendingRepsFile(ArrayList<User> pendingList) {
+		//this.clearRowData();
+		//try(PrintWriter pw = new PrintWriter(pendingRepsFile)){
+			//pw.println("Name,Company,Position,Email");
 			
-			for(User u: pendingList) {
-				pw.println(u.getUserName()+"," + u.getCompany() + "," + u.getPosition() + "," + u.getEmail());
-			}
-		}
-		catch (FileNotFoundException e) {
-			e.getMessage();
-		}
-	}
+			//for(User u: pendingList) {
+				//pw.println(u.getUserName()+"," + u.getCompany() + "," + u.getPosition() + "," + u.getEmail());
+			//}
+		//}
+		//catch (FileNotFoundException e) {
+			//e.getMessage();
+		//}
+	//}
 	
 	private void clearRowData() {
 		for(int i = 0; i<rowData.length; i++) {
