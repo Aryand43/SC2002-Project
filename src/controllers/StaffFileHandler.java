@@ -4,21 +4,26 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
-import models.User;
+import models.CareerCenterStaff;
 
-public class StaffFileHandler extends FileHandler{
+public class StaffFileHandler extends FileHandler<CareerCenterStaff>{
+	/**
+     * Reads staff list from CSV and automatically registers them
+     * as CareerCenterStaff objects.
+     */
+    @Override
 	private String filePath = "assets/testcases/sample_staff_list.csv";
 	private String line;
 	private String[] rowData;
-	private ArrayList<User> userList = new ArrayList<>();
+	private ArrayList<CareerCenterStaff> staffList = new ArrayList<>();
 	
-	public ArrayList<User> readFromFile() {
+	public ArrayList<CareerCenterStaff> readFromFile() {
 		try(Scanner sc = new Scanner(new File(filePath))){
 			while(sc.hasNextLine()) {
 				line = sc.nextLine();
 				rowData = line.split(",");
-				User user = new User(rowData[0], rowData[1],rowData[4]);
-				userList.add(user);
+				CareerCenterStaff staff = new CareerCenterStaff(rowData[0], rowData[1], rowData[4], rowData[3]);
+				staffList.add(staff);
 				System.out.println(rowData[0] + " " + rowData[1]);
 			}
 			
@@ -26,16 +31,16 @@ public class StaffFileHandler extends FileHandler{
 		catch (FileNotFoundException e) {
 			e.getMessage();
 		}
-		return userList;
+		return staffList;
 	}
 	
-	public void writeToFile(ArrayList<User> userList) {
+	public void writeToFile(ArrayList<CareerCenterStaff> staffList) {
 		this.clearRowData();
 		try(PrintWriter pw = new PrintWriter(filePath)){
 			pw.println("StaffID,Name,Password");
 			
-			for(User u: userList) {
-				pw.println(u.getID()+"," + u.getUserName() + "," + u.getPassword());
+			for(CareerCenterStaff staff : staffList) {
+				pw.println(staff.getID()+"," + staff.getUserName() + "," + staff.getPassword());
 			}
 		}
 		catch (FileNotFoundException e) {
