@@ -105,3 +105,4 @@ public class CareerCenterStaff extends User {
             System.out.println(internship.toString());
         }
     }
+}
