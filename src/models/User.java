@@ -37,7 +37,7 @@ public class User {
     protected final String email;
     protected String password;
     protected TypesOfUser userType;
-    protected boolean isLoggedIn;
+    protected boolean loggedIn;
 
      /**
      * Class Constructor
@@ -52,7 +52,7 @@ public class User {
         this.email = email;
         this.password = "password";
         this.userType = TypesOfUser.User;
-        this.isLoggedIn = false;
+        this.loggedIn = false;
     }
 
     /**
@@ -89,7 +89,7 @@ public class User {
      * Getter Function
      * @return Login state of user
      */
-    public boolean isLoggedIn(){return this.isLoggedIn;}
+    public boolean isLoggedIn(){return this.loggedIn;}
 
     /**
      * Setter Function
@@ -97,7 +97,8 @@ public class User {
      * Login status is set true with @see {@link managers.UserManager}, upon a successful login.<br>
      * Login status is set to false with @see {@link managers.UserManager}, when user logs out.
      */
-    public void setLogin(boolean b){this.isLoggedIn = b;}
+    public void setLogin(boolean b){this.loggedIn = b;}
+
     /**
      * Set/Change user's password <br>
      * @param oldPass Takes in user's old password to enable password change.

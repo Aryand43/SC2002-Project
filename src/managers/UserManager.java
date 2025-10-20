@@ -129,6 +129,6 @@ public class UserManager {
 
     //placeholder for now
     public boolean rejectCompanyRepresentative(String repID){
-        return true:
+        return true;
     }
 }
