@@ -3,7 +3,7 @@ import  models.User;
 import java.util.ArrayList;
 
 
-public abstract class FileHandler {
-	public abstract ArrayList<User> readFromFile();
-	public abstract void writeToFile(ArrayList<User> userList);
+public abstract class FileHandler<T> {
+	public abstract ArrayList<T> readFromFile();
+	public abstract void writeToFile(ArrayList<T> dataList);
 }
