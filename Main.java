@@ -6,6 +6,20 @@ import managers.UserManager;
 import models.User;
 public class Main {
 	private static ArrayList<User> userList = new ArrayList<>();
+	
+	static {
+        // Automatically load Career Center Staff
+        StaffFileHandler staffFileHandler = new StaffFileHandler();
+        ArrayList<CareerCenterStaff> staffList = staffFileHandler.readFromFile();
+
+        userList.addAll(staffList);
+        System.out.println("[Init] Registered " + staffList.size() + " Career Center Staff.");
+    }
+	
+    public static ArrayList<User> getAllUsers() {
+        return userList;
+    }
+	
     public static void main (String args[]){
     	
         // Initialise all users as objects
