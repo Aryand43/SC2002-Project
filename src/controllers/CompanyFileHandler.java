@@ -1,16 +1,19 @@
 package controllers;
-import models.User;
-import java.util.Scanner;
-import java.io.FileNotFoundException;
 import java.io.File;
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+import models.User;
 
 public class CompanyFileHandler extends FileHandler{
 	private String filePath = "assets/testcases/sample_company_representative_list.csv";
+	private String pendingRepsFile = "assets/testcases/pending_rep_account.csv";
 	private String line;
 	private String[] rowData;
 	private ArrayList<User> userList = new ArrayList<>();
+	private ArrayList<User> pendingList = new ArrayList<>();
+
 	
 	public ArrayList<User> readFromFile() {
 		try(Scanner sc = new Scanner(new File(filePath))){
@@ -32,10 +35,23 @@ public class CompanyFileHandler extends FileHandler{
 	public void writeToFile(ArrayList<User> userList) {
 		this.clearRowData();
 		try(PrintWriter pw = new PrintWriter(filePath)){
-			pw.println("ComapyRepID,Comapy Rep Name,Password");
+			pw.println("CompanyRepID,Company Rep Name,Password");
 			
 			for(User u: userList) {
 				pw.println(u.getID()+"," + u.getUserName() + "," + u.getPassword());
+			}
+		}
+		catch (FileNotFoundException e) {
+			e.getMessage();
+		}
+	}
+	public void writeToPendingRepsFile(ArrayList<User> pendingList) {
+		this.clearRowData();
+		try(PrintWriter pw = new PrintWriter(pendingRepsFile)){
+			pw.println("Name,Company,Position,Email");
+			
+			for(User u: pendingList) {
+				pw.println(u.getUserName()+"," + u.getCompany() + "," + u.getPosition() + "," + u.getEmail());
 			}
 		}
 		catch (FileNotFoundException e) {

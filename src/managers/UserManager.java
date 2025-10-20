@@ -119,7 +119,7 @@ public class UserManager {
             }
         }
         // need wait for company rep to be done
-        //staffList.add()
+        //pendingList.add()
     }
 
     //placeholder for now
