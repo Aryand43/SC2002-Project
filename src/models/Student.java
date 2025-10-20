@@ -1,56 +1,142 @@
-package main;
+package models;
 
 import java.util.ArrayList;
-import managers.UserManager;
-import models.User;
-import models.Student;
-import models.InternshipApplication;
 
-public class Main {
-    public static void main(String[] args) {
-        // --- Create sample student data ---
-        Student s1 = new Student("U001", "Alice Tan", "alice@uni.edu", 2, "CSC");
-        Student s2 = new Student("U002", "Bob Lee", "bob@uni.edu", 4, "EEE");
+/**
+ * <b>STUDENT CLASS</b><br>
+ * Extends {@link models.User} and defines specific behavior and permissions for student users.
+ * <br>
+ * A Student object will contain:
+ * <ul>
+ *   <li>Year of Study (1–4)</li>
+ *   <li>Major (CSC, EEE, MAE, etc.)</li>
+ *   <li>Visibility status (true/false)</li>
+ *   <li>List of Internship Applications (max 3)</li>
+ * </ul>
+ * 
+ * <br>Based on system requirements:
+ * <ul>
+ *   <li>Year 1–2: can only apply for Basic-level internships</li>
+ *   <li>Year 3–4: can apply for any level (Basic, Intermediate, Advanced)</li>
+ *   <li>Only 1 internship can be accepted</li>
+ *   <li>Student can withdraw an application (subject to approval)</li>
+ * </ul>
+ * 
+ * @author Joel Lee
+ */
+public class Student extends User {
+    
+    private int yearOfStudy;                // Year 1–4
+    private String major;                   // CSC, EEE, MAE, etc.
+    private boolean isVisible;              // Profile visibility
+    private ArrayList<InternshipApplication> applications; // Up to 3 active applications
 
-        ArrayList<User> studentList = new ArrayList<>();
-        studentList.add(s1);
-        studentList.add(s2);
-
-        ArrayList<User> repList = new ArrayList<>();
-        ArrayList<User> staffList = new ArrayList<>();
-
-        // --- Initialize UserManager ---
-        UserManager um = new UserManager(studentList, repList, staffList);
-
-        // --- Test login ---
-        System.out.println("\n--- LOGIN TEST ---");
-        um.login("U001", "password");  // Default password from User.java
-
-        // --- Apply for internships ---
-        Student currentStudent = (Student) um.getCurrentUser();
-
-        InternshipApplication i1 = new InternshipApplication("I001", "Software Intern", "Basic");
-        InternshipApplication i2 = new InternshipApplication("I002", "AI Research Intern", "Advanced");
-
-        System.out.println("\n--- APPLY TEST ---");
-        currentStudent.applyForInternship(i1);  // Should succeed (Basic)
-        currentStudent.applyForInternship(i2);  // Should fail (Year 2 can't apply for Advanced)
-
-        // --- View applications ---
-        System.out.println("\n--- VIEW APPLICATIONS ---");
-        currentStudent.viewApplications();
-
-        // --- Simulate company success and acceptance ---
-        i1.setStatus("Successful");
-        System.out.println("\n--- ACCEPT INTERNSHIP ---");
-        currentStudent.acceptInternship("I001");
-
-        // --- Request withdrawal (for demonstration) ---
-        System.out.println("\n--- WITHDRAWAL REQUEST ---");
-        currentStudent.requestWithdrawal("I001");
-
-        // --- Logout ---
-        System.out.println("\n--- LOGOUT TEST ---");
-        um.logout();
+    /**
+     * Constructor for Student.
+     * @param ID Student ID
+     * @param name Student name
+     * @param email Student email
+     * @param yearOfStudy 1–4
+     * @param major Student’s major (e.g., CSC, EEE)
+     */
+    public Student(String ID, String name, String email, int yearOfStudy, String major) {
+        super(ID, name, email);
+        this.yearOfStudy = yearOfStudy;
+        this.major = major;
+        this.isVisible = true; // Default visibility
+        this.applications = new ArrayList<>();
+        this.userType = TypesOfUser.Student;
     }
+
+    // -----------------------------
+    // Getters and Setters
+    // -----------------------------
+    public int getYearOfStudy() { return yearOfStudy; }
+    public String getMajor() { return major; }
+    public boolean getVisibility() { return isVisible; }
+    public ArrayList<InternshipApplication> getApplications() { return applications; }
+
+    public void setVisibility(boolean visible) {
+        this.isVisible = visible;
+    }
+
+    // -----------------------------
+    // Internship Management
+    // -----------------------------
+
+    /**
+     * Apply for a new internship opportunity.
+     * @param internship InternshipApplication object
+     * @return true if application successful, false otherwise
+     */
+    public boolean applyForInternship(InternshipApplication internship) {
+        if (applications.size() >= 3) {
+            System.out.println("You can only apply for a maximum of 3 internship opportunities at once.");
+            return false;
+        }
+
+        if (yearOfStudy <= 2 && !internship.getLevel().equalsIgnoreCase("Basic")) {
+            System.out.println("Year 1 and 2 students can only apply for Basic-level internships.");
+            return false;
+        }
+
+        // Add application
+        applications.add(internship);
+        System.out.printf("Internship '%s' applied successfully. Status: Pending.%n", internship.getTitle());
+        return true;
+    }
+
+    /**
+     * Accept an internship offer if status is "Successful".
+     * Automatically withdraws all other applications.
+     */
+    public void acceptInternship(String internshipID) {
+        InternshipApplication accepted = null;
+        for (InternshipApplication app : applications) {
+            if (app.getID().equals(internshipID) && app.getStatus().equalsIgnoreCase("Successful")) {
+                accepted = app;
+                break;
+            }
+        }
+
+        if (accepted == null) {
+            System.out.println("No successful internship found with the given ID.");
+            return;
+        }
+
+        // Withdraw other applications
+        for (InternshipApplication app : applications) {
+            if (!app.getID().equals(internshipID)) {
+                app.setStatus("Withdrawn");
+            }
+        }
+
+        System.out.printf("Internship '%s' accepted. All other applications withdrawn.%n", accepted.getTitle());
+    }
+
+    /**
+     * Request to withdraw an internship application.
+     * @param internshipID ID of internship to withdraw
+     */
+    public void requestWithdrawal(String internshipID) {
+        for (InternshipApplication app : applications) {
+            if (app.getID().equals(internshipID)) {
+                app.setStatus("Withdraw Requested");
+                System.out.printf("Withdrawal requested for internship '%s' (Subject to Career Center approval).%n", app.getTitle());
+                return;
+            }
+        }
+        System.out.println("No internship found with the given ID.");
+    }
+
+    /**
+     * View applications and their statuses (Pending, Successful, Unsuccessful, Withdrawn)
+     */
+    public void viewApplications() {
+        System.out.println("Your Internship Applications:");
+        for (InternshipApplication app : applications) {
+            System.out.printf("- %s (%s): %s%n", app.getTitle(), app.getLevel(), app.getStatus());
+        }
+    }
+
 }
