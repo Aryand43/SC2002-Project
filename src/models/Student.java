@@ -28,7 +28,6 @@ public class Student extends User {
     
     private int yearOfStudy;                // Year 1–4
     private String major;                   // CSC, EEE, MAE, etc.
-    private boolean isVisible;              // Profile visibility
     private ArrayList<InternshipApplication> applications; // Up to 3 active applications
 
     /**
@@ -43,7 +42,6 @@ public class Student extends User {
         super(ID, name, email);
         this.yearOfStudy = yearOfStudy;
         this.major = major;
-        this.isVisible = true; // Default visibility
         this.applications = new ArrayList<>();
         this.userType = TypesOfUser.Student;
     }
@@ -53,12 +51,8 @@ public class Student extends User {
     // -----------------------------
     public int getYearOfStudy() { return yearOfStudy; }
     public String getMajor() { return major; }
-    public boolean getVisibility() { return isVisible; }
     public ArrayList<InternshipApplication> getApplications() { return applications; }
 
-    public void setVisibility(boolean visible) {
-        this.isVisible = visible;
-    }
 
     // -----------------------------
     // Internship Management
@@ -140,3 +134,4 @@ public class Student extends User {
     }
 
 }
+
