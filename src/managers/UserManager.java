@@ -106,22 +106,7 @@ public class UserManager {
         System.out.printf("%s Successfully logged out", this.getCurrentUser().getUserName());
         this.clearCurrentUser();
     }
-
-    public void registerRep(String userName, String companyName, String department, String position, String email){
-        for (User u: repList){
-            if (u.getUserName().equals(userName) && u.getEmail().equals(email) && u.getCompany().equals(companyName)){
-                System.out.println("User already exists!");
-                return;
-            }
-            else if(u.getUserName().equals(userName) && u.getEmail().equals(email) && !u.getCompany().equals(companyName)){
-                System.out.println("User exists in a different company!");
-                return;
-            }
-        }
-        // need wait for company rep to be done
-        //pendingList.add()
-    }
-
+    
     //placeholder for now
     public boolean approveCompanyRepresentative(String repID){
         return true;

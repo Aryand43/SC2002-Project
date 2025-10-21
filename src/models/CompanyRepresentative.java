@@ -50,6 +50,7 @@ public class CompanyRepresentative extends User {
         app.setStatus("Successful");
         System.out.println("Application " + app.getID() + " approved.");
     }
+    
     public void rejectApplication(Application app) {
         app.setStatus("Unsuccessful");
         System.out.println("Application " + app.getID() + " rejected.");
