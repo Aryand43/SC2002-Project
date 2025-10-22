@@ -60,10 +60,10 @@ public class UserManager {
      * @return The respective list of objects associated with the ID.
      */
     public ArrayList<User> getRespectiveUserList(String ID){   
-        if (Character.toString(ID.charAt(0)).equals("U") || Character.toString(ID.charAt(0)).equals("u")){
+        if (Character.toString(ID.charAt(0)).equalsIgnoreCase("U")){
             return this.studentList;
         }
-        else if (Character.toString(ID.charAt(0)).equals("CR") || Character.toString(ID.charAt(0)).equals("cr")){
+        else if (Character.toString(ID.charAt(0)).equalsIgnoreCase("CR")){
             return this.repList;
         }
         else{

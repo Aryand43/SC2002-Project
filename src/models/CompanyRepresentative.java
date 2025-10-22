@@ -6,7 +6,7 @@ public class CompanyRepresentative extends User {
     private String department; 
     private String position;
     private boolean approved; 
-    private ArrayList<InternshipOpportunity> listings;
+    private ArrayList<Internship> listings;
 
     /*
     * Constructor 
@@ -30,8 +30,8 @@ public class CompanyRepresentative extends User {
     public String getPosition() { return position; }
     public boolean isApproved() { return approved; }
     public void setApproved(boolean status) { this.approved = status; }
-    public ArrayList<InternshipOpportunity> getListings() { return listings; }
-    public boolean createInternshipListing(InternshipOpportunity io) {
+    public ArrayList<> getListings() { return listings; }
+    public boolean createInternshipListing(Internship io) {
         if (listings.size() >= 5) {
             System.out.println("You can only post up to 5 internships.");
             return false;

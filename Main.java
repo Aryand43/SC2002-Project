@@ -2,8 +2,11 @@ import controllers.CompanyFileHandler;
 import controllers.StaffFileHandler;
 import controllers.studentFileHandler;
 import java.util.ArrayList;
-import models.UserManager;
+import managers.UserManager;
 import models.User;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter; 
+
 public class Main {
 	private static ArrayList<User> userList = new ArrayList<>();
     public static void main (String args[]){

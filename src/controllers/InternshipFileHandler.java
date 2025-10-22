@@ -4,21 +4,23 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import models.Internship;
 import models.User;
 import java.io.FileWriter;
 
 public class InternshipFileHandler extends FileHandler{
-	private String filePath = "assets/testcases/Internship_list.csv";
+	private String filePath = "assets/testcases/internship_list.csv";
 	private String line;
 	private String[] rowData;
-	private ArrayList<InternshipOpportunity> InternshipList = new ArrayList<>();
+	private ArrayList<Internship> InternshipList = new ArrayList<>();
 	
-	public ArrayList<InternshipOpportunity> readFromFile() {
+	public ArrayList<Internship> readFromFile() {
 		try(Scanner sc = new Scanner(new File(filePath))){
 			while(sc.hasNextLine()) {
 				line = sc.nextLine();
 				rowData = line.split(",");
-				InternshipOpportuniy Internship = new InternshipOpportuniy(//GetRelevantDataHere);
+				Internship Internship = new Internship(//GetRelevantDataHere);
 				InternshipList.add(Internship);
 			}
 			
@@ -29,7 +31,7 @@ public class InternshipFileHandler extends FileHandler{
 		return InternshipList;
 	}
 	
-	public void writeToFile(ArrayList<InternshipOpportunity> InternshipList) {
+	public void writeToFile(ArrayList<Internship> InternshipList) {
 		this.clearRowData();
 		try(PrintWriter pw = new PrintWriter(filePath)){
 			pw.println("InternshipID,Company,Role");
