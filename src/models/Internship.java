@@ -23,7 +23,45 @@ public class Internship {
     protected int confirmedSlots;
     protected boolean visible;
     
-   public Internship(
+    /**
+     * Constructor Class for reading from internship listing file (samples)
+     */
+    public Internship(
+        String listingID,
+        String title, 
+        String description,
+        InternshipLevel level,
+        String preferredMajor,
+        LocalDate openingDate,
+        LocalDate closingDate,
+        InternshipStatus status,
+        String companyName,
+        String companyRepId,
+        int totalSlots,
+        int availableSlots,
+        int confirmedSlots,
+        boolean visible) {
+        
+        this.internshipId = listingID;
+        this.title = title;
+        this.description = description;
+        this.level = level;
+        this.preferredMajor = preferredMajor;
+        this.openingDate = openingDate;
+        this.closingDate = closingDate;
+        this.status = status;
+        this.companyName = companyName;
+        this.companyRepId = companyRepId;
+        this.totalSlots = totalSlots;
+        this.availableSlots = totalSlots;
+        this.confirmedSlots = confirmedSlots;
+        this.visible = visible;
+    }
+
+    /**
+     * Constructor Class for newly created internshiphs within program
+     */
+    public Internship(
         String title, 
         String description,
         InternshipLevel level,
@@ -33,28 +71,28 @@ public class Internship {
         String companyName,
         String companyRepId,
         int totalSlots) {
-        
-            this.internshipId = generateInternshipId();
-            this.title = title;
-            this.description = description;
-            this.level = level;
-            this.preferredMajor = preferredMajor;
-            this.openingDate = openingDate;
-            this.closingDate = closingDate;
-            this.status = InternshipStatus.PENDING;
-            this.companyName = companyName;
-            this.companyRepId = companyRepId;
-            this.totalSlots = totalSlots;
-            this.availableSlots = totalSlots;
-            this.confirmedSlots = 0;
-            this.visible = false;
-        }
+    
+        this.internshipId = generateInternshipID();
+        this.title = title;
+        this.description = description;
+        this.level = level;
+        this.preferredMajor = preferredMajor;
+        this.openingDate = openingDate;
+        this.closingDate = closingDate;
+        this.status = InternshipStatus.PENDING;
+        this.companyName = companyName;
+        this.companyRepId = companyRepId;
+        this.totalSlots = totalSlots;
+        this.availableSlots = totalSlots;
+        this.confirmedSlots = 0;
+        this.visible = false;
+    }
     
     /**
      * Generates an Internship ID that starts with INT padded with 0's if idCOunter is less than 4 digits
-     * @return an unique ID for each internship listing
+     * @return an unique ID for each internship listing (For listings not in the file)
      */
-    private static String generateInternshipId() {
+    private static String generateInternshipID() {
         return "INT" + String.format("%04d", idCounter++);
     }
 

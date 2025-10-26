@@ -1,6 +1,6 @@
 package controllers;
-import  models.User;
-import java.util.ArrayList;
+import  java.util.ArrayList;
+import models.User;
 
 /**
  * <b>FileHandler CLASS</b><br>

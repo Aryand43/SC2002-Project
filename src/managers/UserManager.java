@@ -81,20 +81,37 @@ public class UserManager {
         ArrayList<User> userList = getRespectiveUserList(ID);
 
         for(User u: userList){
-            System.out.println(u.getID());
-            System.out.println(u.getPassword());
-            if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
-                u.setLogin(true);
-                this.currentUser = u;
-                System.out.printf("\n%s has successfully logged in!\n", u.getUserName());
-                return;
+            // If user is company rep, have to check email for login detials
+            if (u.getUserType() != User.TypesOfUser.CompanyRepresentative){
+                System.out.println(u.getEmail());
+                System.out.println(u.getPassword());
+                if(u.getEmail().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
+                    u.setLogin(true);
+                    this.currentUser = u;
+                    System.out.printf("\n%s has successfully logged in!\n", u.getUserName());
+                    return;
+                }
+                else if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == true){
+                    System.out.printf("\nError: %s already logged in!", u.getUserName());
+                    return;
+                }
             }
-            else if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == true){
-                System.out.printf("\n%s already logged in!", u.getUserName());
-                return;
-            }
+            else {
+                System.out.println(u.getID());
+                System.out.println(u.getPassword());
+                if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
+                    u.setLogin(true);
+                    this.currentUser = u;
+                    System.out.printf("\n%s has successfully logged in!\n", u.getUserName());
+                    return;
+                }
+                else if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == true){
+                    System.out.printf("\nError: %s already logged in!", u.getUserName());
+                    return;
+                }
+            }   
         }
-        System.out.println("\nWrong Password or ID inputted!");
+        System.out.println("\nError: Wrong Password or ID inputted!");
     }
     
     /**

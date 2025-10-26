@@ -134,7 +134,7 @@ public class User {
                 }
             }   
             else {
-                System.out.println("\nWrong Password Entered!");
+                System.out.println("\nError: Wrong Password Entered!");
             }
             sc.close();
         }
@@ -164,7 +164,7 @@ public class User {
         } 
         
         else {
-            System.out.println("Invalid new password.\n");
+            System.out.println("Error: Invalid new password.\n");
             return false;
         }
     }

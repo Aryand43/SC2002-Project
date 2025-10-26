@@ -29,6 +29,7 @@ public class Student extends User {
     private int yearOfStudy;                // Year 1–4
     private String major;                   // CSC, EEE, MAE, etc.
     private ArrayList<InternshipApplication> applications; // Up to 3 active applications
+    private int currentApplications;
 
     /**
      * Constructor for Student.
@@ -44,6 +45,7 @@ public class Student extends User {
         this.major = major;
         this.applications = new ArrayList<>();
         this.userType = TypesOfUser.Student;
+        this.currentApplications = 0;
     }
 
     // -----------------------------
