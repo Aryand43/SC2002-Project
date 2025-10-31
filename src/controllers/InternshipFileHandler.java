@@ -2,14 +2,13 @@ package controllers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+import java.util.ArrayList;
+import java.util.Scanner;
 import models.Internship;
 import models.Internship.InternshipLevel;
 import models.Internship.InternshipStatus;
@@ -118,7 +117,7 @@ public class InternshipFileHandler{
      */
     private String formatInternshipToCSV(Internship internship) {
         return String.join(",",
-            internship.getInternshipId(),
+            internship.getInternshipID(),
             internship.getTitle(),
             internship.getDescription(),
             internship.getLevel().name(),
@@ -141,7 +140,7 @@ public class InternshipFileHandler{
     public void addToFile(Internship internship) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(filePath, true))) {
             pw.println(formatInternshipToCSV(internship));
-            System.out.println("Internship added to file: " + internship.getInternshipId());
+            System.out.println("Internship added to file: " + internship.getInternshipID());
             
         } catch (IOException e) {
             System.err.println("Error adding internship to file: " + e.getMessage());
@@ -156,7 +155,7 @@ public class InternshipFileHandler{
         boolean removed = false;
         
         for (int i = 0; i < internshipList.size(); i++) {
-            if (internshipList.get(i).getInternshipId().equals(internshipId)) {
+            if (internshipList.get(i).getInternshipID().equals(internshipId)) {
                 internshipList.remove(i);
                 removed = true;
                 break;
@@ -179,7 +178,7 @@ public class InternshipFileHandler{
         boolean updated = false;
         
         for (int i = 0; i < internshipList.size(); i++) {
-            if (internshipList.get(i).getInternshipId().equals(updatedInternship.getInternshipId())) {
+            if (internshipList.get(i).getInternshipID().equals(updatedInternship.getInternshipID())) {
                 internshipList.set(i, updatedInternship);
                 updated = true;
                 break;
@@ -188,9 +187,9 @@ public class InternshipFileHandler{
         
         if (updated) {
             this.writeToFile(internshipList);
-            System.out.println("Internship updated: " + updatedInternship.getInternshipId());
+            System.out.println("Internship updated: " + updatedInternship.getInternshipID());
         } else {
-            System.out.println("Internship not found for update: " + updatedInternship.getInternshipId());
+            System.out.println("Internship not found for update: " + updatedInternship.getInternshipID());
         }
     }
     
