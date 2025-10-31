@@ -2,6 +2,9 @@ package managers;
 
 import java.util.ArrayList;
 import models.User;
+import models.Student;
+import models.CompanyRepresentative;
+import models.CareerCenterStaff;
 
 /**
  * <b>USER MANAGER CLASS</b><br>
@@ -132,5 +135,50 @@ public class UserManager {
     //placeholder for now
     public boolean rejectCompanyRepresentative(String repID){
         return true;
+    }
+
+    /**
+     * Return list of students (concrete Student objects) stored in manager
+     */
+    public ArrayList<Student> getStudentList(){
+        ArrayList<Student> students = new ArrayList<>();
+        for (User u : this.studentList){
+            try {
+                students.add((Student) u);
+            } catch (ClassCastException e){
+                // skip or log if element isn't Student
+            }
+        }
+        return students;
+    }
+
+    /**
+     * Return list of company representatives (concrete CompanyRepresentative objects)
+     */
+    public ArrayList<CompanyRepresentative> getRepList(){
+        ArrayList<CompanyRepresentative> reps = new ArrayList<>();
+        for (User u : this.repList){
+            try {
+                reps.add((CompanyRepresentative) u);
+            } catch (ClassCastException e){
+                // skip or log
+            }
+        }
+        return reps;
+    }
+
+    /**
+     * Return list of career center staff (concrete CareerCenterStaff objects)
+     */
+    public ArrayList<CareerCenterStaff> getStaffList(){
+        ArrayList<CareerCenterStaff> staff = new ArrayList<>();
+        for (User u : this.staffList){
+            try {
+                staff.add((CareerCenterStaff) u);
+            } catch (ClassCastException e){
+                // skip or log
+            }
+        }
+        return staff;
     }
 }
