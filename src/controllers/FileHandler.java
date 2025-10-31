@@ -5,46 +5,46 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import models.User;
-
 /**
- * <b>FileHandler CLASS</b><br>
- * In charge of the logic behind interaction with CSV file .
- * <br><br>
- * Responsibilities include:
- * <ul>
- * <li>Reading from a file</li>
- * <li>Writing To a file</li>
- * </ul>
+ * Handles reading and writing serialized entities to a file. 
+ * <p>
+ * This class uses a {@link Serializer} to convert entities
+ * to and from string representations
  * 
- * Abstract class and requires to be inherited by relevant classes for more specific functions.
- * 
+ * @param <T> the type of entity handled by this FileHandler
  * @author KaiQiang
  */
-public abstract class FileHandler {
-	public abstract ArrayList<User> readFromFile();
-	public abstract void writeToFile(ArrayList<User> userList);
-}
-
-
 public class FileHandler<T>{
 	private Serializer<T> serializer;
 	private String filePath;
 	
+	
+	/**
+	 * Creates a new instance of FileHandler using the given serializer that is specific to the entity
+	 * 
+	 * @param serializer the serializer used for converting entities
+	 */
 	public FileHandler(Serializer<T> serializer){
 		this.serializer = serializer;
 		this.filePath = serializer.getFilePath();
 	}
 	
+	
+	/**
+	 * Read line by line from a file, ignoring the header line.
+	 * 
+	 * @return an array list of entities after it has been deserialised from the file
+	 * @throws FileNotFoundException if the file does not exist
+	 */
 	public ArrayList<T> readFromFile() {
+		ArrayList<T> arrayList = new ArrayList<>();
 		try(Scanner sc = new Scanner(new File(filePath))){
 			if(sc.hasNextLine()) {
 				sc.nextLine();
 			}
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
-				T returnedEntity = serializer.deserialize();
-				ArrayList<T> arrayList = new ArrayList<>();
+				T returnedEntity = serializer.deserialize(line);
 				arrayList.add(returnedEntity);
 			};
 			
@@ -55,11 +55,19 @@ public class FileHandler<T>{
 		return arrayList;
 	}
 	
+	
+	/**
+	 * Writes line by line to the same filepath including the header
+	 * 
+	 * 
+	 * @param arrayList takes in an array list of the entity to be written back to the file including
+	 * @throws FileNotFoundException if the file does not exist
+	 */
 	public void writeToFile(ArrayList<T> arrayList) {
 		try(PrintWriter pw = new PrintWriter(filePath)){
 			pw.println(serializer.getHeader());
 			
-			for(entities u: arrayList) {
+			for(T u: arrayList) {
 				pw.println(serializer.serialize(u));
 			}
 		}
