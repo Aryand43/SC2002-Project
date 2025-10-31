@@ -124,39 +124,41 @@ public class InternshipManager {
     }
 
     /**
- * Get pending internships for approval (Career Center Staff action)
- */
-public ArrayList<Internship> getPendingInternships() {
-    ArrayList<Internship> pendingInternships = new ArrayList<>();
+     * Get pending internships for approval (Career Center Staff action)
+     */
+    public ArrayList<Internship> getPendingInternships() {
+        ArrayList<Internship> pendingInternships = new ArrayList<>();
+        
+        // Filter internships with PENDING status
+        for (Internship internship : internshipList) {
+            if (internship.getStatus() == InternshipStatus.PENDING) {
+                pendingInternships.add(internship);
+            }
+        }
     
-    // Filter internships with PENDING status
-    for (Internship internship : internshipList) {
-        if (internship.getStatus() == InternshipStatus.PENDING) {
-            pendingInternships.add(internship);
+        // Sort by title (alphabetical order)
+        pendingInternships.sort((i1, i2) -> i1.getTitle().compareTo(i2.getTitle()));
+        return pendingInternships;
+    }
+
+    /**
+     * Print pending internships
+     */
+    public void displayPendingInternships() {
+        ArrayList<Internship> pendingInternships = getPendingInternships();
+        
+        if (pendingInternships.isEmpty()) {
+            System.out.println("No pending internships found.");
+        } else {
+            System.out.println("\n=== Pending Internships ===");
+            for (int i = 0; i < pendingInternships.size(); i++) {
+                System.out.println((i + 1) + ". " + pendingInternships.get(i).getDetailedInfo());
+            }
+            System.out.println("Total pending: " + pendingInternships.size());
         }
     }
-    
-    // Sort by title (alphabetical order)
-    pendingInternships.sort(new Comparator<Internship>() {
-        @Override
-        public int compare(Internship i1, Internship i2) {
-            return i1.getInternshipID().compareTo(i2.getInternshipID());
-        }
-    });
-    
-    // Print the pending internships
-    if (pendingInternships.isEmpty()) {
-        System.out.println("No pending internships found.");
-    } else {
-        System.out.println("\n======== Pending Internships ========");
-        for (int i = 0; i < pendingInternships.size(); i++) {
-            System.out.println((i + 1) + ". " + pendingInternships.get(i).getDetailedInfo());
-        }
-        System.out.println("Total pending: " + pendingInternships.size());
-    }
-    
-    return pendingInternships;
-}
+
+
 
      /**
      * @return Number of internship listings made by 1 representative. (Maximum for 1 rep = 5)
@@ -358,4 +360,32 @@ public ArrayList<Internship> getPendingInternships() {
         }
         System.out.println();
     }
+
+    /**
+     * Search internships by keyword in title and description
+     * @param keyword - the search term to look for
+     * @return List of internships that match the keyword
+     */
+    public List<Internship> search(String keyword) {
+        List<Internship> matchingInternships = new ArrayList<>();
+        
+        // Convert keyword to lowercase for case-insensitive search
+        String searchTerm = keyword.toLowerCase().trim();
+        
+        // Filter internships that contain the keyword in title or description
+        for (Internship internship : internshipList) {
+            String title = internship.getTitle().toLowerCase();
+            String description = internship.getDescription().toLowerCase();
+            
+            // Check if keyword appears in title or description
+            if (title.contains(searchTerm) || description.contains(searchTerm)) {
+                matchingInternships.add(internship);
+            }
+        }
+        
+        // Sort results by title
+        matchingInternships.sort((i1, i2) -> i1.getTitle().compareTo(i2.getTitle()));
+        return matchingInternships;
+    }
+
 }
