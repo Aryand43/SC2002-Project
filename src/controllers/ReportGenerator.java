@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import managers.ApplicationManager;
 import managers.InternshipManager;
 import managers.UserManager;
@@ -51,6 +52,44 @@ public class ReportGenerator {
         }
         
         return filteredInternships;
+    }
+
+    
+    /**
+     * Generate internships filtered by preferred major (case-insensitive).
+     * @param preferredMajor major to filter by
+     * @return list of internships matching preferred major
+     */
+    public List<Internship> generateReportByPreferredMajor(String preferredMajor) {
+        if (preferredMajor == null || preferredMajor.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<Internship> allInternships = internshipManager.getAllInternships();
+        return allInternships.stream()
+                .filter(i -> i.getPreferredMajor() != null && i.getPreferredMajor().equalsIgnoreCase(preferredMajor))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Generate internships filtered by level. Level string is matched against Internship.InternshipLevel enum.
+     * @param levelStr level name (BASIC, INTERMEDIATE, ADVANCED)
+     * @return list of internships matching the level
+     */
+    public List<Internship> generateReportByLevel(String levelStr) {
+        if (levelStr == null || levelStr.isEmpty()) {
+            return new ArrayList<>();
+        }
+        Internship.InternshipLevel parsedLevel;
+        try {
+            parsedLevel = Internship.InternshipLevel.valueOf(levelStr.toUpperCase());
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+        final Internship.InternshipLevel level = parsedLevel;
+        List<Internship> allInternships = internshipManager.getAllInternships();
+        return allInternships.stream()
+                .filter(i -> i.getLevel() == level)
+                .collect(Collectors.toList());
     }
     
     /**
