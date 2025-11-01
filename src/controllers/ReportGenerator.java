@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import managers.ApplicationManager;
 import managers.InternshipManager;
@@ -34,28 +36,14 @@ public class ReportGenerator {
      * @return list of internships matching the specified status
      */
     public List<Internship> generateReportByStatus(String status) {
-        System.out.println("Generating report for internships with status: " + status);
-        
-        List<Internship> allInternships = internshipManager.getAllInternships();
-        List<Internship> filteredInternships = new ArrayList<>();
-        
-        for (Internship internship : allInternships) {
-            if (internship.getStatus().toString().equalsIgnoreCase(status)) {
-                filteredInternships.add(internship);
-            }
+        if (status == null || status.isEmpty()) {
+            return new ArrayList<>();
         }
-
-        System.out.println("Found " + filteredInternships.size() + " internships with status: " + status);
-        for (Internship internship : filteredInternships) {
-            System.out.println("- " + internship.getTitle() + " | " + internship.getCompanyName() + 
-                             " | Slots: " + internship.getConfirmedSlots() + "/" + internship.getTotalSlots());
-        }
-        
-        return filteredInternships;
+        Predicate<Internship> predicate = i -> i.getStatus().toString().equalsIgnoreCase(status);
+        return filterInternships(predicate, list -> System.out.println("Found " + list.size() + " internships with status: " + status));
     }
-
     
-    /**
+        /**
      * Generate internships filtered by preferred major (case-insensitive).
      * @param preferredMajor major to filter by
      * @return list of internships matching preferred major
@@ -64,10 +52,8 @@ public class ReportGenerator {
         if (preferredMajor == null || preferredMajor.isEmpty()) {
             return new ArrayList<>();
         }
-        List<Internship> allInternships = internshipManager.getAllInternships();
-        return allInternships.stream()
-                .filter(i -> i.getPreferredMajor() != null && i.getPreferredMajor().equalsIgnoreCase(preferredMajor))
-                .collect(Collectors.toList());
+        Predicate<Internship> predicate = i -> i.getPreferredMajor() != null && i.getPreferredMajor().equalsIgnoreCase(preferredMajor);
+        return filterInternships(predicate, list -> System.out.println("Found " + list.size() + " internships for preferred major: " + preferredMajor));
     }
 
     /**
@@ -79,19 +65,10 @@ public class ReportGenerator {
         if (levelStr == null || levelStr.isEmpty()) {
             return new ArrayList<>();
         }
-        Internship.InternshipLevel parsedLevel;
-        try {
-            parsedLevel = Internship.InternshipLevel.valueOf(levelStr.toUpperCase());
-        } catch (Exception e) {
-            return new ArrayList<>();
-        }
-        final Internship.InternshipLevel level = parsedLevel;
-        List<Internship> allInternships = internshipManager.getAllInternships();
-        return allInternships.stream()
-                .filter(i -> i.getLevel() == level)
-                .collect(Collectors.toList());
+        Predicate<Internship> predicate = i -> i.getLevel() != null && i.getLevel().equalsIgnoreCase(levelStr);
+        return filterInternships(predicate, list -> System.out.println("Found " + list.size() + " internships from level: " + levelStr));
     }
-    
+
     /**
      * Generates a report of internships filtered by company name.
      *
@@ -99,24 +76,11 @@ public class ReportGenerator {
      * @return list of internships from the specified company
      */
     public List<Internship> generateReportByCompany(String companyName) {
-        System.out.println("Generating report for company: " + companyName);
-        
-        List<Internship> allInternships = internshipManager.getAllInternships();
-        List<Internship> filteredInternships = new ArrayList<>();
-        
-        for (Internship internship : allInternships) {
-            if (internship.getCompanyName().equalsIgnoreCase(companyName)) {
-                filteredInternships.add(internship);
-            }
+        if (companyName == null || companyName.isEmpty()) {
+            return new ArrayList<>();
         }
-
-        System.out.println("Found " + filteredInternships.size() + " internships from company: " + companyName);
-        for (Internship internship : filteredInternships) {
-            System.out.println("- " + internship.getTitle() + " | Status: " + internship.getStatus() +
-                             " | Level: " + internship.getLevel());
-        }
-        
-        return filteredInternships;
+        Predicate<Internship> predicate = i -> i.getCompanyName() != null && i.getCompanyName().equalsIgnoreCase(companyName);
+        return filterInternships(predicate, list -> System.out.println("Found " + list.size() + " internships from company: " + companyName));
     }
     
     /**
@@ -130,24 +94,16 @@ public class ReportGenerator {
         
     // Get all applications and filter by student
     List<Application> allApplications = applicationManager.getApplicationList();
-        List<Application> studentApplications = new ArrayList<>();
-        
-        for (Application application : allApplications) {
-            // Application.getStudent() may be null if created from file; guard accordingly.
-            Student student = application.getStudent();
-            if (student != null && student.getID().equals(studentId)) {
-                studentApplications.add(application);
-            }
-        }
+        List<Application> studentApplications = allApplications.stream()
+                .filter(app -> app.getStudent() != null && app.getStudent().getID().equals(studentId))
+                .collect(Collectors.toList());
 
         System.out.println("Found " + studentApplications.size() + " applications for student: " + studentId);
-        for (Application application : studentApplications) {
+        studentApplications.forEach(application -> {
             Internship internship = application.getInternship();
-            System.out.println("- Internship: " + internship.getTitle() + 
-                             " | Status: " + application.getStatus() +
-                             " | Applied: " + application.getAppliedDate());
-        }
-        
+            String title = internship != null ? internship.getTitle() : "<unknown>";
+            System.out.println("- Internship: " + title + " | Status: " + application.getStatus() + " | Applied: " + application.getAppliedDate());
+        });
         return studentApplications;
     }
     
@@ -294,35 +250,46 @@ public class ReportGenerator {
      * @return list of internships matching all specified criteria
      */
     public List<Internship> generateCustomReport(String status, String level, String major, String company) {
-        System.out.println("Generating custom report with filters - Status: " + status + 
-                         ", Level: " + level + ", Major: " + major + ", Company: " + company);
-        
-        List<Internship> allInternships = internshipManager.getAllInternships();
-        List<Internship> filteredInternships = new ArrayList<>();
-        
-        for (Internship internship : allInternships) {
+        System.out.println("Generating custom report with filters - Status: " + status + ", Level: " + level + ", Major: " + major + ", Company: " + company);
+
+        Predicate<Internship> predicate = i -> {
             boolean matches = true;
-            
             if (status != null && !status.isEmpty()) {
-                matches = matches && internship.getStatus().toString().equalsIgnoreCase(status);
+                matches = matches && i.getStatus() != null && i.getStatus().toString().equalsIgnoreCase(status);
             }
             if (level != null && !level.isEmpty()) {
-                matches = matches && internship.getLevel().toString().equalsIgnoreCase(level);
+                matches = matches && i.getLevel() != null && i.getLevel().toString().equalsIgnoreCase(level);
             }
             if (major != null && !major.isEmpty()) {
-                matches = matches && internship.getPreferredMajor().equalsIgnoreCase(major);
+                matches = matches && i.getPreferredMajor() != null && i.getPreferredMajor().equalsIgnoreCase(major);
             }
             if (company != null && !company.isEmpty()) {
-                matches = matches && internship.getCompanyName().equalsIgnoreCase(company);
+                matches = matches && i.getCompanyName() != null && i.getCompanyName().equalsIgnoreCase(company);
             }
-            
-            if (matches) {
-                filteredInternships.add(internship);
+            return matches;
+        };
+
+        Consumer<List<Internship>> printer = list -> System.out.println("Custom report found " + list.size() + " matching internships.");
+        return filterInternships(predicate, printer);
+    }
+
+    /**
+     * Helper that filters internships by a predicate and optionally prints a summary using the provided printer.
+     * Keeps the public methods concise and uses streams internally for efficiency.
+     */
+    private List<Internship> filterInternships(Predicate<Internship> predicate, Consumer<List<Internship>> printer) {
+        List<Internship> allInternships = internshipManager.getAllInternships();
+        List<Internship> result = allInternships.stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
+        if (printer != null) {
+            try {
+                printer.accept(result);
+            } catch (Exception ignored) {
+                // Printing is best-effort; don't fail the query on printer errors
             }
         }
-        
-        System.out.println("Custom report found " + filteredInternships.size() + " matching internships.");
-        return filteredInternships;
+        return result;
     }
 
     public ApplicationManager getApplicationManager() {
