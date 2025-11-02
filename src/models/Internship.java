@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Internship {
     public enum InternshipLevel {BASIC, INTERMEDIATE, ADVANCED};
     public enum InternshipStatus {PENDING, APPROVED, REJECTED, FILLED};
-    private static int idCounter = 1;
+    private static int idCounter = 11;
 
     protected String internshipId;
     protected String title;
@@ -87,15 +87,6 @@ public class Internship {
         this.confirmedSlots = 0;
         this.visible = false;
     }
-    
-    /**
-     * Generates an Internship ID that starts with INT padded with 0's if idCOunter is less than 4 digits
-     * @return an unique ID for each internship listing (For listings not in the file)
-     */
-    private static String generateInternshipID() {
-        return "INT" + String.format("%04d", idCounter++);
-    }
-
     /**
      * Getters
      */
@@ -114,7 +105,7 @@ public class Internship {
     public int getConfirmedSlots() { return confirmedSlots; }
     public boolean isVisible() { return visible; }
     public boolean isFull() {
-        if (this.getAvailableSlots() == 0) return true;
+        if(this.getAvailableSlots() == 0) return true;
         return false;
     }
 
@@ -131,6 +122,14 @@ public class Internship {
     public void setCompanyName(String companyName) { this.companyName = companyName; }
     public void setVisible() { this.visible = true; }
     public void setInvisible() { this.visible = false; }
+    
+    /**
+     * Generates an Internship ID that starts with INT padded with 0's if idCOunter is less than 4 digits
+     * @return an unique ID for each internship listing (For listings not in the file)
+     */
+    private static String generateInternshipID() {
+        return "INT" + String.format("%04d", idCounter++);
+    }
 
     /**
      * Check if internship is open for applications. IF date is before opening date, listing should not be visible.<br>

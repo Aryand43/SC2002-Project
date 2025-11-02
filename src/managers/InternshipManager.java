@@ -83,27 +83,26 @@ public class InternshipManager {
     }
 
     /**
-     * Approve the internship (Career Center Staff action)
+     * Change the status of listing (Career Center Staff action) <br>
+     * Career Center Staff can use this to approve/reject an internship.
      */
-    public void updateInternshipStatus(String internshipID, String update) {
+    public void changeInternshipStatus(String internshipID, InternshipStatus update) {
         Internship i = findInternshipByID(internshipID);
-        if (i.getStatus() == InternshipStatus.PENDING && update.equalsIgnoreCase("APPROVED")) {
-            i.setStatus(InternshipStatus.APPROVED);
-        }
+        i.setStatus(update);
     }
 
     /**
      * Update an existing internship details
      */
     public boolean updateInternship(Internship updatedInternship) {
-        Internship existing = findInternshipByID(updatedInternship.getInternshipID());
-        if (existing == null) {
+        Internship internship = findInternshipByID(updatedInternship.getInternshipID());
+        if (internship == null) {
             System.out.println("Error: Internship not found.");
             return false;
         }
 
-        // Update in memory list
-        int index = internshipList.indexOf(existing);
+        // Update in list
+        int index = internshipList.indexOf(internship);
         internshipList.set(index, updatedInternship);
         return true;
     }
@@ -251,8 +250,9 @@ public class InternshipManager {
             System.out.println("Error: Internship not found.");
             return false;
         }
-        if (internship.getStatus() != InternshipStatus.APPROVED){
 
+        // Verify status
+        if (internship.getStatus() != InternshipStatus.APPROVED){
             System.out.println("Error: Internship must be approved before changing visibility.");
             return false;
         }
@@ -342,7 +342,7 @@ public class InternshipManager {
     }
 
     /**
-     * Display internships in a formatted list
+     * Display internships in a formatted output in terminal
      */
     public void displayInternships() {
         if (internshipList.isEmpty()) {
