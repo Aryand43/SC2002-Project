@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Internship {
     public enum InternshipLevel {BASIC, INTERMEDIATE, ADVANCED};
     public enum InternshipStatus {PENDING, APPROVED, REJECTED, FILLED};
-    private static int idCounter = 1;
+    private static int idCounter = 11;
 
     protected String internshipId;
     protected String title;
@@ -87,15 +87,6 @@ public class Internship {
         this.confirmedSlots = 0;
         this.visible = false;
     }
-    
-    /**
-     * Generates an Internship ID that starts with INT padded with 0's if idCOunter is less than 4 digits
-     * @return an unique ID for each internship listing (For listings not in the file)
-     */
-    private static String generateInternshipID() {
-        return "INT" + String.format("%04d", idCounter++);
-    }
-
     /**
      * Getters
      */
@@ -113,6 +104,10 @@ public class Internship {
     public int getAvailableSlots() { return availableSlots; }
     public int getConfirmedSlots() { return confirmedSlots; }
     public boolean isVisible() { return visible; }
+    public boolean isFull() {
+        if(this.getAvailableSlots() == 0) return true;
+        return false;
+    }
 
     /**
      * Setters
@@ -125,23 +120,15 @@ public class Internship {
     public void setClosingDate(LocalDate closingDate) { this.closingDate = closingDate; }
     public void setStatus(InternshipStatus status) { this.status = status; }
     public void setCompanyName(String companyName) { this.companyName = companyName; }
-    public void setVisible(boolean visible) { this.visible = visible; }
-
+    public void setVisible() { this.visible = true; }
+    public void setInvisible() { this.visible = false; }
+    
     /**
-     * Toggle visibility of internship listing. Only visible if status is APPROVED
-     * @return 
-     * <ol>
-     * <li>true as long as the Internship Status is "APPROVED".<br>
-     * Visibility is able to be changed from true to false and false to true</li>
-     * <li>false if internship listing is anything other than "APPROVED" </li>
-     * </ol>
+     * Generates an Internship ID that starts with INT padded with 0's if idCOunter is less than 4 digits
+     * @return an unique ID for each internship listing (For listings not in the file)
      */
-    public boolean toggleVisibility() {
-        if (this.status != InternshipStatus.APPROVED) {
-            return false;
-        }
-        this.visible = !this.visible;
-        return true;
+    private static String generateInternshipID() {
+        return "INT" + String.format("%04d", idCounter++);
     }
 
     /**
@@ -172,7 +159,6 @@ public class Internship {
         }
         return true;
     }
-
 
     /**
      * Increment confirmed slots when student accepts placement
