@@ -18,9 +18,10 @@ public class InternshipManager {
     private static int maxListingsPerRep = 5;
 
 
-    public InternshipManager(FileHandler fileHandler) {
+    public InternshipManager() {
     	InternshipSerializer internshipSerializer = new InternshipSerializer();
     	FileHandler<Internship> internshipFileHandler = new FileHandler<>(internshipSerializer);
+    	this.fileHandler = internshipFileHandler;
         this.internshipList = internshipFileHandler.readFromFile();
     }
     
