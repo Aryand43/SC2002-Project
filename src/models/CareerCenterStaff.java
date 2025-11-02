@@ -1,10 +1,9 @@
 package models;
 
 import controllers.FileHandler;
-import managers.UserManager;
-import managers.InternshipManager;
 import managers.ApplicationManager;
-import java.util.List;
+import managers.InternshipManager;
+import managers.UserManager;
 
 /**
  * <b>CAREER CENTER STAFF CLASS</b><br>
@@ -12,7 +11,7 @@ import java.util.List;
  * <br><br>
  * Responsibilities include:
  * <ul>
- * <li>Authorizing or rejecting Company Representative account creation</li>
+ * <li>Authorizing or rejecting Company Representative account creation
  * </ul>
  * 
  * Inherits basic functions like login, logout, and change password from {@link models.User}.
@@ -22,6 +21,7 @@ import java.util.List;
 public class CareerCenterStaff extends User {
 
     private String department;
+    private String role;
     private FileHandler fileHandler;
     private UserManager userManager;
     private InternshipManager internshipManager;
@@ -34,8 +34,9 @@ public class CareerCenterStaff extends User {
      * @param email Staff email
      * @param department Staff department (e.g. Career Services Office)
      */
-    public CareerCenterStaff(String ID, String name, String email, String department) {
+    public CareerCenterStaff(String ID, String name, String role, String department,String email) {
         super(ID, name, email);
+        this.role = role;
         this.userType = TypesOfUser.CareerCenterStaff;
         this.department = department;
     }
@@ -43,6 +44,10 @@ public class CareerCenterStaff extends User {
     public String getDepartment() {return this.department;}
 
     public void setDepartment(String department) {this.department = department;}
+
+    public String getRole() {return this.role;}
+
+    public void setRole(String role) {this.role = role;}
 
     /**
      * Approves or rejects the registration of a Company Representative.
@@ -58,4 +63,5 @@ public class CareerCenterStaff extends User {
             System.out.println("Company representative " + companyRepID + " rejected.");
         }
     }
+    
 }
