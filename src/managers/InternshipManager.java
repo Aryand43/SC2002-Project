@@ -1,5 +1,5 @@
 package managers;
-import controllers.InternshipFileHandler;
+import controllers.FileHandler;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,11 +12,11 @@ import models.Internship.InternshipStatus;
 
 public class InternshipManager {
     private List<Internship> internshipList;
-    private InternshipFileHandler fileHandler;
+    private FileHandler fileHandler;
     private static int maxListingsPerRep = 5;
 
 
-    public InternshipManager(InternshipFileHandler fileHandler) {
+    public InternshipManager(FileHandler fileHandler) {
         this.fileHandler = fileHandler;
         this.internshipList = fileHandler.readFromFile();
     }
@@ -66,19 +66,7 @@ public class InternshipManager {
     
         System.out.println("Internship created successfully! ID: " + internship.getInternshipID());
         internshipList.add(internship);
-        fileHandler.addToFile(internship);
         return internship;
-    }
-
-    /**
-     * Save internships to file
-     */
-    public void saveInternships() {
-        try {
-            fileHandler.writeToFile(new ArrayList<>(internshipList));
-        } catch (Exception e) {
-            System.err.println("Error saving internships: " + e.getMessage());
-        }
     }
 
     /**
@@ -93,6 +81,7 @@ public class InternshipManager {
             .findFirst()
             .orElse(null);
     }
+
     /**
      * Approve the internship (Career Center Staff action)
      */
@@ -116,10 +105,6 @@ public class InternshipManager {
         // Update in memory list
         int index = internshipList.indexOf(existing);
         internshipList.set(index, updatedInternship);
-        
-        // Update in file
-        fileHandler.updateInFile(updatedInternship);
-        System.out.println("Internship updated successfully.");
         return true;
     }
 
@@ -157,8 +142,6 @@ public class InternshipManager {
             System.out.println("Total pending: " + pendingInternships.size());
         }
     }
-
-
 
      /**
      * @return Number of internship listings made by 1 representative. (Maximum for 1 rep = 5)
@@ -221,7 +204,6 @@ public class InternshipManager {
         }
 
         internship.setStatus(InternshipStatus.APPROVED);
-        fileHandler.updateInFile(internship);
         System.out.println("Internship approved successfully!");
         return true;
     }
@@ -242,7 +224,6 @@ public class InternshipManager {
         }
 
         internship.setStatus(InternshipStatus.REJECTED);
-        fileHandler.updateInFile(internship);
         System.out.println("Internship rejected.");
         return true;
 
@@ -266,7 +247,6 @@ public class InternshipManager {
 
         if (internship.isVisible()) {
             internship.toggleVisibility();
-            fileHandler.updateInFile(internship);
             System.out.println("Visibility toggled. Now: " + (internship.isVisible() ? "Visible" : "Hidden"));
             return true;
         } else {
@@ -282,8 +262,7 @@ public class InternshipManager {
         Internship internship = findInternshipByID(internshipId);
         if (internship != null) {
             internship.incrementConfirmedSlots();
-            //UPDATE SLOTS IN FILE!!
-            fileHandler.updateInFile(internship);
+            if (internship.getAvailableSlots() == 0) internship.toggleVisibility();
         }
     }
 
@@ -292,10 +271,9 @@ public class InternshipManager {
      */
     public void updateListingOnWithdrawal(String internshipId) {
         Internship internship = findInternshipByID(internshipId);
+        if (internship.getAvailableSlots() == 0) internship.toggleVisibility();
         if (internship != null) {
             internship.decrementConfirmedSlots();
-            //UPDATE SLOTS IN FILE!!
-            fileHandler.updateInFile(internship);
         }
     }
 
@@ -322,7 +300,6 @@ public class InternshipManager {
         }
 
         internshipList.remove(internship);
-        fileHandler.removeFromFile(internshipId);
         System.out.println("Internship deleted successfully.");
         return true;
     }
@@ -387,5 +364,4 @@ public class InternshipManager {
         matchingInternships.sort((i1, i2) -> i1.getTitle().compareTo(i2.getTitle()));
         return matchingInternships;
     }
-
 }
