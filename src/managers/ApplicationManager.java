@@ -1,15 +1,18 @@
 package managers;
 
+import controllers.ApplicationSerializer;
+import controllers.FileHandler;
 import java.util.ArrayList;
 import java.util.List;
 import models.Application;
-import models.Student;
 import models.Internship;
+import models.Student;
 
 //Minimal ApplicationManager implementation to satisfy ReportGenerator usage.
 public class ApplicationManager {
     private List<Application> applicationList;
     private InternshipManager internshipManager;
+    private FileHandler<Application> fileHandler;
 
     public ApplicationManager() {
         this.applicationList = new ArrayList<>();
@@ -18,6 +21,13 @@ public class ApplicationManager {
     public ApplicationManager(InternshipManager internshipManager) {
         this();
         this.internshipManager = internshipManager;
+        ApplicationSerializer serializer = new ApplicationSerializer();
+        this.fileHandler = new FileHandler<>(serializer);
+        this.applicationList = fileHandler.readFromFile();
+    }
+
+    public void saveApplicationsToFile() {
+        fileHandler.writeToFile(new ArrayList<>(applicationList));
     }
 
     // Return current applications
@@ -63,7 +73,8 @@ public class ApplicationManager {
     // Reject withdrawal request
     public boolean rejectWithdrawal(Application application) {
         if (application == null) return false;
-        application.setStatus(Application.ApplicationStatus.PENDING);
+        application.setStatus(Application.ApplicationStatus.SUCCESSFUL);
+        // TODO: Ensure we track original state if more states are added later
         return true;
     }
 
@@ -78,7 +89,7 @@ public class ApplicationManager {
         return rejectWithdrawal(app);
     }
 
-    private Application findByID(String id) {
+    public Application findByID(String id) {
         for (Application a : applicationList) {
             if (a.getID().equals(id)) return a;
         }
