@@ -1,7 +1,10 @@
 package controllers;
 
 import models.Internship;
+import models.Internship.InternshipLevel;
+import models.Internship.InternshipStatus;
 
+import java.time.LocalDate;
 
 /**
  * Implements the serializing and deserializing of Internship  entity and the relevant metadata for its file
@@ -24,7 +27,7 @@ public class InternshipSerializer implements Serializer<Internship>{
 	 */
 	public Internship deserialize(String line) {
 		String[] rowData = line.split(",");
-		Internship internship = new Internship(rowData[0],rowData[1],rowData[2],rowData[3],rowData[4]);
+		Internship internship = new Internship(rowData[0],rowData[1],rowData[2],InternshipLevel.valueOf(rowData[3]),rowData[4],LocalDate.parse(rowData[5]),LocalDate.parse(rowData[6]),InternshipStatus.valueOf(rowData[7]),rowData[8], rowData[9], Integer.parseInt(rowData[10]), Integer.parseInt(rowData[11]), Integer.parseInt(rowData[12]), Boolean.parseBoolean(rowData[13]) );
 		return internship;
 	}
 	
@@ -38,7 +41,9 @@ public class InternshipSerializer implements Serializer<Internship>{
 	 * @return a string that is comma delimited for csv file
 	 */
 	public String serialize(Internship internship) {
-		String line =
+		String line = internship.getInternshipID() + "," + internship.getTitle() + "," + internship.getDescription() + "," + internship.getLevel().toString() + "," + internship.getPreferredMajor() + "," + internship.getOpeningDate().toString() + "," + internship.getClosingDate().toString()
+				+ "," + internship.getStatus().toString() + "," + internship.getCompanyName() + "," + internship.getCompanyRepId() + "," + String.valueOf(internship.getTotalSlots()) + "," + String.valueOf(internship.getAvailableSlots()) + "," + String.valueOf(internship.getConfirmedSlots()) + ","
+				+ String.valueOf(internship.isVisible());
 		return line;
 	}
 	

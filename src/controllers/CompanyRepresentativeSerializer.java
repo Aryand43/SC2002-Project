@@ -37,7 +37,7 @@ public class CompanyRepresentativeSerializer implements Serializer<CompanyRepres
 	 * @return a string that is comma delimited for csv file
 	 */
 	public String serialize(CompanyRepresentative cr) {
-		String line = cr.getID() + "," + cr.getName() + "," + cr.getCompanyName() + "," + cr.getDepartment() + "," + cr.getPosition() + ", cr.getEmail() + "," + cr.getStatus();
+		String line = cr.getID() + "," + cr.getUserName() + "," + cr.getCompanyName() + "," + cr.getDepartment() + "," + cr.getPosition() + "," cr.getEmail() + "," + cr.getStatus();
 		return line;
 	}
 	
