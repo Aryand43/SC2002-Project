@@ -22,12 +22,24 @@ public class StudentSerializer implements Serializer<Student> {
 	 * @return the Student reconstructed from the line of text
 	 */
 	public Student deserialize(String line) {
-		String[] rowData = line.split(",");
-		Student student = new Student(rowData[0],rowData[1],rowData[2],Integer.parseInt(rowData[3]),rowData[4]);
-		return student;
-	}
-	
-	
+    String[] rowData = line.split(",");
+    if (rowData.length < 5) {
+        throw new IllegalArgumentException("Invalid student line (expected 5 columns): " + line);
+    }
+
+    String id    = rowData[0].trim();
+    String name  = rowData[1].trim();
+    String major = rowData[2].trim();
+    int year;
+    try {
+        year = Integer.parseInt(rowData[3].trim());
+    } catch (NumberFormatException e) {
+        throw new IllegalArgumentException("Invalid year value for student: " + rowData[3], e);
+    }
+    String email = rowData[4].trim();
+
+    return new Student(id, name, email, year, major);
+}
 
 	/**
 	 * Serializes the Student into a string of information to be stored into the corresponding file
@@ -62,3 +74,4 @@ public class StudentSerializer implements Serializer<Student> {
 	}
 
 }
+
