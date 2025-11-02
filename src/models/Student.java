@@ -38,7 +38,7 @@ public class Student extends User {
      * yearOfStudy 1–4
      * major Student’s major (e.g., CSC, EEE)
      */
-    public Student(String ID, String name, String email, int yearOfStudy, String major) {
+    public Student(String ID, String name, String major, int yearOfStudy, String email) {
         super(ID, name, email);
         this.yearOfStudy = yearOfStudy;
         this.major = major;

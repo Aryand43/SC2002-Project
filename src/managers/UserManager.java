@@ -1,10 +1,17 @@
 package managers;
 
 import java.util.ArrayList;
+
+import controllers.FileHandler;
+import controllers.InternshipSerializer;
 import models.User;
 import models.Student;
 import models.CompanyRepresentative;
+import models.Internship;
 import models.CareerCenterStaff;
+import controllers.StaffSerializer;
+import controllers.StudentSerializer;
+import controllers.CompanyRepresentativeSerializer;
 
 /**
  * <b>USER MANAGER CLASS</b><br>
@@ -16,15 +23,15 @@ public class UserManager {
     /**
      * studentList stores an array of initialised Student objects by FileHandler
      */
-    private ArrayList<User> studentList;
+    private ArrayList<Student> studentList;
     /**
      * repList stores an array of initialised Company Representative objects by FileHandler
      */
-    private ArrayList<User> repList;
+    private ArrayList<CompanyRepresentative> repList;
     /**
      * staffList stores an array of initialised Career Center Staff objects by FileHandler
      */
-    private ArrayList<User> staffList; 
+    private ArrayList<CareerCenterStaff> staffList; 
     /**
      * Stores the whole User object
      */
@@ -34,10 +41,16 @@ public class UserManager {
      * Class Constructor<br>
      * Ensure each object list is loaded accordingly eg. Student list from main code is loaded into Student list in User Manager.
      */
-    public UserManager(ArrayList<User> studentList, ArrayList<User> repList, ArrayList<User> staffList){
-        this.studentList = studentList;
-        this.repList = repList;
-        this.staffList = staffList;
+    public UserManager(){
+        StaffSerializer staffSerializer = new StaffSerializer();
+    	FileHandler<CareerCenterStaff> staffFileHandler = new FileHandler<>(staffSerializer);
+    	staffList = staffFileHandler.readFromFile();
+    	StudentSerializer studentSerializer = new StudentSerializer();
+    	FileHandler<Student> studentFileHandler = new FileHandler<>(studentSerializer);
+    	studentList = studentFileHandler.readFromFile();
+    	CompanyRepresentativeSerializer companyRepSerializer = new CompanyRepresentativeSerializer();
+    	FileHandler<CompanyRepresentative> companyFileHandler = new FileHandler<>(companyRepSerializer);
+    	repList = companyFileHandler.readFromFile();
     }
     
     /**
@@ -62,17 +75,17 @@ public class UserManager {
      * </ol>
      * @return The respective list of objects associated with the ID.
      */
-    public ArrayList<User> getRespectiveUserList(String ID){   
-        if (Character.toString(ID.charAt(0)).equalsIgnoreCase("U")){
-            return this.studentList;
-        }
-        else if (Character.toString(ID.charAt(0)).equalsIgnoreCase("CR")){
-            return this.repList;
-        }
-        else{
-            return this.staffList;
-        }
-    }
+    //public ArrayList<User> getRespectiveUserList(String ID){   
+        //if (Character.toString(ID.charAt(0)).equalsIgnoreCase("U")){
+            //return this.studentList;
+        //}
+        //else if (Character.toString(ID.charAt(0)).equalsIgnoreCase("CR")){
+            //return this.repList;
+        //}
+        //else{
+           // return this.staffList;
+        //}
+    //}
 
     /**
      * Login function checks the inputted ID, password and login state.<br>
