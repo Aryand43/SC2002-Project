@@ -3,9 +3,16 @@ package models;
 import java.util.ArrayList;
 
 /**
- * <b>STUDENT CLASS</b><br>
- * Extends {@link models.User} and defines specific behavior and permissions for student users.
- * <br>
+ * Represents a Student user in the Internship Management System.
+ * <p>
+ * A student can:
+* <ul>
+* <li>Apply for internships (max 3 active applications)</li>
+* <li>Accept one internship offer</li>
+* <li>Request to withdraw applications</li>
+* <li>View all submitted applications</li>
+* </ul>
+* </p>
  * A Student object will contain:
  * <ul>
  *   <li>Year of Study (1–4)</li>
@@ -22,6 +29,7 @@ import java.util.ArrayList;
  *   <li>Student can withdraw an application (subject to approval)</li>
  * </ul>
  * 
+ * This class extends {@link models.User}.
  * @author Joel Lee
  */
 public class Student extends User {
@@ -32,11 +40,11 @@ public class Student extends User {
 
     /**
      * Constructor for Student.
-     * ID Student ID
-     * name Student name
-     * email Student email
-     * yearOfStudy 1–4
-     * major Student’s major (e.g., CSC, EEE)
+     * @param ID Student ID
+     * @param name Student name
+     * @param email Student email
+     * @param yearOfStudy 1–4
+     * @param major Student’s major (e.g., CSC, EEE)
      */
     public Student(String ID, String name, String major, int yearOfStudy, String email) {
         super(ID, name, email);
@@ -154,5 +162,6 @@ public class Student extends User {
     }
 
 }
+
 
 
