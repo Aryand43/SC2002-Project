@@ -36,7 +36,7 @@ public class StaffSerializer implements Serializer<CareerCenterStaff>{
 	 * @return a string that is comma delimited for csv file
 	 */
 	public String serialize(CareerCenterStaff staff) {
-		String line = staff.getID() + "," + staff.getName() + "," + staff.getRole() +"," + staff.getDepartment() +"," + staff.getEmail();
+		String line = staff.getID() + "," + staff.getUserName() + "," + staff.getRole() +"," + staff.getDepartment() +"," + staff.getEmail();
 		return line;
 	}
 	

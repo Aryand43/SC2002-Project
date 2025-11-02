@@ -23,7 +23,7 @@ public class StudentSerializer implements Serializer<Student> {
 	 */
 	public Student deserialize(String line) {
 		String[] rowData = line.split(",");
-		Student student = new Student(rowData[0],rowData[1],rowData[2],rowData[3]);
+		Student student = new Student(rowData[0],rowData[1],rowData[2],rowData[3],rowData[4]);
 		return student;
 	}
 	
