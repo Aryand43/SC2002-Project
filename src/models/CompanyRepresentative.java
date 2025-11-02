@@ -30,7 +30,7 @@ public class CompanyRepresentative extends User {
     public String getPosition() { return position; }
     public boolean isApproved() { return approved; }
     public void setApproved(boolean status) { this.approved = status; }
-    public ArrayList<> getListings() { return listings; }
+    public ArrayList<Internship> getListings() { return listings; }
     public boolean createInternshipListing(Internship io) {
         if (listings.size() >= 5) {
             System.out.println("You can only post up to 5 internships.");

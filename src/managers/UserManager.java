@@ -1,10 +1,7 @@
 package managers;
 
 import java.util.ArrayList;
-import models.User;
-import models.Student;
-import models.CompanyRepresentative;
-import models.CareerCenterStaff;
+import models.*;
 
 /**
  * <b>USER MANAGER CLASS</b><br>
@@ -16,15 +13,15 @@ public class UserManager {
     /**
      * studentList stores an array of initialised Student objects by FileHandler
      */
-    private ArrayList<User> studentList;
+    private ArrayList<Student> studentList;
     /**
      * repList stores an array of initialised Company Representative objects by FileHandler
      */
-    private ArrayList<User> repList;
+    private ArrayList<CompanyRepresentative> repList;
     /**
      * staffList stores an array of initialised Career Center Staff objects by FileHandler
      */
-    private ArrayList<User> staffList; 
+    private ArrayList<CareerCenterStaff> staffList; 
     /**
      * Stores the whole User object
      */
@@ -127,14 +124,32 @@ public class UserManager {
         this.clearCurrentUser();
     }
     
-    //placeholder for now
+    /**
+     * Approve new company representative (Career Center Staff action)
+     */
     public boolean approveCompanyRepresentative(String repID){
-        return true;
+        for(CompanyRepresentative cr : repList){
+            if (repID.equals(cr.getID())){
+                cr.setApproved(true);
+                System.out.println("Company Representative Approved!");
+                return true;
+            }
+        }
+        return false;
     }
 
-    //placeholder for now
+    /**
+     * Reject new company representative (Career Center Staff action)
+     */
     public boolean rejectCompanyRepresentative(String repID){
-        return true;
+        for(CompanyRepresentative cr : repList){
+            if (repID.equals(cr.getID())){
+                cr.setApproved(true);
+                System.out.println("Company Representative Rejected!");
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
