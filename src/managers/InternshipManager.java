@@ -1,5 +1,7 @@
 package managers;
 import controllers.FileHandler;
+import controllers.InternshipSerializer;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,8 +19,9 @@ public class InternshipManager {
 
 
     public InternshipManager(FileHandler fileHandler) {
-        this.fileHandler = fileHandler;
-        this.internshipList = fileHandler.readFromFile();
+    	InternshipSerializer internshipSerializer = new InternshipSerializer();
+    	FileHandler<Internship> internshipFileHandler = new FileHandler<>(internshipSerializer);
+        this.internshipList = internshipFileHandler.readFromFile();
     }
     
     /**
