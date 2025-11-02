@@ -23,7 +23,7 @@ public class CompanyRepresentativeSerializer implements Serializer<CompanyRepres
 	 */
 	public CompanyRepresentative deserialize(String line) {
 		String[] rowData = line.split(",");
-		CompanyRepresentative cr = new CompanyRepresentative(rowData[0],rowData[1],rowData[2],rowData[3],rowData[4],rowData[5]);
+		CompanyRepresentative cr = new CompanyRepresentative(rowData[0],rowData[1],rowData[2],rowData[3],rowData[4],rowData[5], Boolean.parseBoolean(rowData[6]));
 		return cr;
 	}
 	
@@ -37,7 +37,7 @@ public class CompanyRepresentativeSerializer implements Serializer<CompanyRepres
 	 * @return a string that is comma delimited for csv file
 	 */
 	public String serialize(CompanyRepresentative cr) {
-		String line = cr.getID() + "," + cr.getUserName() + "," + cr.getCompanyName() + "," + cr.getDepartment() + "," + cr.getPosition() + "," + cr.getEmail() + "," + cr.getStatus();
+		String line = cr.getID() + "," + cr.getUserName() + "," + cr.getCompanyName() + "," + cr.getDepartment() + "," + cr.getPosition() + "," + cr.getEmail() + "," + Boolean.toString(cr.isApproved());
 		return line;
 	}
 	

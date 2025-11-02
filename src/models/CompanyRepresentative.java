@@ -21,6 +21,19 @@ public class CompanyRepresentative extends User {
         this.approved = false;
         this.listings = new ArrayList<>();        
     }
+    
+    /*
+     * Constructor for serializer
+     */
+    public CompanyRepresentative(String ID, String name, String email, String companyName, String department, String position, Boolean status){
+        super(ID, name, email);
+        this.companyName = companyName;
+        this.department = department;
+        this.position = position;
+        this.userType = TypesOfUser.CompanyRepresentative;
+        this.approved = status;
+        this.listings = new ArrayList<>();        
+    }
 
     /*
     * Getters & Setters
