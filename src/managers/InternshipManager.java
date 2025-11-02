@@ -30,7 +30,7 @@ public class InternshipManager {
      * <li> Number of total slots is in the range of 1-10</li>
      * 
      */
-    public Internship createOpportunity(
+    public Internship createListing(
             String companyRepId,
             String title,
             String description,
@@ -281,7 +281,7 @@ public class InternshipManager {
         Internship internship = findInternshipByID(internshipId);
         if (internship != null) {
             internship.incrementConfirmedSlots();
-            if (internship.getAvailableSlots() == 0) internship.setVisible();
+            if (internship.getAvailableSlots() == 0) internship.setInvisible();
         }
     }
 
@@ -290,9 +290,9 @@ public class InternshipManager {
      */
     public void updateListingOnWithdrawal(String internshipId) {
         Internship internship = findInternshipByID(internshipId);
-        if (internship.getAvailableSlots() == 0) internship.setInvisible();
         if (internship != null) {
             internship.decrementConfirmedSlots();
+            if (internship.getAvailableSlots() > 0) internship.setVisible();
         }
     }
 
