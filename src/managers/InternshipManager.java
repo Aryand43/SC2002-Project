@@ -174,11 +174,18 @@ public class InternshipManager {
     /**
      * Getter Function <br>
      * Get visible internships for students based on eligibility & major. <br>
-     * Students should only be able to see internships based on thier own major
+     * Students should only be able to see internships based on: <br>
+     * <ol> 
+     * <li>Internship listing is visibl</li>
+     * <li>Internship listing still has available slots</li>
+     * <li>Internship listing is open and within the opening and closing date</li>
+     * <li>thier own major</li>
+     * </ol>
      */
     public List<Internship> getVisibleInternshipsForStudent(int yearOfStudy, String major) {
         return internshipList.stream()
-            .filter(Internship::isVisible)
+            .filter(i -> i.isVisible())
+            .filter(i -> i.isFull() == false)
             .filter(i -> i.getStatus() == InternshipStatus.APPROVED)
             .filter(i -> i.isStudentEligible(yearOfStudy))
             .filter(i -> i.isOpenForApplications())
@@ -189,7 +196,7 @@ public class InternshipManager {
 
     /**
      * Approve an internship listing opportunity (by career center staff only) <br>
-     * @return true only when internshp id is valid and the listing is in pending state.
+     * @return true only when internship id is valid and the listing is in pending state.
      */
     public boolean approveListing(String internshipId) {
         Internship internship = findInternshipByID(internshipId);
@@ -198,7 +205,7 @@ public class InternshipManager {
             return false;
         }
 
-        if (internship.getStatus() != InternshipStatus.PENDING) {
+        else if (internship.getStatus() != InternshipStatus.PENDING) {
             System.out.println("Error: Only pending internships can be approved.");
             return false;
         }
@@ -218,7 +225,7 @@ public class InternshipManager {
             return false;
         }
 
-        if (internship.getStatus() != InternshipStatus.PENDING) {
+        else if (internship.getStatus() != InternshipStatus.PENDING) {
             System.out.println("Error: Only pending internships can be rejected.");
             return false;
         }
@@ -230,12 +237,23 @@ public class InternshipManager {
     }
 
     /**
-     * Toggle visibility of an internship
+     * Toggle visibility of internship listing. Only visible if status is APPROVED
+     * @return 
+     * <ol>
+     * <li>true as long as the Internship Status is "APPROVED".<br>
+     * Visibility is able to be changed from true to false and false to true</li>
+     * <li>false if internship listing is anything other than "APPROVED" </li>
+     * </ol>
      */
     public boolean toggleVisibility(String internshipId, String companyRepId) {
         Internship internship = findInternshipByID(internshipId);
         if (internship == null) {
             System.out.println("Error: Internship not found.");
+            return false;
+        }
+        if (internship.getStatus() != InternshipStatus.APPROVED){
+
+            System.out.println("Error: Internship must be approved before changing visibility.");
             return false;
         }
 
@@ -244,14 +262,15 @@ public class InternshipManager {
             System.out.println("Error: You can only modify your own internships.");
             return false;
         }
-
         if (internship.isVisible()) {
-            internship.toggleVisibility();
-            System.out.println("Visibility toggled. Now: " + (internship.isVisible() ? "Visible" : "Hidden"));
+            internship.setInvisible();
+            System.out.println("Visibility toggled. Now: Hidden");
             return true;
-        } else {
-            System.out.println("Error: Internship must be approved before changing visibility.");
-            return false;
+        } 
+        else{
+            internship.setVisible();
+            System.out.println("Visibility toggled. Now: Visible");
+            return true;
         }
     }
 
@@ -262,7 +281,7 @@ public class InternshipManager {
         Internship internship = findInternshipByID(internshipId);
         if (internship != null) {
             internship.incrementConfirmedSlots();
-            if (internship.getAvailableSlots() == 0) internship.toggleVisibility();
+            if (internship.getAvailableSlots() == 0) internship.setVisible();
         }
     }
 
@@ -271,7 +290,7 @@ public class InternshipManager {
      */
     public void updateListingOnWithdrawal(String internshipId) {
         Internship internship = findInternshipByID(internshipId);
-        if (internship.getAvailableSlots() == 0) internship.toggleVisibility();
+        if (internship.getAvailableSlots() == 0) internship.setInvisible();
         if (internship != null) {
             internship.decrementConfirmedSlots();
         }

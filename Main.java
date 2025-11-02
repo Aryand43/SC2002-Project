@@ -1,7 +1,4 @@
-import controllers.CompanyFileHandler;
-import controllers.InternshipFileHandler;
-import controllers.StaffFileHandler;
-import controllers.StudentFileHandler;
+import controllers.FileHandler;
 import java.util.ArrayList;
 import managers.InternshipManager;
 import managers.UserManager;
@@ -9,17 +6,17 @@ import models.Internship;
 import models.User;
 
 public class Main {
-	private static ArrayList<User> userList = new ArrayList<>();
-    public static void main (String args[]){
-    	
-        // Initialise all users as objects
-        StudentFileHandler student_fh = new StudentFileHandler();
-        CompanyFileHandler company_fh = new CompanyFileHandler();
-        StaffFileHandler staff_fh = new StaffFileHandler();
+	private ArrayList<User> studentList = new ArrayList<>();
+	private ArrayList<User> staffList = new ArrayList<>();
+	private ArrayList<User> repList = new ArrayList<>();
+    private static ArrayList<Internship> intershipList = new ArrayList<>();
 
-        ArrayList<User> studentList = student_fh.readFromFile();
-        ArrayList<User> repList = company_fh.readFromFile();
-        ArrayList<User> staffList = staff_fh.readFromFile();
+    public static void main (String args[]){
+    	FileHandler fh = new FileHandler()
+        // Initialise all users as objects
+        studentList = FileHandler.readFromFile();
+        repList = .readFromFile();
+        staffList = staff_fh.readFromFile();
         UserManager UM = new UserManager(studentList, repList, staffList);
         
 
@@ -38,6 +35,7 @@ public class Main {
         Internship result = IM.findInternshipByID("INT0002");
         System.out.print(result.getDetailedInfo());
         IM.getPendingInternships();
+
 
     }
 }

@@ -113,6 +113,10 @@ public class Internship {
     public int getAvailableSlots() { return availableSlots; }
     public int getConfirmedSlots() { return confirmedSlots; }
     public boolean isVisible() { return visible; }
+    public boolean isFull() {
+        if (this.getAvailableSlots() == 0) return true;
+        return false;
+    }
 
     /**
      * Setters
@@ -125,24 +129,8 @@ public class Internship {
     public void setClosingDate(LocalDate closingDate) { this.closingDate = closingDate; }
     public void setStatus(InternshipStatus status) { this.status = status; }
     public void setCompanyName(String companyName) { this.companyName = companyName; }
-    public void setVisible(boolean visible) { this.visible = visible; }
-
-    /**
-     * Toggle visibility of internship listing. Only visible if status is APPROVED
-     * @return 
-     * <ol>
-     * <li>true as long as the Internship Status is "APPROVED".<br>
-     * Visibility is able to be changed from true to false and false to true</li>
-     * <li>false if internship listing is anything other than "APPROVED" </li>
-     * </ol>
-     */
-    public boolean toggleVisibility() {
-        if (this.status != InternshipStatus.APPROVED) {
-            return false;
-        }
-        this.visible = !this.visible;
-        return true;
-    }
+    public void setVisible() { this.visible = true; }
+    public void setInvisible() { this.visible = false; }
 
     /**
      * Check if internship is open for applications. IF date is before opening date, listing should not be visible.<br>
@@ -172,7 +160,6 @@ public class Internship {
         }
         return true;
     }
-
 
     /**
      * Increment confirmed slots when student accepts placement
