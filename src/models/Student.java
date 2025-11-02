@@ -28,16 +28,15 @@ public class Student extends User {
     
     private int yearOfStudy;                // Year 1–4
     private String major;                   // CSC, EEE, MAE, etc.
-    private ArrayList<InternshipApplication> applications; // Up to 3 active applications
-    private int currentApplications;
+    private ArrayList<Application> applications; // Up to 3 active applications
 
     /**
      * Constructor for Student.
-     * @param ID Student ID
-     * @param name Student name
-     * @param email Student email
-     * @param yearOfStudy 1–4
-     * @param major Student’s major (e.g., CSC, EEE)
+     * ID Student ID
+     * name Student name
+     * email Student email
+     * yearOfStudy 1–4
+     * major Student’s major (e.g., CSC, EEE)
      */
     public Student(String ID, String name, String email, int yearOfStudy, String major) {
         super(ID, name, email);
@@ -45,7 +44,6 @@ public class Student extends User {
         this.major = major;
         this.applications = new ArrayList<>();
         this.userType = TypesOfUser.Student;
-        this.currentApplications = 0;
     }
 
     // -----------------------------
@@ -53,7 +51,7 @@ public class Student extends User {
     // -----------------------------
     public int getYearOfStudy() { return yearOfStudy; }
     public String getMajor() { return major; }
-    public ArrayList<InternshipApplication> getApplications() { return applications; }
+    public ArrayList<Application> getApplications() { return applications; }
 
 
     // -----------------------------
@@ -62,34 +60,48 @@ public class Student extends User {
 
     /**
      * Apply for a new internship opportunity.
-     * @param internship InternshipApplication object
+     * @param application Application object
      * @return true if application successful, false otherwise
      */
-    public boolean applyForInternship(InternshipApplication internship) {
+    public boolean applyForInternship(Application application) {
         if (applications.size() >= 3) {
             System.out.println("You can only apply for a maximum of 3 internship opportunities at once.");
             return false;
         }
 
-        if (yearOfStudy <= 2 && !internship.getLevel().equalsIgnoreCase("Basic")) {
+        Internship internship = application.getInternship();
+        if (internship == null) {
+            System.out.println("Invalid application: internship not set.");
+            return false;
+        }
+
+        // Check internship is open for applications
+        if (!internship.isOpenForApplications()) {
+            System.out.println("This internship is not open for applications.");
+            return false;
+        }
+
+        //Checking the restriction for Year 1-2 students
+        if (yearOfStudy <= 2 && internship.getLevel() != Internship.InternshipLevel.BASIC) {
             System.out.println("Year 1 and 2 students can only apply for Basic-level internships.");
             return false;
         }
 
         // Add application
-        applications.add(internship);
-        System.out.printf("Internship '%s' applied successfully. Status: Pending.%n", internship.getTitle());
+        applications.add(application);
+        System.out.println("Application submitted: " + internship.getTitle());
         return true;
-    }
+    }   
 
     /**
      * Accept an internship offer if status is "Successful".
      * Automatically withdraws all other applications.
      */
     public void acceptInternship(String internshipID) {
-        InternshipApplication accepted = null;
-        for (InternshipApplication app : applications) {
-            if (app.getID().equals(internshipID) && app.getStatus().equalsIgnoreCase("Successful")) {
+        Application accepted = null;
+        for (Application app : applications) {
+            if (app.getInternship() != null && app.getInternship().getInternshipID().equals(internshipID) &&
+                app.getStatus() == Application.ApplicationStatus.SUCCESSFUL) {
                 accepted = app;
                 break;
             }
@@ -101,13 +113,17 @@ public class Student extends User {
         }
 
         // Withdraw other applications
-        for (InternshipApplication app : applications) {
-            if (!app.getID().equals(internshipID)) {
-                app.setStatus("Withdrawn");
+        for (Application app : applications) {
+            if (app.getInternship() == null) continue;
+            if (!app.getInternship().getInternshipID().equals(internshipID)) {
+                app.setStatus(Application.ApplicationStatus.WITHDRAWN);
             }
         }
 
-        System.out.printf("Internship '%s' accepted. All other applications withdrawn.%n", accepted.getTitle());
+        // Update confirmed slots on the accepted internship
+        accepted.getInternship().incrementConfirmedSlots();
+
+        System.out.printf("Internship '%s' accepted. All other applications withdrawn.%n", accepted.getInternship().getTitle());
     }
 
     /**
@@ -115,10 +131,10 @@ public class Student extends User {
      * @param internshipID ID of internship to withdraw
      */
     public void requestWithdrawal(String internshipID) {
-        for (InternshipApplication app : applications) {
-            if (app.getID().equals(internshipID)) {
-                app.setStatus("Withdraw Requested");
-                System.out.printf("Withdrawal requested for internship '%s' (Subject to Career Center approval).%n", app.getTitle());
+        for (Application app : applications) {
+            if (app.getInternship() != null && app.getInternship().getInternshipID().equals(internshipID)) {
+                app.setStatus(Application.ApplicationStatus.WITHDRAW_REQUESTED);
+                System.out.printf("Withdrawal requested for internship '%s' (Subject to Career Center approval).%n", app.getInternship().getTitle());
                 return;
             }
         }
@@ -130,10 +146,13 @@ public class Student extends User {
      */
     public void viewApplications() {
         System.out.println("Your Internship Applications:");
-        for (InternshipApplication app : applications) {
-            System.out.printf("- %s (%s): %s%n", app.getTitle(), app.getLevel(), app.getStatus());
+        for (Application app : applications) {
+            String title = app.getInternship() == null ? "<unknown>" : app.getInternship().getTitle();
+            String level = app.getInternship() == null ? "<unknown>" : app.getInternship().getLevel().toString();
+            System.out.printf("- %s (%s): %s%n", title, level, app.getStatus());
         }
     }
 
 }
+
 
