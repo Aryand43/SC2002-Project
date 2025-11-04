@@ -1,7 +1,6 @@
 package managers;
 import controllers.FileHandler;
 import controllers.InternshipSerializer;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -343,22 +342,6 @@ public class InternshipManager {
             .filter(i -> companyName == null || i.getCompanyName().toLowerCase().contains(companyName.toLowerCase()))
             .sorted(Comparator.comparing(Internship::getTitle))
             .collect(Collectors.toList());
-    }
-
-    /**
-     * Display internships in a formatted output in terminal
-     */
-    public void displayInternships() {
-        if (internshipList.isEmpty()) {
-            System.out.println("No internships found.");
-            return;
-        }
-
-        System.out.println("\n=== Internship Opportunities ===");
-        for (int i = 0; i < internshipList.size(); i++) {
-            System.out.println((i + 1) + ". " + internshipList.get(i).getDetailedInfo());
-        }
-        System.out.println();
     }
 
     /**
