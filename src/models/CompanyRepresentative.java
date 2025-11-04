@@ -1,5 +1,6 @@
 package models; 
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import models.Application.ApplicationStatus; 
 
 public class CompanyRepresentative extends User {
     private String companyName;
@@ -60,12 +61,12 @@ public class CompanyRepresentative extends User {
         return newRep;
     }
     public void approveApplication(Application app) {
-        app.setStatus("Successful");
+        app.setStatus(ApplicationStatus.SUCCESSFUL);
         System.out.println("Application " + app.getID() + " approved.");
     }
     
     public void rejectApplication(Application app) {
-        app.setStatus("Unsuccessful");
+        app.setStatus(ApplicationStatus.UNSUCCESSFUL);
         System.out.println("Application " + app.getID() + " rejected.");
     }
 }
