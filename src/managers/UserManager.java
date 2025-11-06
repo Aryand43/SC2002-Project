@@ -93,7 +93,7 @@ public class UserManager {
      * Else, user will be unable to login.
      * 
      */
-    public void login(String ID, String password){
+    public boolean login(String ID, String password){
          ArrayList<User> userList = getRespectiveUserList();
 
          for(User u: userList){
@@ -105,11 +105,11 @@ public class UserManager {
                      u.setLogin(true);
                      this.currentUser = u;
                      System.out.printf("\n%s has successfully logged in!\n", u.getUserName());
-                     return;
+                     return true;
                  }
                  else if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == true){
                      System.out.printf("\nError: %s already logged in!", u.getUserName());
-                     return;
+                     return false;
                  }
              }
              else {
@@ -119,15 +119,16 @@ public class UserManager {
                      u.setLogin(true);
                      this.currentUser = u;
                      System.out.printf("\n%s has successfully logged in!\n", u.getUserName());
-                     return;
+                     return true;
                  }
                  else if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == true){
                      System.out.printf("\nError: %s already logged in!", u.getUserName());
-                     return;
+                     return false;
                  }
              }   
          }
          System.out.println("\nError: Wrong Password or ID inputted!");
+         return false;
     }
     
     public ArrayList<User> getRespectiveUserList(){
