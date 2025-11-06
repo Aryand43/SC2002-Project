@@ -94,42 +94,62 @@ public class UserManager {
      * 
      */
     public void login(String ID, String password){
-        // ArrayList<User> userList = getRespectiveUserList(ID);
+         ArrayList<User> userList = getRespectiveUserList();
 
-        // for(User u: userList){
-        //     // If user is company rep, have to check email for login detials
-        //     if (u.getUserType() != User.TypesOfUser.CompanyRepresentative){
-        //         System.out.println(u.getEmail());
-        //         System.out.println(u.getPassword());
-        //         if(u.getEmail().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
-        //             u.setLogin(true);
-        //             this.currentUser = u;
-        //             System.out.printf("\n%s has successfully logged in!\n", u.getUserName());
-        //             return;
-        //         }
-        //         else if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == true){
-        //             System.out.printf("\nError: %s already logged in!", u.getUserName());
-        //             return;
-        //         }
-        //     }
-        //     else {
-        //         System.out.println(u.getID());
-        //         System.out.println(u.getPassword());
-        //         if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
-        //             u.setLogin(true);
-        //             this.currentUser = u;
-        //             System.out.printf("\n%s has successfully logged in!\n", u.getUserName());
-        //             return;
-        //         }
-        //         else if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == true){
-        //             System.out.printf("\nError: %s already logged in!", u.getUserName());
-        //             return;
-        //         }
-        //     }   
-        // }
-        // System.out.println("\nError: Wrong Password or ID inputted!");
+         for(User u: userList){
+             // If user is company rep, have to check email for login detials
+             if (u.getUserType() != User.TypesOfUser.CompanyRepresentative){
+                 System.out.println(u.getEmail());
+                 System.out.println(u.getPassword());
+                 if(u.getEmail().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
+                     u.setLogin(true);
+                     this.currentUser = u;
+                     System.out.printf("\n%s has successfully logged in!\n", u.getUserName());
+                     return;
+                 }
+                 else if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == true){
+                     System.out.printf("\nError: %s already logged in!", u.getUserName());
+                     return;
+                 }
+             }
+             else {
+                 System.out.println(u.getID());
+                 System.out.println(u.getPassword());
+                 if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
+                     u.setLogin(true);
+                     this.currentUser = u;
+                     System.out.printf("\n%s has successfully logged in!\n", u.getUserName());
+                     return;
+                 }
+                 else if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == true){
+                     System.out.printf("\nError: %s already logged in!", u.getUserName());
+                     return;
+                 }
+             }   
+         }
+         System.out.println("\nError: Wrong Password or ID inputted!");
     }
     
+    public ArrayList<User> getRespectiveUserList(){
+    	ArrayList<User> userList = new ArrayList<>();
+    	
+    	for(Student s: studentList) {
+    		User u = s;
+    		userList.add(u);
+    	}
+    	
+    	for(CompanyRepresentative cr: repList) {
+    		User u = cr;
+    		userList.add(u);
+    	}
+    	
+    	for(CareerCenterStaff staff: staffList) {
+    		User u = staff;
+    		userList.add(u);
+    	}
+    	
+    	return userList;
+    }
     /**
      * Logout function sets the current user's login state to false, and then clears the current user from User Manager.<br> 
      * System message displayed in program to let user know they have logged out.

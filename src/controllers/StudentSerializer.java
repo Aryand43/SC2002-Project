@@ -38,7 +38,7 @@ public class StudentSerializer implements Serializer<Student> {
     }
     String email = rowData[4].trim();
 
-    return new Student(id, name, email, year, major);
+    return new Student(id, name, major, year, email);
 }
 
 	/**
