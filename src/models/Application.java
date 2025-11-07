@@ -11,6 +11,9 @@ public class Application {
     private ApplicationStatus status;
     private String appliedDate; 
 
+    private transient Student studentRef;
+    private transient Internship internshipRef;
+
     // Full constructor
     public Application(String id, String studentID, String internshipID, ApplicationStatus status, String appliedDate) {
         this.id = id;
@@ -40,6 +43,8 @@ public class Application {
         this.internshipID = internshipID;
         this.status = ApplicationStatus.PENDING;
         this.appliedDate = LocalDate.now().toString();
+        this.studentRef = null; // Explicitly set to null
+        this.internshipRef = null; // Explicitly set to null
     }
 
     public String getID() { return id; }
@@ -51,6 +56,12 @@ public class Application {
     public void setStatus(ApplicationStatus status) { this.status = status; }
     public void setStudentID(String s) { this.studentID = s; }
     public void setInternshipID(String i) { this.internshipID = i; }
+
+    public Student getStudent() { return studentRef; }
+    public Internship getInternship() { return internshipRef; }
+
+    public void setStudentRef(Student studentRef) { this.studentRef = studentRef; }
+    public void setInternshipRef(Internship internshipRef) { this.internshipRef = internshipRef; }
 
     @Override
     public String toString() {
