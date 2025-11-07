@@ -29,7 +29,7 @@ public class UserManager {
      * Stores the whole User object
      */
     private User currentUser;
-    private ArrayList<User> userList;
+    private ArrayList<User> userList = getRespectiveUserList();
 
     /**
      * Class Constructor<br>
@@ -88,7 +88,6 @@ public class UserManager {
      * 
      */
     public boolean login(String ID, String password){
-         userList = getRespectiveUserList();
 
          for(User u: userList){
              // If user is company rep, have to check email for login detials
