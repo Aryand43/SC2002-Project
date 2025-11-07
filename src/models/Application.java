@@ -9,18 +9,28 @@ public class Application {
     private String studentID; 
     private String internshipID; 
     private ApplicationStatus status;
-    private String appliedDate; 
+    private final String appliedDate; 
 
-    private transient Student studentRef;
-    private transient Internship internshipRef;
+    private String studentRef;
+    private String internshipRef;
 
-    // Full constructor
-    public Application(String id, String studentID, String internshipID, ApplicationStatus status, String appliedDate) {
-        this.id = id;
+    /**
+     * Class Constructor
+     * @param studentID ID of student
+     * @param internshipID ID of internship
+     * @param appliedDate Date of application
+     * @param studentRef Student object
+     * @param internshipRef Internship object
+     * @param status Current status of application
+     */
+    public Application(String studentID, String internshipID, String appliedDate, String studentRef, String internshipRef, ApplicationStatus status) {
+        this.id = "APP" + System.currentTimeMillis();
         this.studentID = studentID;
         this.internshipID = internshipID;
-        this.status = status == null ? ApplicationStatus.PENDING : status;
-        this.appliedDate = appliedDate == null ? LocalDate.now().toString() : appliedDate;
+        this.appliedDate = appliedDate;
+        this.studentRef = studentRef;
+        this.internshipRef = internshipRef;
+        this.status = status;
     }
 
     // Convenience constructor used by some serializers (id, studentId, internshipId, statusAsString)
@@ -57,11 +67,20 @@ public class Application {
     public void setStudentID(String s) { this.studentID = s; }
     public void setInternshipID(String i) { this.internshipID = i; }
 
-    public Student getStudent() { return studentRef; }
-    public Internship getInternship() { return internshipRef; }
+    public String getStudentRef(){return this.studentRef;}
 
-    public void setStudentRef(Student studentRef) { this.studentRef = studentRef; }
-    public void setInternshipRef(Internship internshipRef) { this.internshipRef = internshipRef; }
+    /**
+     * Setter method for studentRef
+     * @param studentRef The student reference ID to set
+     */
+    public void setStudentRef(String studentRef) {
+        this.studentRef = studentRef;
+    }
+
+    public String getInternshipRef(){return this.internshipRef;}
+    public void setInternshipRef(String internshipRef) {
+        this.internshipRef = internshipRef;
+    }
 
     @Override
     public String toString() {
