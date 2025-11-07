@@ -31,6 +31,8 @@ public class UserManager {
      * Stores the whole User object
      */
     private User currentUser;
+    
+    private ArrayList<User> userList;
 
     /**
      * Class Constructor<br>
@@ -89,7 +91,7 @@ public class UserManager {
      * 
      */
     public boolean login(String ID, String password){
-         ArrayList<User> userList = getRespectiveUserList();
+         userList = getRespectiveUserList();
 
          for(User u: userList){
              // If user is company rep, have to check email for login detials
@@ -147,6 +149,10 @@ public class UserManager {
     	return userList;
     }
     
+    
+    public User getUserByID(String ID) {
+    	
+    }
     /**
      * Logout function sets the current user's login state to false, and then clears the current user from User Manager.<br> 
      * System message displayed in program to let user know they have logged out.
