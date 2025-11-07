@@ -69,18 +69,18 @@ public class Application {
     public void setStudentID(String s) { this.studentID = s; }
     public void setInternshipID(String i) { this.internshipID = i; }
 
-    public Student getStudentRef(){return this.studentRef;}
+    public Student getStudent(){return this.studentRef;}
 
     /**
      * Setter method for studentRef
      * @param studentRef The student reference ID to set
      */
-    public void setStudentRef(Student studentRef) {
+    public void setStudent(Student studentRef) {
         this.studentRef = studentRef;
     }
 
-    public Internship getInternshipRef(){return this.internshipRef;}
-    public void setInternshipRef(Internship internshipRef) {
+    public Internship getInternship(){return this.internshipRef;}
+    public void setInternship(Internship internshipRef) {
         this.internshipRef = internshipRef;
     }
 
