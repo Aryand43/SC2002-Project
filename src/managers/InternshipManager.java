@@ -155,8 +155,7 @@ public class InternshipManager {
     }
 
     /**
-     * Getter Function <br>
-     * Get all internship listings for Career Center Staff
+     * Getter Function to return the stored internship list <br>
      */
     public List<Internship> getAllInternships() {
         return new ArrayList<>(internshipList);
