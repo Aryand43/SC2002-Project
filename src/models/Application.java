@@ -11,8 +11,8 @@ public class Application {
     private ApplicationStatus status;
     private final String appliedDate; 
 
-    private String studentRef;
-    private String internshipRef;
+    private Student studentRef;
+    private Internship internshipRef;
 
     /**
      * Class Constructor
@@ -23,7 +23,7 @@ public class Application {
      * @param internshipRef Internship object
      * @param status Current status of application
      */
-    public Application(String studentID, String internshipID, String appliedDate, String studentRef, String internshipRef, ApplicationStatus status) {
+    public Application(String studentID, String internshipID, String appliedDate, Student studentRef, Internship internshipRef, ApplicationStatus status) {
         this.id = "APP" + System.currentTimeMillis();
         this.studentID = studentID;
         this.internshipID = internshipID;
@@ -60,6 +60,7 @@ public class Application {
     public String getID() { return id; }
     public String getStudentID() { return studentID; }
     public String getInternshipID() { return internshipID; }
+    public Student getStudent() { return this.studentRef;}
     public ApplicationStatus getStatus() { return status; }
     public String getAppliedDate() { return appliedDate; }
 
@@ -67,18 +68,18 @@ public class Application {
     public void setStudentID(String s) { this.studentID = s; }
     public void setInternshipID(String i) { this.internshipID = i; }
 
-    public String getStudentRef(){return this.studentRef;}
+    public Student getStudentRef(){return this.studentRef;}
 
     /**
      * Setter method for studentRef
      * @param studentRef The student reference ID to set
      */
-    public void setStudentRef(String studentRef) {
+    public void setStudentRef(Student studentRef) {
         this.studentRef = studentRef;
     }
 
-    public String getInternshipRef(){return this.internshipRef;}
-    public void setInternshipRef(String internshipRef) {
+    public Internship getInternshipRef(){return this.internshipRef;}
+    public void setInternshipRef(Internship internshipRef) {
         this.internshipRef = internshipRef;
     }
 
