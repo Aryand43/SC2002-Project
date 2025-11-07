@@ -1,6 +1,6 @@
 package boundaries;
+import controllers.UserManager;
 import java.util.Scanner;
-import managers.UserManager;
 
 public class UserLoginBoundary {
 	

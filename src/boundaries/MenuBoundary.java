@@ -28,7 +28,7 @@ public class MenuBoundary {
         System.out.println("3. Apply for Internship");
         System.out.println("4. View My Applications");
         System.out.println("5. Filter Internships");
-        System.out.println("0. Back to Main Menu");
+        System.out.println("0. Logout");
         printSeparator();
     }
 
@@ -43,7 +43,7 @@ public class MenuBoundary {
         System.out.println("4. Reject Internship");
         System.out.println("5. Filter Internships");
         System.out.println("6. Generate Report");
-        System.out.println("0. Back to Main Menu");
+        System.out.println("0. Logout");
         printSeparator();
     }
 
@@ -57,7 +57,7 @@ public class MenuBoundary {
         System.out.println("3. Toggle Internship Visibility");
         System.out.println("4. View Applications");
         System.out.println("5. Approve/Reject Applications");
-        System.out.println("0. Back to Main Menu");
+        System.out.println("0. Logout");
         printSeparator();
     }
 }

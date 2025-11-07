@@ -1,17 +1,12 @@
-package managers;
+package controllers;
 
 import java.util.ArrayList;
 
-import controllers.FileHandler;
-import controllers.InternshipSerializer;
 import models.User;
 import models.Student;
 import models.CompanyRepresentative;
 import models.Internship;
 import models.CareerCenterStaff;
-import controllers.StaffSerializer;
-import controllers.StudentSerializer;
-import controllers.CompanyRepresentativeSerializer;
 
 /**
  * <b>USER MANAGER CLASS</b><br>

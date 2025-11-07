@@ -94,8 +94,8 @@ public class User {
     /**
      * Setter Function
      * Sets user's login status to true. <br>
-     * Login status is set true with @see {@link managers.UserManager}, upon a successful login.<br>
-     * Login status is set to false with @see {@link managers.UserManager}, when user logs out.
+     * Login status is set true with @see {@link controllers.UserManager}, upon a successful login.<br>
+     * Login status is set to false with @see {@link controllers.UserManager}, when user logs out.
      */
     public void setLogin(boolean b){this.loggedIn = b;}
 

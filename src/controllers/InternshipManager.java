@@ -1,6 +1,4 @@
-package managers;
-import controllers.FileHandler;
-import controllers.InternshipSerializer;
+package controllers;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;

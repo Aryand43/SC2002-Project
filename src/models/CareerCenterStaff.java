@@ -1,9 +1,9 @@
 package models;
 
+import controllers.ApplicationManager;
 import controllers.FileHandler;
-import managers.ApplicationManager;
-import managers.InternshipManager;
-import managers.UserManager;
+import controllers.InternshipManager;
+import controllers.UserManager;
 
 /**
  * <b>CAREER CENTER STAFF CLASS</b><br>
