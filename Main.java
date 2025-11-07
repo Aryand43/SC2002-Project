@@ -3,10 +3,43 @@ import controllers.*;
 import models.*;
 import boundaries.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
+    private Scanner scanner;
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    
+    private int inputInteger(String prompt, int min, int max) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                int value = Integer.parseInt(scanner.nextLine().trim());
+                if (value >= min && value <= max) {
+                    return value;
+                } else {
+                    System.out.println("Please enter a number between " + min + " and " + max + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+    }
 
+    private LocalDate inputDate(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                String dateInput = scanner.nextLine().trim();
+                return LocalDate.parse(dateInput, DATE_FORMATTER);
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please use dd/MM/yyyy (e.g., 25/12/2024).");
+            }
+        }
+    }
     public static void main (String[] args){
         
         // 1. INITIALIZE ALL MANAGERS (Loads data from CSV files)
