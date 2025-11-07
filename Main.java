@@ -1,4 +1,3 @@
-import managers.*;
 import controllers.*;
 import models.*;
 import boundaries.*;
@@ -12,7 +11,7 @@ import java.util.Scanner;
 public class Main {
     private Scanner scanner;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    
+
     private int inputInteger(String prompt, int min, int max) {
         while (true) {
             try {
@@ -116,4 +115,5 @@ public class Main {
         }
         System.out.println("=".repeat(60));
     }
+    
 }
