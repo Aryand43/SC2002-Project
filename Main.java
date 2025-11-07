@@ -52,7 +52,7 @@ public class Main {
 
         Student student = null;
         for (Student s : userManager.getStudentList()) {
-            if (s.getID().equals("U2310002B")) { // Ng Jia Hao, Year 3, CSC
+            if (s.getUserName().equals("Ng Jia Hao")) { // Ng Jia Hao, Year 3, CSC
                 student = s;
                 break;
             }
@@ -73,7 +73,7 @@ public class Main {
             return;
         }
 
-        System.out.printf("Testing Student: %s (%s, Year %d)\n", student.getUserName(), student.getID(), student.getYearOfStudy());
+        System.out.printf("Testing Student: %s (Year %d)\n", student.getUserName(), student.getYearOfStudy());
         System.out.println("-".repeat(60));
 
         // 3. SCENARIO: Apply for 3 internships
@@ -105,7 +105,7 @@ public class Main {
         
         int finalAppCount = student.getApplications().size();
         System.out.println("-".repeat(60));
-        System.out.printf("Final number of applications for %s: %d\n", student.getID(), finalAppCount);
+        System.out.printf("Final number of applications for student: %d\n", finalAppCount);
 
         if (finalAppCount == 3 && !success4) {
             System.out.println("Test Status: PASSED (Student application limit rule enforced correctly).");
