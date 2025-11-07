@@ -29,10 +29,7 @@ public class UserManager {
      * Stores the whole User object
      */
     private User currentUser;
-    /**
-     * Stores the whole User object list
-     */
-    private ArrayList<User> userList = getRespectiveUserList();
+    private ArrayList<User> userList;
 
     /**
      * Class Constructor<br>
@@ -91,6 +88,8 @@ public class UserManager {
      * 
      */
     public boolean login(String ID, String password){
+         userList = getRespectiveUserList();
+
          for(User u: userList){
              // If user is company rep, have to check email for login detials
              if (u.getUserType() != User.TypesOfUser.CompanyRepresentative){
@@ -145,6 +144,11 @@ public class UserManager {
     	}
     	
     	return userList;
+    }
+    
+    
+    public User getUserByID(String ID) {
+    	
     }
     /**
      * Logout function sets the current user's login state to false, and then clears the current user from User Manager.<br> 
