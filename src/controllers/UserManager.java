@@ -1,12 +1,10 @@
 package controllers;
 
 import java.util.ArrayList;
-
-import models.User;
-import models.Student;
-import models.CompanyRepresentative;
-import models.Internship;
 import models.CareerCenterStaff;
+import models.CompanyRepresentative;
+import models.Student;
+import models.User;
 
 /**
  * <b>USER MANAGER CLASS</b><br>
@@ -31,6 +29,10 @@ public class UserManager {
      * Stores the whole User object
      */
     private User currentUser;
+    /**
+     * Stores the whole User object list
+     */
+    private ArrayList<User> userList = getRespectiveUserList();
 
     /**
      * Class Constructor<br>
@@ -89,8 +91,6 @@ public class UserManager {
      * 
      */
     public boolean login(String ID, String password){
-         ArrayList<User> userList = getRespectiveUserList();
-
          for(User u: userList){
              // If user is company rep, have to check email for login detials
              if (u.getUserType() != User.TypesOfUser.CompanyRepresentative){
@@ -194,6 +194,20 @@ public class UserManager {
             }
         }
         return reps;
+    }
+
+    /**
+     * Returns a Student object by its ID.
+     * @param studentID The ID of the student to retrieve.
+     * @return The Student object if found, otherwise null.
+     */
+    public User getStudentByID(String studentID) {
+        for (User s : userList) {
+            if (s.getID().equals(studentID)) {
+                return s;
+            }
+        }
+        return null;
     }
 
     /**
