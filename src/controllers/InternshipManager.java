@@ -128,23 +128,6 @@ public class InternshipManager {
         return pendingInternships;
     }
 
-    /**
-     * Print pending internships
-     */
-    public void displayPendingInternships() {
-        ArrayList<Internship> pendingInternships = getPendingInternships();
-        
-        if (pendingInternships.isEmpty()) {
-            System.out.println("No pending internships found.");
-        } else {
-            System.out.println("\n=== Pending Internships ===");
-            for (int i = 0; i < pendingInternships.size(); i++) {
-                System.out.println((i + 1) + ". " + pendingInternships.get(i).getDetailedInfo());
-            }
-            System.out.println("Total pending: " + pendingInternships.size());
-        }
-    }
-
      /**
      * @return Number of internship listings made by 1 representative. (Maximum for 1 rep = 5)
      */

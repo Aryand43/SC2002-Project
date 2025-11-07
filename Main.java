@@ -1,9 +1,7 @@
-import managers.UserManager;
-import managers.InternshipManager;
-import managers.ApplicationManager;
-import models.Student;
-import models.Internship;
-import models.Application;
+import managers.*;
+import controllers.*;
+import models.*;
+import boundaries.*;
 
 import java.util.List;
 

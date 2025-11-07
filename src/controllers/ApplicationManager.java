@@ -1,12 +1,8 @@
-package managers;
+package controllers;
 
-import controllers.ApplicationSerializer;
-import controllers.FileHandler;
 import java.util.ArrayList;
 import java.util.List;
-import models.Application;
-import models.Internship;
-import models.Student;
+import models.*;
 
 //Minimal ApplicationManager implementation to satisfy ReportGenerator usage.
 public class ApplicationManager {
