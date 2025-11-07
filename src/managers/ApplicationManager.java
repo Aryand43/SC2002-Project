@@ -37,7 +37,7 @@ public class ApplicationManager {
 
     // Apply for an internship
     public Application apply(Student student, Internship opportunity) {
-        Application app = new Application(student, opportunity);
+        Application app = new Application(student.getID(), opportunity.getInternshipID());
         applicationList.add(app);
         return app;
     }
@@ -47,8 +47,8 @@ public class ApplicationManager {
         if (application == null) return false;
         application.setStatus(Application.ApplicationStatus.SUCCESSFUL);
         // If internship manager available, update listing confirmation
-        if (internshipManager != null && application.getInternship() != null) {
-            internshipManager.updateListingOnConfirmation(application.getInternship().getInternshipID());
+        if (internshipManager != null && application.getInternshipID() != null) {
+            internshipManager.updateListingOnConfirmation(application.getInternshipID());
         }
         return true;
     }
@@ -64,8 +64,8 @@ public class ApplicationManager {
     public boolean approveWithdrawal(Application application) {
         if (application == null) return false;
         application.setStatus(Application.ApplicationStatus.WITHDRAWN);
-        if (internshipManager != null && application.getInternship() != null) {
-            internshipManager.updateListingOnWithdrawal(application.getInternship().getInternshipID());
+        if (internshipManager != null && application.getInternshipID() != null) {
+            internshipManager.updateListingOnWithdrawal(application.getInternshipID());
         }
         return true;
     }
