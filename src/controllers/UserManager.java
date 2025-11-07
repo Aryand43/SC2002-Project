@@ -147,9 +147,6 @@ public class UserManager {
     }
     
     
-    public User getUserByID(String ID) {
-    	
-    }
     /**
      * Logout function sets the current user's login state to false, and then clears the current user from User Manager.<br> 
      * System message displayed in program to let user know they have logged out.
