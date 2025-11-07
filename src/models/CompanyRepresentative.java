@@ -1,5 +1,6 @@
 package models; 
 import java.util.ArrayList;
+import models.Internship;
 import models.Application.ApplicationStatus; 
 
 public class CompanyRepresentative extends User {
