@@ -9,6 +9,7 @@ public class ApplicationManager {
     private List<Application> applicationList;
     private InternshipManager internshipManager;
     private FileHandler<Application> fileHandler;
+    private UserManager userManager;
 
     public ApplicationManager() {
         this.applicationList = new ArrayList<>();
@@ -20,6 +21,17 @@ public class ApplicationManager {
         ApplicationSerializer serializer = new ApplicationSerializer();
         this.fileHandler = new FileHandler<>(serializer);
         this.applicationList = fileHandler.readFromFile();
+    }
+
+    public ApplicationManager(InternshipManager internshipManager, UserManager userManager) {
+        this();
+        this.internshipManager = internshipManager;
+        this.userManager = userManager;
+        ApplicationSerializer serializer = new ApplicationSerializer();
+        this.fileHandler = new FileHandler<>(serializer);
+        this.applicationList = fileHandler.readFromFile();
+        // After loading applications, resolve references to Student and Internship objects
+        resolveObjectReferences();
     }
 
     public void saveApplicationsToFile() {
@@ -90,5 +102,15 @@ public class ApplicationManager {
             if (a.getID().equals(id)) return a;
         }
         return null;
+    }
+
+    private void resolveObjectReferences() {
+        if (userManager == null) {
+            return;
+        }
+        for (Application app : applicationList) {
+            app.setStudentRef(userManager.getStudentByID(app.getStudentID()));
+            app.setInternshipRef(internshipManager.findInternshipByID(app.getInternshipID()));
+        }
     }
 }

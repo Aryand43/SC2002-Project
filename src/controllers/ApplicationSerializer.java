@@ -1,6 +1,8 @@
 package controllers;
 
 import models.Application;
+import controllers.UserManager;
+import controllers.InternshipManager;
 /**
  * Implements the serializing and deserializing of Application entity and the relevant metadata for its file
  * <p>
@@ -12,7 +14,17 @@ import models.Application;
  * 
  */
 public class ApplicationSerializer implements Serializer<Application>{
-	
+
+    private UserManager userManager;
+    private InternshipManager internshipManager;
+
+    public ApplicationSerializer() {}
+
+    public ApplicationSerializer(UserManager userManager, InternshipManager internshipManager) {
+        this.userManager = userManager;
+        this.internshipManager = internshipManager;
+    }
+
 	/**
 	 * Deserializes the given string into the Application by creating a new instance of Application
 	 * by separting the line by commas into 
@@ -23,6 +35,12 @@ public class ApplicationSerializer implements Serializer<Application>{
 	public Application deserialize(String line) {
 		String[] rowData = line.split(",");
 		Application application = new Application(rowData[0],rowData[1],rowData[2],rowData[3]);
+		if (userManager != null) {
+		    application.setStudentRef(userManager.getStudentByID(application.getStudentID()));
+		}
+		if (internshipManager != null) {
+		    application.setInternshipRef(internshipManager.findInternshipByID(application.getInternshipID()));
+		}
 		return application;
 	}
 	

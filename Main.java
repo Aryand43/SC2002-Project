@@ -2,7 +2,6 @@ import managers.*;
 import controllers.*;
 import models.*;
 import boundaries.*;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -81,17 +80,17 @@ public class Main {
         // 3. SCENARIO: Apply for 3 internships
         
         // Apply 1
-        Application app1 = applicationManager.apply(student.getID(), int0001.getInternshipID());
+        Application app1 = applicationManager.apply(student, int0001);
         boolean success1 = student.applyForInternship(app1);
         System.out.printf("Attempt 1 (INT0001): %s\n", success1 ? "SUCCESS" : "FAILURE");
 
         // Apply 2
-        Application app2 = applicationManager.apply(student.getID(), int0002.getInternshipID());
+        Application app2 = applicationManager.apply(student, int0002);
         boolean success2 = student.applyForInternship(app2);
         System.out.printf("Attempt 2 (INT0002): %s\n", success2 ? "SUCCESS" : "FAILURE");
 
         // Apply 3
-        Application app3 = applicationManager.apply(student.getID(), int0003.getInternshipID());
+        Application app3 = applicationManager.apply(student, int0003);
         boolean success3 = student.applyForInternship(app3);
         System.out.printf("Attempt 3 (INT0003): %s\n", success3 ? "SUCCESS" : "FAILURE");
         
@@ -99,7 +98,7 @@ public class Main {
         
         // 4. SCENARIO: Test the application limit (Attempt 4)
         
-        Application app4 = applicationManager.apply(student.getID(), int0005.getInternshipID());
+        Application app4 = applicationManager.apply(student, int0005);
         boolean success4 = student.applyForInternship(app4);
         System.out.printf("Attempt 4 (INT0005): %s\n", success4 ? "SUCCESS (RULE VIOLATION)" : "FAILURE (Limit Check Passed)");
         
