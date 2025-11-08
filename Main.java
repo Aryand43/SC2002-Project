@@ -1,11 +1,10 @@
-import controllers.*;
-import models.*;
 import boundaries.*;
+import controllers.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.List;
 import java.util.Scanner;
+import models.*;
 
 public class Main {
     private Scanner scanner;
@@ -43,8 +42,19 @@ public class Main {
         // 1. INITIALIZE ALL MANAGERS (Loads data from CSV files)
         UserManager userManager = new UserManager();
         InternshipManager internshipManager = new InternshipManager();
+
         // ApplicationManager needs InternshipManager to link applications to opportunities
         ApplicationManager applicationManager = new ApplicationManager(internshipManager, userManager);
+        MenuBoundary UI = new MenuBoundary();
+        
+        // CAN START OUT MAIN CODE HERE FOR THE INTERNSHIP MANAGEMENT SYSTEM
+
+
+
+
+
+
+
 
         System.out.println("=".repeat(60));
         System.out.println("--- Functional Integration Test: Student Application Limit ---");

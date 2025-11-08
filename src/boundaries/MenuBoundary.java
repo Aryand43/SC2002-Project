@@ -19,13 +19,14 @@ public class MenuBoundary {
     }
     
     public void displayLoginMenu() {
-    	System.out.println("Welcome to Internship Management Portal!");
-		System.out.println("========== Internship Menu =========");
+    	printSectionHeader("Welcome to Internship Management Portal!");
+		System.out.println("========== Portal Menu =========");
 		System.out.println("1. Login");
 		System.out.println("2. Reset Password");
 		System.out.println("3. Register (Company Representative)");
 		System.out.println("0. Exit");
-		System.out.println("Please enter your input (1-0)! ");
+		printSeparator();
+
     }
     /**
      * Display Student Internship Menu
