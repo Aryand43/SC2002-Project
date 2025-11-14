@@ -21,6 +21,7 @@ public class StudentSerializer implements Serializer<Student> {
 	 * @param line the line to deserialize
 	 * @return the Student reconstructed from the line of text
 	 */
+	@Override
 	public Student deserialize(String line) {
     String[] rowData = line.split(",");
     if (rowData.length < 5) {
@@ -37,7 +38,7 @@ public class StudentSerializer implements Serializer<Student> {
         throw new IllegalArgumentException("Invalid year value for student: " + rowData[3], e);
     }
     String email = rowData[4].trim();
-
+	System.out.println("current data: " + name);
     return new Student(id, name, major, year, email);
 }
 
@@ -48,6 +49,7 @@ public class StudentSerializer implements Serializer<Student> {
 	 * @param Student the student object to serialize
 	 * @return a string that is comma delimited for csv file
 	 */
+	@Override
 	public String serialize(Student student) {
 		String line = student.getID() + "," + student.getUserName() + "," + student.getMajor() + "," + student.getYearOfStudy() +"," + student.getEmail();
 		return line;
@@ -59,6 +61,7 @@ public class StudentSerializer implements Serializer<Student> {
 	 * 
 	 * @return the string for Header
 	 */
+	@Override
 	public String getHeader() {
 		return "StudentID,Name,Major,Year,Email";
 	}
@@ -69,6 +72,7 @@ public class StudentSerializer implements Serializer<Student> {
 	 * 
 	 * @return the string for filepath
 	 */
+	@Override
 	public String getFilePath() {
 		return  "assets/testcases/sample_student_list.csv";
 	}

@@ -4,13 +4,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-import models.*;
+import models.User.TypesOfUser;
 
 public class Main {
     private Scanner scanner;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    private int inputInteger(String prompt, int min, int max) {
+    int inputInteger(String prompt, int min, int max) {
         while (true) {
             try {
                 System.out.print(prompt);
@@ -26,7 +26,7 @@ public class Main {
         }
     }
 
-    private LocalDate inputDate(String prompt) {
+    LocalDate inputDate(String prompt) {
         while (true) {
             try {
                 System.out.print(prompt);
@@ -38,91 +38,83 @@ public class Main {
         }
     }
     public static void main (String[] args){
-        
+        Scanner sc = new Scanner(System.in);
         // 1. INITIALIZE ALL MANAGERS (Loads data from CSV files)
         UserManager userManager = new UserManager();
         InternshipManager internshipManager = new InternshipManager();
 
         // ApplicationManager needs InternshipManager to link applications to opportunities
-        ApplicationManager applicationManager = new ApplicationManager(internshipManager, userManager);
+        //ApplicationManager applicationManager = new ApplicationManager(internshipManager, userManager);
         MenuBoundary UI = new MenuBoundary();
         
+        // CANT TEST SHIT FOR NOw
         // CAN START OUT MAIN CODE HERE FOR THE INTERNSHIP MANAGEMENT SYSTEM
+        
+        //Step 1: Prompt login UI for users to login
+        while(true){
+            UI.displayLoginMenu();
+            
+            // Input username
+            System.out.print("Enter Username: ");
+            String username = sc.nextLine();
+            
+            // Input password
+            System.out.print("Enter password");
+            String password = sc.nextLine();
 
+            //Login user function 
+            boolean login = userManager.login(username, password);
+            if (login) break; //if login succesfull, can get into user specific functions alrdy
+        }
 
+        //Step 2: Display respective user's main menu in the internship management system
+        TypesOfUser currentPermission = userManager.getCurrentUser().getUserType();
+        Main main = new Main(); // Need to create new main obj to call input validation methods
+        int choice;
 
-
-
-
-
-
-        System.out.println("=".repeat(60));
-        System.out.println("--- Functional Integration Test: Student Application Limit ---");
-        System.out.println("=".repeat(60));
-
-        Student student = null;
-        for (Student s : userManager.getStudentList()) {
-            if (s.getUserName().equals("Ng Jia Hao")) { // Ng Jia Hao, Year 3, CSC
-                student = s;
+        switch(currentPermission){
+            case Student: // Current user is student
+                UI.displayStudentInternshipMenu();
+                choice = main.inputInteger("Enter choice: ", 0, 5);
+                switch (choice){
+                    case 1: // View Available Internships
+                        
+                        break;
+                    case 2: // Search Internships
+                        
+                        break;
+                    case 3: // Apply for Internship
+                        
+                        break;
+                    case 4: // View My Applications
+                        
+                        break;
+                    case 5: // Filter Internships
+                        
+                        break;
+                    case 0: // Logout
+                        userManager.logout();
+                        break; 
+                }
                 break;
-            }
+                
+            case CareerCenterStaff: // Current user is Career Center Staff
+                UI.displayStaffInternshipMenu();
+                main.inputInteger("Enter choice: ", 0, 6);
+                break;
+
+
+            case CompanyRepresentative: // Current user is Company Representative
+                UI.displayCompanyRepInternshipMenu();
+                main.inputInteger("Enter choice: ", 0, 5);
+                break;
+
+
+            default:
+                System.out.println("Invalid user type.");
+                break;
         }
-        
-        if (student == null) {
-            System.err.println("FATAL ERROR: Student U2310002B not found in data files. Aborting test.");
-            return;
-        }
-
-        Internship int0001 = internshipManager.findInternshipByID("INT0001");
-        Internship int0002 = internshipManager.findInternshipByID("INT0002");
-        Internship int0003 = internshipManager.findInternshipByID("INT0003");
-        Internship int0005 = internshipManager.findInternshipByID("INT0005");
-        
-        if (int0001 == null || int0002 == null || int0003 == null || int0005 == null) {
-            System.err.println("FATAL ERROR: One or more required Internship IDs (INT0001, INT0002, INT0003, INT0005) not found. Aborting test.");
-            return;
-        }
-
-        System.out.printf("Testing Student: %s (Year %d)\n", student.getUserName(), student.getYearOfStudy());
-        System.out.println("-".repeat(60));
-
-        // 3. SCENARIO: Apply for 3 internships
-        
-        // Apply 1
-        Application app1 = applicationManager.apply(student, int0001);
-        boolean success1 = student.applyForInternship(app1);
-        System.out.printf("Attempt 1 (INT0001): %s\n", success1 ? "SUCCESS" : "FAILURE");
-
-        // Apply 2
-        Application app2 = applicationManager.apply(student, int0002);
-        boolean success2 = student.applyForInternship(app2);
-        System.out.printf("Attempt 2 (INT0002): %s\n", success2 ? "SUCCESS" : "FAILURE");
-
-        // Apply 3
-        Application app3 = applicationManager.apply(student, int0003);
-        boolean success3 = student.applyForInternship(app3);
-        System.out.printf("Attempt 3 (INT0003): %s\n", success3 ? "SUCCESS" : "FAILURE");
-        
-        System.out.println("-".repeat(60));
-        
-        // 4. SCENARIO: Test the application limit (Attempt 4)
-        
-        Application app4 = applicationManager.apply(student, int0005);
-        boolean success4 = student.applyForInternship(app4);
-        System.out.printf("Attempt 4 (INT0005): %s\n", success4 ? "SUCCESS (RULE VIOLATION)" : "FAILURE (Limit Check Passed)");
-        
-        // 5. VERIFICATION
-        
-        int finalAppCount = student.getApplications().size();
-        System.out.println("-".repeat(60));
-        System.out.printf("Final number of applications for student: %d\n", finalAppCount);
-
-        if (finalAppCount == 3 && !success4) {
-            System.out.println("Test Status: PASSED (Student application limit rule enforced correctly).");
-        } else {
-            System.out.println("Test Status: FAILED (Application limit rule was violated or incorrectly reported).");
-        }
-        System.out.println("=".repeat(60));
+        System.out.println("Exiting Internship Management System... Goodbye!");
+        sc.close();
     }
-    
 }

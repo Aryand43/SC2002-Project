@@ -25,23 +25,31 @@ public class UserManager {
      * staffList stores an array of initialised Career Center Staff objects by FileHandler
      */
     private ArrayList<CareerCenterStaff> staffList; 
+
+    /**
+     * userList stores an array of all types of User objects (Student, Company Representative, Career Center Staff)
+     */
+    private ArrayList<User> userList = getRespectiveUserList();
+    
     /**
      * Stores the whole User object
      */
     private User currentUser;
-    private ArrayList<User> userList = getRespectiveUserList();
 
     /**
      * Class Constructor<br>
      * Ensure each object list is loaded accordingly eg. Student list from main code is loaded into Student list in User Manager.
      */
     public UserManager(){
+        // Initializing lists into fields  
         StaffSerializer staffSerializer = new StaffSerializer();
     	FileHandler<CareerCenterStaff> staffFileHandler = new FileHandler<>(staffSerializer);
     	staffList = staffFileHandler.readFromFile();
+
     	StudentSerializer studentSerializer = new StudentSerializer();
     	FileHandler<Student> studentFileHandler = new FileHandler<>(studentSerializer);
     	studentList = studentFileHandler.readFromFile();
+
     	CompanyRepresentativeSerializer companyRepSerializer = new CompanyRepresentativeSerializer();
     	FileHandler<CompanyRepresentative> companyFileHandler = new FileHandler<>(companyRepSerializer);
     	repList = companyFileHandler.readFromFile();
@@ -69,17 +77,17 @@ public class UserManager {
      * </ol>
      * @return The respective list of objects associated with the ID.
      */
-    //public ArrayList<User> getRespectiveUserList(String ID){   
-        //if (Character.toString(ID.charAt(0)).equalsIgnoreCase("U")){
-            //return this.studentList;
-        //}
-        //else if (Character.toString(ID.charAt(0)).equalsIgnoreCase("CR")){
-            //return this.repList;
-        //}
-        //else{
-           // return this.staffList;
-        //}
-    //}
+    // public ArrayList<User> getRespectiveUserList(String ID){   
+    //     if (Character.toString(ID.charAt(0)).equalsIgnoreCase("U")){
+    //         return this.studentList;
+    //     }
+    //     else if (Character.toString(ID.charAt(0)).equalsIgnoreCase("CR")){
+    //         return this.repList;
+    //     }
+    //     else{
+    //        return this.staffList;
+    //     }
+    // }
 
     /**
      * Login function checks the inputted ID, password and login state.<br>
@@ -126,6 +134,10 @@ public class UserManager {
     
     public ArrayList<User> getRespectiveUserList(){
     	ArrayList<User> userList = new ArrayList<>();
+        for(CareerCenterStaff staff: staffList) {
+            User u = staff;
+            userList.add(u);
+        }
     	
     	for(Student s: studentList) {
     		User u = s;
@@ -137,10 +149,6 @@ public class UserManager {
     		userList.add(u);
     	}
     	
-    	for(CareerCenterStaff staff: staffList) {
-    		User u = staff;
-    		userList.add(u);
-    	}
     	
     	return userList;
     }
