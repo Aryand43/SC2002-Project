@@ -32,6 +32,7 @@ public class ApplicationSerializer implements Serializer<Application>{
 	 * @param line the line to deserialize
 	 * @return the Application Object reconstructed from the line of text
 	 */
+	@Override
 	public Application deserialize(String line) {
 		String[] rowData = line.split(",");
 		Application application = new Application(rowData[0],rowData[1],rowData[2],rowData[3]);
@@ -52,6 +53,7 @@ public class ApplicationSerializer implements Serializer<Application>{
 	 * @param application the Application to serialize
 	 * @return a string that is comma delimited for csv file
 	 */
+	@Override
 	public String serialize(Application application) {
 		String line = application.getID();
 		return line;
@@ -64,6 +66,7 @@ public class ApplicationSerializer implements Serializer<Application>{
 	 * 
 	 * @return the string for Header
 	 */
+	@Override
 	public String getHeader() {
 		return "";
 	}
@@ -74,6 +77,7 @@ public class ApplicationSerializer implements Serializer<Application>{
 	 * 
 	 * @return the string for filepath
 	 */
+	@Override
 	public String getFilePath() {
 		return  "assets/testcases/application_list.csv";
 	}
