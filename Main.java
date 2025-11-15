@@ -7,7 +7,7 @@ import java.util.Scanner;
 import models.User.TypesOfUser;
 import models.CompanyRepresentative;
 public class Main {
-    private Scanner scanner;
+    private Scanner scanner = new Scanner(System.in);
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     int inputInteger(String prompt, int min, int max) {
