@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import models.User.TypesOfUser;
-
 import models.CompanyRepresentative;
 public class Main {
     private Scanner scanner;
@@ -58,8 +57,6 @@ public class Main {
         // CAN START OUT MAIN CODE HERE FOR THE INTERNSHIP MANAGEMENT SYSTEM
         
         //Step 1: Prompt login UI for users to login
-        while(true){
-            UI.displayLoginMenu();
         while(input != 5) {
         	boolean login = false;
         	while(login == false) {
