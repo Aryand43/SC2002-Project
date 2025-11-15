@@ -1,5 +1,7 @@
 package boundaries;
 
+import java.util.Scanner;
+
 public class MenuBoundary {
 
     /**
@@ -22,12 +24,13 @@ public class MenuBoundary {
     	printSectionHeader("Welcome to Internship Management Portal!");
 		System.out.println("========== Portal Menu =========");
 		System.out.println("1. Login");
-		System.out.println("2. Reset Password");
-		System.out.println("3. Register (Company Representative)");
-		System.out.println("0. Exit");
+		System.out.println("2. Reset Password (Forgot Password)");
+		System.out.println("3. Change Password");
+		System.out.println("4. Register (Company Representative)");
+		System.out.println("5. Exit");
 		printSeparator();
-
     }
+    
     /**
      * Display Student Internship Menu
      */

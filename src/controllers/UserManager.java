@@ -146,14 +146,18 @@ public class UserManager {
     	}
     	
     	for(CompanyRepresentative cr: repList) {
+    		if(cr.isApproved() == true) {
     		User u = cr;
     		userList.add(u);
+    		}
+    		else {
+    			continue;
+    		}
     	}
     	
     	
     	return userList;
     }
-    
     
     /**
      * Logout function sets the current user's login state to false, and then clears the current user from User Manager.<br> 
@@ -167,12 +171,72 @@ public class UserManager {
     
     //placeholder for now
     public boolean approveCompanyRepresentative(String repID){
+    	for(CompanyRepresentative cr: repList) {
+    		if(cr.getID().equals(repID)) {
+    			if(cr.isApproved()) {
+    				System.out.println("Error, Cant Accept, CompanyRepresentative Has Already Been Approved!");
+    				return false;
+    			}
+    			else if(cr.isApproved() == null) {
+    				cr.setApproved(true);
+    				User u = cr;
+    				userList.add(u);
+    				return true;
+    			}
+    			else {
+    				System.out.println("Error! Cant Accept, CompanyRepresentative Has Already Been Rejected!");
+    				return false;
+    			}
+    		}
+    	}
         return true;
     }
 
     //placeholder for now
     public boolean rejectCompanyRepresentative(String repID){
+    	for(CompanyRepresentative cr: repList) {
+    		if(cr.getID().equals(repID)) {
+    			if(cr.isApproved()) {
+    				System.out.println("Error! Cant Reject, CompanyRepresentative Has Already Been Approved!");
+    				return false;
+    			}
+    			else if(cr.isApproved() == null) {
+    				cr.setApproved(false);
+    				return true;
+    			}
+    			else {
+    				System.out.println("Error! Cant Reject, CompanyRepresentative Has Already Been Rejected!");
+    				return false;
+    			}
+    		}
+    	}
         return true;
+    }
+    
+    public void resetPassword(String userID, String userEmail) {
+    	User resetUser = userList.stream().filter(s -> s.getID().equals(userID)).filter(s -> s.getEmail().equals(userEmail)).findFirst().orElse(null);
+    	if (resetUser == null) {
+    		System.out.println("No Such User/Mismatched UserId and User Email!");
+    	}
+    	else {
+    		resetUser.resetDefaultPassword();
+    		System.out.println("Password Sucessfully Resetted! New Password: password ");
+    	}
+    }
+    
+    public void changePassword(String userID, String oldPassword){
+    	User u = userList.stream().filter(s -> s.getID().equals(userID)).filter(s -> s.getPassword().equals(oldPassword)).findFirst().orElse(null);
+    	if(u == null) {
+    		System.out.println("No Such User/Mismatched UserId and oldPassword");
+    	}
+    	else {
+    		String newpassword = u.setPassword(oldPassword);
+    		System.out.println("Password Sucessfully resetted! New Password: " + newpassword);
+    	}
+    }
+    
+    public void addCompanyRepresentative(CompanyRepresentative cr) {
+    	repList.add(cr);
     }
 
     /**

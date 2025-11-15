@@ -7,7 +7,7 @@ public class CompanyRepresentative extends User {
     private String companyName;
     private String department; 
     private String position;
-    private boolean approved; 
+    private Boolean approved; 
     private ArrayList<Internship> listings;
 
     /*
@@ -20,7 +20,7 @@ public class CompanyRepresentative extends User {
         this.department = department;
         this.position = position;
         this.userType = TypesOfUser.CompanyRepresentative;
-        this.approved = false;
+        this.approved = null;
         this.listings = new ArrayList<>();        
     }
     
@@ -43,8 +43,8 @@ public class CompanyRepresentative extends User {
     public String getCompanyName() { return companyName; }
     public String getDepartment() { return department; }
     public String getPosition() { return position; }
-    public boolean isApproved() { return approved; }
-    public void setApproved(boolean status) { this.approved = status; }
+    public Boolean isApproved() { return approved; }
+    public void setApproved(Boolean status) { this.approved = status; }
     public ArrayList<Internship> getListings() { return listings; }
     public boolean createInternshipListing(Internship io) {
         if (listings.size() >= 5) {

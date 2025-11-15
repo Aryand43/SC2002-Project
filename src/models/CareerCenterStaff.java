@@ -56,11 +56,15 @@ public class CareerCenterStaff extends User {
      */
     public void authorizeCompanyAccount(String companyRepID, boolean approve) {
         if (approve) {
-            userManager.approveCompanyRepresentative(companyRepID);
-            System.out.println("Company representative " + companyRepID + " approved.");
+            boolean approvalStatus = userManager.approveCompanyRepresentative(companyRepID);
+            if(approvalStatus) {
+            	System.out.println("Company representative " + companyRepID + " approved.");
+            }
         } else {
-            userManager.rejectCompanyRepresentative(companyRepID);
-            System.out.println("Company representative " + companyRepID + " rejected.");
+        	boolean rejectStatus = userManager.rejectCompanyRepresentative(companyRepID);
+        	if(rejectStatus) {
+        		 System.out.println("Company representative " + companyRepID + " rejected.");
+        	}
         }
     }
     

@@ -113,6 +113,10 @@ public class User {
      * @return 
      * User's new password
      */
+    
+    public void resetDefaultPassword() {
+    	this.password = "password";
+    }
     public String setPassword(String oldPass){
         Scanner sc = new Scanner(System.in);
         while(true){
