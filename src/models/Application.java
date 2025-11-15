@@ -61,7 +61,6 @@ public class Application {
     public String getID() { return id; }
     public String getStudentID() { return studentID; }
     public String getInternshipID() { return internshipID; }
-    public Student getStudent() { return this.studentRef;}
     public ApplicationStatus getStatus() { return status; }
     public String getAppliedDate() { return appliedDate; }
 
