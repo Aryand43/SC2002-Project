@@ -46,13 +46,14 @@ public class MenuBoundary {
      * Display Career Center Staff Internship Menu
      */
     public void displayStaffInternshipMenu() {
-        printSectionHeader("Career Center Staff - Internship Management");
-        System.out.println("1. View All Internships");
-        System.out.println("2. View Pending Internships");
-        System.out.println("3. Approve Internship");
-        System.out.println("4. Reject Internship");
-        System.out.println("5. Filter Internships");
-        System.out.println("6. Generate Report");
+        printSectionHeader("Career Center Staff - Menu");
+        System.out.println("1. View Company Representative account list");
+        System.out.println("2. Authorize / Reject Company Representative account");
+        System.out.println("3. View Internship Opportunities Pending For Approval");
+        System.out.println("4. Approve / Reject Internship Opportunity Postings");
+        System.out.println("5. View Student Withdrawal Requests");
+        System.out.println("6. Approve / Reject Student Withdrawal Requests");
+        System.out.println("7. Generate Reports regarding internship opportunities");
         System.out.println("0. Logout");
         printSeparator();
     }
