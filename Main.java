@@ -60,6 +60,14 @@ public class Main {
         //Step 1: Prompt login UI for users to login
         while(true){
             UI.displayLoginMenu();
+        while(input != 5) {
+        	boolean login = false;
+        	while(login == false) {
+        		UI.displayLoginMenu();
+            	input = main.inputInteger("Please Enter Your Input: ", 1, 4);
+            	switch(input) {
+            	case 1:
+            		 // Input username
                     System.out.print("Enter UserID: ");
                     String userID = sc.nextLine();
                     
@@ -162,12 +170,19 @@ public class Main {
                                  break;
                              case 2:
                                  // Authorize / Reject Company Representative
+                                 System.out.print("Enter Company Representative ID to review: ");
+                                 String repId = sc.nextLine().trim();
+                                 System.out.println("1. Approve\n2. Reject");
+                                 int decision = main.inputInteger("Choose action: ", 1, 2);
                                  if (decision == 1) {
                                      boolean ok = userManager.approveCompanyRepresentative(repId);
                                      System.out.println(ok ? "Company Representative approved." : "Failed to approve (check ID).");
                                  } else {
                                      boolean ok = userManager.rejectCompanyRepresentative(repId);
                                      System.out.println(ok ? "Company Representative rejected." : "Failed to reject (check ID).");
+                                 }
+                                 break;
+                             case 3:
                                  // View Pending Internships
                                  printInternshipList(internshipManager.getPendingInternships());
                                  break;
