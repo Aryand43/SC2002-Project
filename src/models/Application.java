@@ -83,6 +83,10 @@ public class Application {
         this.internshipRef = internshipRef;
     }
 
+    public void setStudentRef(Student studentRef) {
+        this.studentRef = studentRef;
+    }
+    
     @Override
     public String toString() {
         String internInfo = (internshipID == null) ? "<unknown internship>" : internshipID;
