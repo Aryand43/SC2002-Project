@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Application;
+import models.Student;
 import controllers.UserManager;
 import controllers.InternshipManager;
 /**
@@ -37,10 +38,10 @@ public class ApplicationSerializer implements Serializer<Application>{
 		String[] rowData = line.split(",");
 		Application application = new Application(rowData[0],rowData[1],rowData[2],rowData[3]);
 		if (userManager != null) {
-		    application.setStudentRef(userManager.getStudentByID(application.getStudentID()));
+		    application.setStudentRef((Student) userManager.getStudentByID(application.getStudentID()));
 		}
 		if (internshipManager != null) {
-		    application.setInternshipRef(internshipManager.findInternshipByID(application.getInternshipID()));
+		    application.setInternship(internshipManager.findInternshipByID(application.getInternshipID()));
 		}
 		return application;
 	}

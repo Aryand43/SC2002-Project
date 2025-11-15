@@ -5,6 +5,7 @@ import models.Internship.InternshipLevel;
 import models.Internship.InternshipStatus;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Implements the serializing and deserializing of Internship  entity and the relevant metadata for its file
@@ -18,6 +19,8 @@ import java.time.LocalDate;
  */
 public class InternshipSerializer implements Serializer<Internship>{
 	
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
 	/**
 	 * Deserializes the given string into the Internship by creating a new instance of Internship
 	 * by separting the line by commas into 
@@ -27,7 +30,7 @@ public class InternshipSerializer implements Serializer<Internship>{
 	 */
 	public Internship deserialize(String line) {
 		String[] rowData = line.split(",");
-		Internship internship = new Internship(rowData[0],rowData[1],rowData[2],InternshipLevel.valueOf(rowData[3]),rowData[4],LocalDate.parse(rowData[5]),LocalDate.parse(rowData[6]),InternshipStatus.valueOf(rowData[7]),rowData[8], rowData[9], Integer.parseInt(rowData[10]), Integer.parseInt(rowData[11]), Integer.parseInt(rowData[12]), Boolean.parseBoolean(rowData[13]) );
+		Internship internship = new Internship(rowData[0],rowData[1],rowData[2],InternshipLevel.valueOf(rowData[3]),rowData[4],LocalDate.parse(rowData[5], FORMATTER),LocalDate.parse(rowData[6], FORMATTER),InternshipStatus.valueOf(rowData[7]),rowData[8], rowData[9], Integer.parseInt(rowData[10]), Integer.parseInt(rowData[11]), Integer.parseInt(rowData[12]), Boolean.parseBoolean(rowData[13]) );
 		return internship;
 	}
 	

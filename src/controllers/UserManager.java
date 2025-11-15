@@ -29,7 +29,7 @@ public class UserManager {
     /**
      * userList stores an array of all types of User objects (Student, Company Representative, Career Center Staff)
      */
-    private ArrayList<User> userList = getRespectiveUserList();
+    private ArrayList<User> userList;
     
     /**
      * Stores the whole User object
@@ -53,6 +53,7 @@ public class UserManager {
     	CompanyRepresentativeSerializer companyRepSerializer = new CompanyRepresentativeSerializer();
     	FileHandler<CompanyRepresentative> companyFileHandler = new FileHandler<>(companyRepSerializer);
     	repList = companyFileHandler.readFromFile();
+        userList = getRespectiveUserList();
     }
     
     /**

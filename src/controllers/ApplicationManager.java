@@ -46,6 +46,8 @@ public class ApplicationManager {
     // Apply for an internship
     public Application apply(Student student, Internship opportunity) {
         Application app = new Application(student.getID(), opportunity.getInternshipID());
+        app.setStudent(student);
+        app.setInternship(opportunity);
         applicationList.add(app);
         return app;
     }
@@ -109,8 +111,8 @@ public class ApplicationManager {
             return;
         }
         for (Application app : applicationList) {
-            app.setStudentRef(userManager.getStudentByID(app.getStudentID()));
-            app.setInternshipRef(internshipManager.findInternshipByID(app.getInternshipID()));
+            app.setStudentRef((Student) userManager.getStudentByID(app.getStudentID()));
+            app.setInternship(internshipManager.findInternshipByID(app.getInternshipID()));
         }
     }
 }
