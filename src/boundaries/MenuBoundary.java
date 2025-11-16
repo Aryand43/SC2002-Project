@@ -20,7 +20,9 @@ public class MenuBoundary {
     private void printSeparator() {
         System.out.println("-".repeat(60));
     }
-    
+    /**
+     * Displays Login Menu Options
+     */
     public void displayLoginMenu() {
     	printSectionHeader("Welcome to Internship Management Portal!");
 		System.out.println("========== Portal Menu =========");
