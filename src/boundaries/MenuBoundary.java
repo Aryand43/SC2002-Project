@@ -45,7 +45,10 @@ public class MenuBoundary {
         System.out.println("0. Logout");
         printSeparator();
     }
-
+    /**
+     * Display list of internships
+     * @param internships List of internships to display
+     */
     public void displayInternshipList(List<Internship> internships) {
         if (internships.isEmpty()) {
             System.out.println("No internships found.");
@@ -60,7 +63,14 @@ public class MenuBoundary {
         System.out.println("\nTotal: " + internships.size() + " internship(s)");
         printSeparator();
     }
-
+    public void displayInternshipFilterMenu(){
+        printSectionHeader("Filter By");
+        System.out.println(" 1. Date Range");
+        System.out.println(" 2. By Internship Level");
+        System.out.println(" 3. Keywords in Listing");
+        System.out.println(" 4. Custom (status, level, major, company)");
+        printSeparator();
+    }
     /**
      * Display Career Center Staff Internship Menu
      */

@@ -145,7 +145,9 @@ public class Main {
                             internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
                             break;
                          case 2: // Search Internships
-                             
+                            UI.displayInternshipFilterMenu();
+                            choice = main.inputInteger("Enter choice: ", 1, 4);
+                            
                             break;
                          case 3: // Apply for Internship
                              
