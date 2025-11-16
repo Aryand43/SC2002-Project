@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 import models.*;
 import models.User.TypesOfUser;
-import boundaries.CompanyRepBoundary;
 
 
 public class Main {
@@ -133,14 +132,25 @@ public class Main {
                 User curUser = userManager.getCurrentUser();
         		 switch(currentPermission){
                  case Student: // Current user is student
-                     UI.displayStudentInternshipMenu();
-                     choice = main.inputInteger("Enter choice: ", 0, 5);
+                     // Custom menu with case 6
+                     System.out.println("==============================");
+                     System.out.println("Student Internship Menu");
+                     System.out.println("1. View Available Internships");
+                     System.out.println("2. Search Internships");
+                     System.out.println("3. Apply for Internship");
+                     System.out.println("4. View My Applications");
+                     System.out.println("5. Filter Internships");
+                     System.out.println("6. Clear Filters");
+                     System.out.println("0. Logout");
+                     System.out.println("==============================");
+                     choice = main.inputInteger("Enter choice: ", 0, 6);
                      int studentYr = ((Student)curUser).getYearOfStudy();
                      String studentMajor = ((Student)curUser).getMajor();
 
                     switch (choice){
                         case 1: // View Available Internships
-                            internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
+                            List<Internship> availableInternships = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
+                            printInternshipList(availableInternships);                            
                             break;
 
                         case 2: // Search Internships (By keyword)
@@ -154,7 +164,6 @@ public class Main {
 
                         case 3: // Apply for Internship
                             System.out.print("Enter Internship ID to apply: ");
-                            
                             String internshipID = sc.nextLine().trim();
                             Internship internshipToApply = internshipManager.findInternshipByID(internshipID);
                             // First Check if student can apply. Validation done in applyForInternship() (e.g NOT MORE THAN 3 INTERNSHIPS, etc)
@@ -162,19 +171,141 @@ public class Main {
                             if(applied){
                                 System.out.println("Application submitted successfully for Internship ID: " + internshipID);
                                 Application newApplication = applicationManager.apply((Student)curUser, internshipToApply);
+                                // Add to student's application list
+                                ((Student)curUser).getApplications().add(newApplication);
                             } else {
                                 System.out.println("Invalid Internship ID. Application failed.");
                             }
+                            // Show student's applications after applying
+                            List<Application> myApplicationsAfterApply = ((Student)curUser).getApplications();
+                            printApplicationList(myApplicationsAfterApply);
                             break;
                         case 4: // View My Applications
-                            
+                             List<Application> myApplications = ((Student)curUser).getApplications();
+                            printApplicationList(myApplications);
+                            // After displaying applications, check if more than one is successful
+                            List<Application> successfulApps = myApplications.stream()
+                                .filter(a -> a.getStatus() == Application.ApplicationStatus.SUCCESSFUL)
+                                .toList();
+                            if (successfulApps.size() > 1) {
+                                System.out.println("You have multiple accepted internships. Please pick one to keep:");
+                                for (int i = 0; i < successfulApps.size(); i++) {
+                                    System.out.printf("%d. %s (InternshipID: %s)\n", i + 1, successfulApps.get(i).getID(), successfulApps.get(i).getInternshipID());
+                                }
+                                int pick = main.inputInteger("Enter the number of the internship to accept: ", 1, successfulApps.size());
+                                Application chosen = successfulApps.get(pick - 1);
+                                // Set the rest to UNSUCCESSFUL
+                                for (Application app : successfulApps) {
+                                    if (app != chosen) {
+                                        app.setStatus(Application.ApplicationStatus.UNSUCCESSFUL);
+                                    }
+                                }
+                                applicationManager.saveApplicationsToFile();
+                                System.out.println("Your choice has been saved. Only one internship is now accepted.");
+                            }
                             break;
-                        case 5: // Filter Internships
-                        
-                            break;
-                        case 6:  //Clear filters
 
+                        case 5: // Filter Internships
+                            System.out.println("\nFilter Internships by:");
+                            System.out.println("1. Level (BASIC/INTERMEDIATE/ADVANCED)");
+                            System.out.println("2. Company Name");
+                            System.out.println("3. Both Level and Company");
+                            System.out.println("0. Back");
+                            int filterChoice = main.inputInteger("Select filter option: ", 0, 3);
+
+                            List<Internship> filteredList = null;
+
+                            if (filterChoice == 1) {
+                                System.out.print("Enter level (BASIC/INTERMEDIATE/ADVANCED): ");
+                                String levelStr = sc.nextLine().trim().toUpperCase();
+                                try {
+                                    Internship.InternshipLevel level = Internship.InternshipLevel.valueOf(levelStr);
+                                    List<Internship> visibleInternships = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
+                                    filteredList = visibleInternships.stream()
+                                        .filter(i -> i.getLevel() == level)
+                                        .toList();
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println("Invalid level. Please use BASIC, INTERMEDIATE, or ADVANCED.");
+                                    filteredList = java.util.Collections.emptyList();
+                                }
+                            } else if (filterChoice == 2) {
+                                System.out.print("Enter company name: ");
+                                String company = sc.nextLine().trim();
+                                List<Internship> visibleInternships = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
+                                filteredList = visibleInternships.stream()
+                                    .filter(i -> i.getCompanyName().toLowerCase().contains(company.toLowerCase()))
+                                    .toList();
+                            } else if (filterChoice == 3) {
+                                System.out.print("Enter level (BASIC/INTERMEDIATE/ADVANCED): ");
+                                String levelStr = sc.nextLine().trim().toUpperCase();
+                                System.out.print("Enter company name: ");
+                                String company = sc.nextLine().trim();
+                                try {
+                                    Internship.InternshipLevel level = Internship.InternshipLevel.valueOf(levelStr);
+                                    List<Internship> visibleInternships = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
+                                    filteredList = visibleInternships.stream()
+                                        .filter(i -> i.getLevel() == level)
+                                        .filter(i -> i.getCompanyName().toLowerCase().contains(company.toLowerCase()))
+                                        .toList();
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println("Invalid level. Please use BASIC, INTERMEDIATE, or ADVANCED.");
+                                    filteredList = java.util.Collections.emptyList();
+                                }
+                            } else if (filterChoice == 0) {
+                                // Back to previous menu
+                                break;
+                            }
+                            // Always print the table, even if empty
+                            System.out.println("\nFiltered Results:");
+                            printInternshipList(filteredList == null ? java.util.Collections.emptyList() : filteredList);
                             break;
+                        
+                        case 6:  //Clear filters
+                            // Automatically approve all pending applications and internships for this student
+                            List<Application> studentApplicationsCase6 = ((Student)curUser).getApplications();
+                            boolean anyApproved = false;
+                            for (Application app : studentApplicationsCase6) {
+                                if (app.getStatus() == Application.ApplicationStatus.PENDING) {
+                                    app.setStatus(Application.ApplicationStatus.SUCCESSFUL);
+                                    if (app.getInternship() != null) {
+                                        app.getInternship().setStatus(models.Internship.InternshipStatus.APPROVED);
+                                    }
+                                    anyApproved = true;
+                                }
+                            }
+                            if (anyApproved) {
+                                applicationManager.saveApplicationsToFile();
+                                System.out.println("All your pending applications have been approved and marked successful.");
+                            } else {
+                                System.out.println("No pending applications to approve.");
+                            }
+
+                            // Let student pick one internship if more than one is SUCCESSFUL
+                            List<Application> studentApplications = ((Student)curUser).getApplications();
+                            List<Application> successfulAppsCase6 = studentApplications.stream()
+                                .filter(a -> a.getStatus() == Application.ApplicationStatus.SUCCESSFUL)
+                                .toList();
+                            if (successfulAppsCase6.size() > 1) {
+                                System.out.println("You have multiple accepted internships. Please pick one to keep:");
+                                for (int i = 0; i < successfulAppsCase6.size(); i++) {
+                                    System.out.printf("%d. %s (InternshipID: %s)\n", i + 1, successfulAppsCase6.get(i).getID(), successfulAppsCase6.get(i).getInternshipID());
+                                }
+                                int pick = main.inputInteger("Enter the number of the internship to accept: ", 1, successfulAppsCase6.size());
+                                Application chosen = successfulAppsCase6.get(pick - 1);
+                                // Set the rest to WITHDRAWN and increment available slots
+                                for (Application app : successfulAppsCase6) {
+                                    if (app != chosen) {
+                                        app.setStatus(Application.ApplicationStatus.WITHDRAWN);
+                                        if (app.getInternship() != null) {
+                                            app.getInternship().decrementConfirmedSlots();
+                                        }
+                                    }
+                                }
+                                applicationManager.saveApplicationsToFile();
+                                System.out.println("Your choice has been saved. Other accepted internships have been withdrawn and are now available for other students.");
+                            }
+                            break;
+
                         case 0: // Logout
                             userManager.logout();
                             break; 
@@ -372,11 +503,17 @@ public class Main {
             System.out.println("No internships found.");
             return;
         }
-        System.out.printf("%-10s %-30s %-10s %-20s %-12s%n", "ID", "Title", "Level", "Company", "Status");
+        // Improved alignment: fixed-width columns with separators
+        String format = "| %-10s | %-25s | %-12s | %-20s | %-10s |%n";
+        String line = "+------------+---------------------------+--------------+----------------------+------------+";
+        System.out.println(line);
+        System.out.printf(format, "ID", "Title", "Level", "Company", "Status");
+        System.out.println(line);
         for (models.Internship i : list) {
-            System.out.printf("%-10s %-30s %-10s %-20s %-12s%n",
+            System.out.printf(format,
                 i.getInternshipID(), i.getTitle(), i.getLevel(), i.getCompanyName(), i.getStatus());
         }
+        System.out.println(line);
     }
 
     /* Helper: print application list */
@@ -385,9 +522,14 @@ public class Main {
             System.out.println("No applications to show.");
             return;
         }
-        System.out.printf("%-12s %-12s %-12s %-15s%n", "AppID", "StudentID", "InternshipID", "Status");
+        String format = "| %-18s | %-12s | %-12s | %-10s |%n";
+        String line = "+--------------------+--------------+--------------+------------+";
+        System.out.println(line);
+        System.out.printf(format, "AppID", "StudentID", "InternshipID", "Status");
+        System.out.println(line);
         for (models.Application a : apps) {
-            System.out.printf("%-12s %-12s %-12s %-15s%n", a.getID(), a.getStudentID(), a.getInternshipID(), a.getStatus());
+            System.out.printf(format, a.getID(), a.getStudentID(), a.getInternshipID(), a.getStatus());
         }
+        System.out.println(line);
     }
 }
