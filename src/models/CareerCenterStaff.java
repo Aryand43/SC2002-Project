@@ -33,6 +33,13 @@ public class CareerCenterStaff extends User {
         this.userType = TypesOfUser.CareerCenterStaff;
         this.department = department;
     }
+    
+    public CareerCenterStaff(String ID, String name, String role, String department,String email, String password) {
+        super(ID, name, email, password);
+        this.role = role;
+        this.userType = TypesOfUser.CareerCenterStaff;
+        this.department = department;
+    }
 
     /**
      * Getter Function

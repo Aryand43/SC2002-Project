@@ -64,7 +64,7 @@ public class StudentSerializer implements Serializer<Student> {
 	 */
 	@Override
 	public String getHeader() {
-		return "StudentID,Name,Major,Year,Email";
+		return "StudentID,Name,Major,Year,Email,Password";
 	}
 	
 	

@@ -57,7 +57,9 @@ public class User {
         this.passwordChanged = false;
     }
     
-    
+    /**
+     * Class Constructor for serializer
+     */
     public User(String ID, String name, String email, String password){
         this.ID = ID;
         this.name = name;

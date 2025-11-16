@@ -27,7 +27,7 @@ public class CompanyRepresentative extends User {
     /*
      * Constructor for serializer
      */
-    public CompanyRepresentative(String ID, String name, String email, String companyName, String department, String position, Boolean status){
+    public CompanyRepresentative(String ID, String name, String email, String companyName, String department, String position, Boolean status, String password){
         super(ID, name, email);
         this.companyName = companyName;
         this.department = department;
