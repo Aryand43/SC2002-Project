@@ -153,15 +153,12 @@ public class Main {
 
                         case 3: // Apply for Internship
                             System.out.print("Enter Internship ID to apply: ");
-                            // First Check if student can apply (i.e NOT MORE THAN 3 INTERNSHIPS)
-                            if (((Student)curUser).noOfApplications() >= 3){
-                                System.out.println("Error: You have already applied for 3 internships. Cannot apply for more internships.");
-                                break;
-                            }
-
+                            
                             String internshipID = sc.nextLine().trim();
                             Internship internshipToApply = internshipManager.findInternshipByID(internshipID);
-                            if(internshipToApply != null){
+                            // First Check if student can apply. Validation done in applyForInternship() (e.g NOT MORE THAN 3 INTERNSHIPS, etc)
+                            boolean applied = ((Student)curUser).applyForInternship(internshipToApply);
+                            if(applied){
                                 System.out.println("Application submitted successfully for Internship ID: " + internshipID);
                                 Application newApplication = applicationManager.apply((Student)curUser, internshipToApply);
                             } else {

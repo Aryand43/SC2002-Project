@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * <br>Based on system requirements:
  * <ul>
  *   <li>Year 1–2: can only apply for Basic-level internships</li>
- *   <li>Year 3–4: can apply for any level (Basic, Intermediate, Advanced)</li>
+ *   <li>Year 3–4: can apply for any level (Basic, Intermesdiate, Advanced)</li>
  *   <li>Only 1 internship can be accepted</li>
  *   <li>Student can withdraw an application (subject to approval)</li>
  * </ul>
@@ -80,21 +80,14 @@ public class Student extends User {
      * @param application Application object
      * @return true if application successful, false otherwise
      */
-    public boolean applyForInternship(Application application) {
+    public boolean applyForInternship(Internship internship) {
         if (applications.size() >= 3) {
             System.out.println("You can only apply for a maximum of 3 internship opportunities at once.");
             return false;
         }
 
-        Internship internship = application.getInternship();
         if (internship == null) {
-            System.out.println("Invalid application: internship not set.");
-            return false;
-        }
-
-        // Check internship is open for applications
-        if (!internship.isOpenForApplications()) {
-            System.out.println("This internship is not open for applications.");
+            System.out.println("Invalid internship listing");
             return false;
         }
 
@@ -105,8 +98,8 @@ public class Student extends User {
         }
 
         // Add application
-        applications.add(application);
-        System.out.println("Application submitted: " + internship.getTitle());
+        //applications.add(application); SHOULD only add once approved by ApplicationManager
+        System.out.println("Application submitted, waiting approval: " + internship.getTitle());
         return true;
     }   
 
