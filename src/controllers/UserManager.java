@@ -306,11 +306,11 @@ public class UserManager {
 
     	StudentSerializer studentSerializer = new StudentSerializer();
     	FileHandler<Student> studentFileHandler = new FileHandler<>(studentSerializer);
-    	System.out.println("Writing to Student File");
     	studentFileHandler.writeToFile(this.studentList);
 
     	CompanyRepresentativeSerializer companyRepSerializer = new CompanyRepresentativeSerializer();
     	FileHandler<CompanyRepresentative> companyFileHandler = new FileHandler<>(companyRepSerializer);
     	companyFileHandler.writeToFile(this.repList);
+    	System.out.println("Saving to Files");
     }
 }
