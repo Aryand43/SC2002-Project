@@ -135,6 +135,15 @@ public class UserManager {
                     if (u.getPassword().equals(password) && !u.isLoggedIn()) {
                         u.setLogin(true);
                         this.currentUser = u;
+                        
+                        if (currentUser.isPasswordChanged()) {
+                            System.out.println("Login Successful! Welcome " + currentUser.getUserName() + "!");
+                        } else {
+                            changePassword(currentUser.getID(), password);
+                            u.setLogin(false);
+                            System.out.println("Password Reset! Please login again!");
+                            return false;
+                        }
                         return true;
                     }
 
@@ -190,15 +199,15 @@ public class UserManager {
     public boolean approveCompanyRepresentative(String repID){
     	for(CompanyRepresentative cr: repList) {
     		if(cr.getID().equals(repID)) {
-    			if(cr.isApproved()) {
-    				System.out.println("Error, Cant Accept, CompanyRepresentative Has Already Been Approved!");
-    				return false;
-    			}
-    			else if(cr.isApproved() == null) {
+    			if(cr.isApproved() == null) {
     				cr.setApproved(true);
     				User u = cr;
     				userList.add(u);
     				return true;
+    			}
+    			else if(cr.isApproved()) {
+    				System.out.println("Error, Cant Accept, CompanyRepresentative Has Already Been Approved!");
+    				return false;
     			}
     			else {
     				System.out.println("Error! Cant Accept, CompanyRepresentative Has Already Been Rejected!");
@@ -212,13 +221,13 @@ public class UserManager {
     public boolean rejectCompanyRepresentative(String repID){
     	for(CompanyRepresentative cr: repList) {
     		if(cr.getID().equals(repID)) {
-    			if(cr.isApproved()) {
-    				System.out.println("Error! Cant Reject, CompanyRepresentative Has Already Been Approved!");
-    				return false;
-    			}
-    			else if(cr.isApproved() == null) {
+    			if(cr.isApproved() == null) { 
     				cr.setApproved(false);
     				return true;
+    			}
+    			else if(cr.isApproved()) {
+    				System.out.println("Error! Cant Reject, CompanyRepresentative Has Already Been Approved!");
+    				return false;
     			}
     			else {
     				System.out.println("Error! Cant Reject, CompanyRepresentative Has Already Been Rejected!");

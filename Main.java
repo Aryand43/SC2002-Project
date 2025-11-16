@@ -353,10 +353,11 @@ public class Main {
             System.out.println("No company representatives found.");
             return;
         }
-        System.out.printf("%-12s %-25s %-20s %-10s%n", "ID", "Name", "Company", "Approved");
+        System.out.printf("%-12s %-25s %-20s%n", "ID", "Name", "Company");
+        
         for (models.CompanyRepresentative r : reps) {
-            System.out.printf("%-12s %-25s %-20s %-10s%n",
-                r.getID(), r.getUserName(), r.getCompanyName(), r.isApproved() ? "Yes" : "No");
+            System.out.printf("%-12s %-25s %-20s%n",
+                r.getID(), r.getUserName(), r.getCompanyName());
         }
     }
 
