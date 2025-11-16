@@ -272,7 +272,6 @@ public class UserManager {
     }
     
     public void saveToFile() {
-    	 // Initializing lists into fields  
         StaffSerializer staffSerializer = new StaffSerializer();
     	FileHandler<CareerCenterStaff> staffFileHandler = new FileHandler<>(staffSerializer);
     	staffFileHandler.writeToFile(this.staffList);
