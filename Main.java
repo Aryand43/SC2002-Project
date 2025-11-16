@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 import models.*;
 import models.User.TypesOfUser;
+import boundaries.CompanyRepBoundary;
 
 
 public class Main {
@@ -328,9 +329,14 @@ public class Main {
                      }
                      break;
                  case CompanyRepresentative: // Current user is Company Representative
-                     UI.displayCompanyRepInternshipMenu();
-                     main.inputInteger("Enter choice: ", 0, 5);
-                     break;
+                    CompanyRepBoundary crBoundary = new CompanyRepBoundary(
+                        sc, 
+                        (CompanyRepresentative)curUser,
+                        internshipManager,
+                        applicationManager
+                    );
+                    crBoundary.run();
+                    break;
 
 
                 default:
