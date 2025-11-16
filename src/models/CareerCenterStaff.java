@@ -49,23 +49,8 @@ public class CareerCenterStaff extends User {
 
     public void setRole(String role) {this.role = role;}
 
-    /**
-     * Approves or rejects the registration of a Company Representative.
-     * @param companyRepID The ID of the company representative to review.
-     * @param approve true to approve, false to reject.
-     */
-    public void authorizeCompanyAccount(String companyRepID, boolean approve) {
-        if (approve) {
-            boolean approvalStatus = userManager.approveCompanyRepresentative(companyRepID);
-            if(approvalStatus) {
-            	System.out.println("Company representative " + companyRepID + " approved.");
-            }
-        } else {
-        	boolean rejectStatus = userManager.rejectCompanyRepresentative(companyRepID);
-        	if(rejectStatus) {
-        		 System.out.println("Company representative " + companyRepID + " rejected.");
-        	}
-        }
+    //Approve/reject company representative account is in user manager.
+
     }
     
 }
