@@ -1,11 +1,11 @@
-InternshipID,Title,Description,Level,PreferredMajor,OpeningDate,ClosingDate,Status,CompanyName,CompanyRepId,TotalSlots,AvailableSlots,ConfirmedSlots,Visible
-INT0001,Software Development Intern,Develop web applications using Java and Spring Boot framework,BASIC,Computer Science,01/11/2024,30/12/2025,APPROVED,Tech Innovations Pte Ltd,sarah.johnson@techinnovations.com.sg,5,5,0,true
-INT0002,Data Analytics Intern,Analyze customer data and create visualization dashboards,INTERMEDIATE,Data Science & AI,15/10/2024,15/12/2025,APPROVED,Quantum Analytics,david.tan@quantumanalytics.sg,3,3,0,true
-INT0003,Cybersecurity Intern,Assist in penetration testing and security audits,ADVANCED,Computer Engineering,01/12/2024,28/02/2025,APPROVED,CyberSecure Systems,john.lim@cybersecure.com,2,2,0,true
-INT0004,Mobile App Development,Build mobile applications for iOS and Android platforms,INTERMEDIATE,Computer Science,01/11/2024,30/12/2025,PENDING,Tech Innovations Pte Ltd,sarah.johnson@techinnovations.com.sg,4,4,0,false
-INT0005,Machine Learning Intern,Work on ML models for predictive analytics,ADVANCED,Data Science & AI,15/11/2024,15/12/2025,APPROVED,Quantum Analytics,david.tan@quantumanalytics.sg,2,2,0,true
-INT0006,Electrical Engineering Intern,Design and test circuit boards for IoT devices,BASIC,Electrical and Electronic Engineering,01/10/2024,30/12/2024,REJECTED,Smart Manufacturing Co,raj.kumar@smartmfg.com.sg,6,6,0,true
-INT0007,Power Systems Intern,Assist in power grid analysis and optimization,INTERMEDIATE, Electrical and Electronic Engineering,15/11/2024,28/12/2025,APPROVED,Smart Manufacturing Co,raj.kumar@smartmfg.com.sg,4,4,0,true
-INT0008,Robotics Engineering Intern,Develop control systems for industrial robots,ADVANCED, Electrical and Electronic Engineering,01/12/2024,30/12/2025,APPROVED,Robotics Dynamics,james.koh@roboticsdynamics.sg,3,3,0,true
-INT0009,Mechanical Design Intern,Create CAD models for mechanical components,BASIC,Mechanical and Aerospace Engineering,01/11/2024,30/12/2025,PENDING,Global Engineering Solutions,priya.sharma@globaleng.com,5,5,0,false
-INT0010,HVAC Systems Intern,Design heating and cooling systems for buildings,INTERMEDIATE,Mechanical and Aerospace Engineering,15/10/2024,15/12/2025,PENDING,GreenTech Industries,emily.wong@greentech.com.sg,4,4,0,true
+
+INT0001,Software Development Intern,Develop web applications using Java and Spring Boot framework,BASIC,Computer Science,2024-11-01,2025-12-30,APPROVED,Tech Innovations Pte Ltd,sarah.johnson@techinnovations.com.sg,5,5,0,true
+INT0002,Data Analytics Intern,Analyze customer data and create visualization dashboards,INTERMEDIATE,Data Science & AI,2024-10-15,2025-12-15,APPROVED,Quantum Analytics,david.tan@quantumanalytics.sg,3,3,0,true
+INT0003,Cybersecurity Intern,Assist in penetration testing and security audits,ADVANCED,Computer Engineering,2024-12-01,2025-02-28,APPROVED,CyberSecure Systems,john.lim@cybersecure.com,2,2,0,true
+INT0004,Mobile App Development,Build mobile applications for iOS and Android platforms,INTERMEDIATE,Computer Science,2024-11-01,2025-12-30,PENDING,Tech Innovations Pte Ltd,sarah.johnson@techinnovations.com.sg,4,4,0,false
+INT0005,Machine Learning Intern,Work on ML models for predictive analytics,ADVANCED,Data Science & AI,2024-11-15,2025-12-15,APPROVED,Quantum Analytics,david.tan@quantumanalytics.sg,2,2,0,true
+INT0006,Electrical Engineering Intern,Design and test circuit boards for IoT devices,BASIC,Electrical and Electronic Engineering,2024-10-01,2024-12-30,REJECTED,Smart Manufacturing Co,raj.kumar@smartmfg.com.sg,6,6,0,true
+INT0007,Power Systems Intern,Assist in power grid analysis and optimization,INTERMEDIATE, Electrical and Electronic Engineering,2024-11-15,2025-12-28,APPROVED,Smart Manufacturing Co,raj.kumar@smartmfg.com.sg,4,4,0,true
+INT0008,Robotics Engineering Intern,Develop control systems for industrial robots,ADVANCED, Electrical and Electronic Engineering,2024-12-01,2025-12-30,APPROVED,Robotics Dynamics,james.koh@roboticsdynamics.sg,3,3,0,true
+INT0009,Mechanical Design Intern,Create CAD models for mechanical components,BASIC,Mechanical and Aerospace Engineering,2024-11-01,2025-12-30,PENDING,Global Engineering Solutions,priya.sharma@globaleng.com,5,5,0,false
+INT0010,HVAC Systems Intern,Design heating and cooling systems for buildings,INTERMEDIATE,Mechanical and Aerospace Engineering,2024-10-15,2025-12-15,PENDING,GreenTech Industries,emily.wong@greentech.com.sg,4,4,0,true

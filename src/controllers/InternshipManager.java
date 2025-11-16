@@ -10,7 +10,7 @@ import models.Internship.InternshipStatus;
 
 
 public class InternshipManager {
-    private List<Internship> internshipList;
+    private ArrayList<Internship> internshipList;
     private FileHandler fileHandler;
     private static int maxListingsPerRep = 5;
 
@@ -349,5 +349,11 @@ public class InternshipManager {
         // Sort results by title
         matchingInternships.sort((i1, i2) -> i1.getTitle().compareTo(i2.getTitle()));
         return matchingInternships;
+    }
+    
+    public void saveToFile() {
+    	InternshipSerializer internshipSerializer = new InternshipSerializer();
+    	FileHandler<Internship> internshipFileHandler = new FileHandler<>(internshipSerializer);
+    	internshipFileHandler.writeToFile(this.internshipList);
     }
 }

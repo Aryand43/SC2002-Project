@@ -6,7 +6,7 @@ import models.*;
 
 //Minimal ApplicationManager implementation to satisfy ReportGenerator usage.
 public class ApplicationManager {
-    private List<Application> applicationList;
+    private ArrayList<Application> applicationList;
     private InternshipManager internshipManager;
     private FileHandler<Application> fileHandler;
     private UserManager userManager;
@@ -114,5 +114,11 @@ public class ApplicationManager {
             app.setStudentRef((Student) userManager.getStudentByID(app.getStudentID()));
             app.setInternship(internshipManager.findInternshipByID(app.getInternshipID()));
         }
+    }
+    
+    public void saveTofile() {
+    	ApplicationSerializer serializer = new ApplicationSerializer();
+        this.fileHandler = new FileHandler<>(serializer);
+        this.fileHandler.writeToFile(applicationList);
     }
 }
