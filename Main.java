@@ -344,6 +344,8 @@ public class Main {
         	}
         System.out.println("Exiting Internship Management System... Goodbye!");
         userManager.saveToFile();
+        internshipManager.saveToFile();
+        applicationManager.saveTofile();
         sc.close();
         }
 
