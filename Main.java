@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 import models.*;
 import models.User.TypesOfUser;
-import boundaries.CompanyRepBoundary;
 
 
 public class Main {
@@ -133,18 +132,21 @@ public class Main {
                 User curUser = userManager.getCurrentUser();
         		 switch(currentPermission){
                  case Student: // Current user is student
-                     UI.displayStudentInternshipMenu();
-                     choice = main.inputInteger("Enter choice: ", 0, 5);
-                     int studentYr = ((Student)curUser).getYearOfStudy();
-                     String studentMajor = ((Student)curUser).getMajor();
+                    UI.displayStudentInternshipMenu();
+                    choice = main.inputInteger("Enter choice: ", 0, 5);
+                    int studentYr = ((Student)curUser).getYearOfStudy();
+                    String studentMajor = ((Student)curUser).getMajor();
+                    System.out.printf("\n%s current year of study: %d", curUser.getUserName(), studentYr);
+                    System.out.printf("\n%s current major: %s\n\n", curUser.getUserName(), studentMajor);
+                    List <Internship> ListingsVisibleToStudent = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
 
                     switch (choice){
                         case 1: // View Available Internships
-                            internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
+                            UI.displayInternshipList(ListingsVisibleToStudent);
                             break;
 
                         case 2: // Search Internships (By keyword)
-                            internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
+                            UI.displayInternshipList(ListingsVisibleToStudent);
                             System.out.print("Enter keyword to search: ");
                             String keywordSearch = sc.nextLine().trim();
                             List<Internship> keywordList = internshipManager.search(keywordSearch);
