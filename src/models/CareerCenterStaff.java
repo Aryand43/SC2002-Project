@@ -1,10 +1,5 @@
 package models;
 
-import controllers.ApplicationManager;
-import controllers.FileHandler;
-import controllers.InternshipManager;
-import controllers.UserManager;
-
 /**
  * <b>CAREER CENTER STAFF CLASS</b><br>
  * Represents a Career Center Staff user in the internship management system. Registration is automatic by reading in from the staff list csv file.
@@ -22,17 +17,15 @@ public class CareerCenterStaff extends User {
 
     private String department;
     private String role;
-    private FileHandler fileHandler;
-    private UserManager userManager;
-    private InternshipManager internshipManager;
-    private ApplicationManager applicationManager;
 
     /**
      * Class Constructor
-     * @param ID Staff ID
-     * @param name Staff name
-     * @param email Staff email
-     * @param department Staff department (e.g. Career Services Office)
+     * @param ID Sets the staff ID
+     * @param name Sets the staff name
+     * @param role Sets the staff role
+     * @param department Sets the staff department (e.g. Career Services Office)
+     * @param email Sets the staff email<br><br>
+     * User type is automatically set to CareerCenterStaff.
      */
     public CareerCenterStaff(String ID, String name, String role, String department,String email) {
         super(ID, name, email);
@@ -40,13 +33,38 @@ public class CareerCenterStaff extends User {
         this.userType = TypesOfUser.CareerCenterStaff;
         this.department = department;
     }
+    
+    public CareerCenterStaff(String ID, String name, String role, String department,String email, String password) {
+        super(ID, name, email, password);
+        this.role = role;
+        this.userType = TypesOfUser.CareerCenterStaff;
+        this.department = department;
+    }
 
+    /**
+     * Getter Function
+     * @return Department
+     */
     public String getDepartment() {return this.department;}
 
+    /**
+     * Setter Function
+     * Sets the department of the Career Center Staff
+     * @param department The department to set
+     */
     public void setDepartment(String department) {this.department = department;}
 
+    /**
+     * Getter Function
+     * @return Role
+     */
     public String getRole() {return this.role;}
 
+    /**
+     * Setter Function
+     * Sets the role of the Career Center Staff
+     * @param role The role to set
+     */
     public void setRole(String role) {this.role = role;}
 
     //Approve/reject company representative account is in user manager.

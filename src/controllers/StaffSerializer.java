@@ -23,7 +23,7 @@ public class StaffSerializer implements Serializer<CareerCenterStaff>{
 	 */
 	public CareerCenterStaff deserialize(String line) {
 		String[] rowData = line.split(",");
-		CareerCenterStaff staff = new CareerCenterStaff(rowData[0],rowData[1],rowData[2],rowData[3],rowData[4]);
+		CareerCenterStaff staff = new CareerCenterStaff(rowData[0],rowData[1],rowData[2],rowData[3],rowData[4], rowData[5]);
 		return staff;
 	}
 	
@@ -36,7 +36,7 @@ public class StaffSerializer implements Serializer<CareerCenterStaff>{
 	 * @return a string that is comma delimited for csv file
 	 */
 	public String serialize(CareerCenterStaff staff) {
-		String line = staff.getID() + "," + staff.getUserName() + "," + staff.getRole() +"," + staff.getDepartment() +"," + staff.getEmail();
+		String line = staff.getID() + "," + staff.getUserName() + "," + staff.getRole() +"," + staff.getDepartment() +"," + staff.getEmail() + "," + staff.getPassword();
 		return line;
 	}
 	
@@ -47,7 +47,7 @@ public class StaffSerializer implements Serializer<CareerCenterStaff>{
 	 * @return the string for Header
 	 */
 	public String getHeader() {
-		return "StaffID,Name,Role,Department,Email";
+		return "StaffID,Name,Role,Department,Email, Password";
 	}
 	
 	
