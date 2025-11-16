@@ -54,7 +54,12 @@ public class User {
         this.password = "password";
         this.userType = TypesOfUser.User;
         this.loggedIn = false;
-        this.passwordChanged = false;
+        if(password.equals("password")) {
+        	this.passwordChanged = false;
+        }
+        else {
+        	this.passwordChanged = true;
+        }
     }
     
     /**
@@ -150,6 +155,7 @@ public class User {
     
     public void resetDefaultPassword() {
     	this.password = "password";
+    	this.passwordChanged = false;
     }
     
     public String setPassword(String oldPass){
@@ -177,7 +183,6 @@ public class User {
             else {
                 System.out.println("\nError: Wrong Password Entered!");
             }
-            sc.close();
         }
     }
     

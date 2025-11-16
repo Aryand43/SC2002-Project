@@ -106,6 +106,15 @@ public class UserManager {
                     System.out.println(u.getPassword());
                     u.setLogin(true);
                     this.currentUser = u;
+                    if(currentUser.isPasswordChanged() == true) {
+                    	 System.out.println("Login Successful! Welcome " + currentUser.getUserName() + "!");
+                    }
+                    else {
+                    	changePassword(currentUser.getID(), password);
+                    	u.setLogin(false);
+                    	System.out.println("Password Resetted!, Please login again!");
+                    	return false;
+                    }
                     return true;
                 }
             }
