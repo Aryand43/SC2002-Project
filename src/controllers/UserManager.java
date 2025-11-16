@@ -128,6 +128,7 @@ public class UserManager {
             }
         }   
     }
+        System.out.println("Login Failed!");
         return false;
     }
     

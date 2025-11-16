@@ -121,6 +121,9 @@ public class Main {
             		break;
             	}
         	}
+            if(input == 5) {
+            	break;
+            }
         	 //Step 2: Display respective user's main menu in the internship management system
             TypesOfUser currentPermission = userManager.getCurrentUser().getUserType();
             int choice;
@@ -342,7 +345,7 @@ public class Main {
         System.out.println("Exiting Internship Management System... Goodbye!");
         userManager.saveToFile();
         sc.close();
-    }
+        }
 
     /* Helper: print company rep list */
     private static void printCompanyRepList(java.util.List<models.CompanyRepresentative> reps) {
