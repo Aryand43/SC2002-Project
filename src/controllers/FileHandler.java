@@ -39,15 +39,17 @@ public class FileHandler<T>{
 	public ArrayList<T> readFromFile() {
 		ArrayList<T> arrayList = new ArrayList<>();
 		try(Scanner sc = new Scanner(new File(filePath))){
+			// Skip header line if present
 			if(sc.hasNextLine()) {
 				sc.nextLine();
 			}
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
+				// skip blank/empty lines to avoid malformed deserialization
+				if (line == null || line.trim().isEmpty()) continue;
 				T returnedEntity = serializer.deserialize(line);
-				arrayList.add(returnedEntity);
-			};
-			
+				if (returnedEntity != null) arrayList.add(returnedEntity);
+			}
 		}
 		catch (FileNotFoundException e) {
 			e.getMessage();

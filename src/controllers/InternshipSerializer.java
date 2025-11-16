@@ -1,11 +1,10 @@
 package controllers;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import models.Internship;
 import models.Internship.InternshipLevel;
 import models.Internship.InternshipStatus;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Implements the serializing and deserializing of Internship  entity and the relevant metadata for its file
@@ -18,9 +17,10 @@ import java.time.format.DateTimeFormatter;
  * 
  */
 public class InternshipSerializer implements Serializer<Internship>{
-	
+
+	// Use dd/MM/yyyy to match CSV date format
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	
+
 	/**
 	 * Deserializes the given string into the Internship by creating a new instance of Internship
 	 * by separting the line by commas into 
@@ -44,7 +44,7 @@ public class InternshipSerializer implements Serializer<Internship>{
 	 * @return a string that is comma delimited for csv file
 	 */
 	public String serialize(Internship internship) {
-		String line = internship.getInternshipID() + "," + internship.getTitle() + "," + internship.getDescription() + "," + internship.getLevel().toString() + "," + internship.getPreferredMajor() + "," + internship.getOpeningDate().toString() + "," + internship.getClosingDate().toString()
+		String line = internship.getInternshipID() + "," + internship.getTitle() + "," + internship.getDescription() + "," + internship.getLevel().toString() + "," + internship.getPreferredMajor() + "," + FORMATTER.format(internship.getOpeningDate()) + "," + FORMATTER.format(internship.getClosingDate())
 				+ "," + internship.getStatus().toString() + "," + internship.getCompanyName() + "," + internship.getCompanyRepId() + "," + String.valueOf(internship.getTotalSlots()) + "," + String.valueOf(internship.getAvailableSlots()) + "," + String.valueOf(internship.getConfirmedSlots()) + ","
 				+ String.valueOf(internship.isVisible());
 		return line;
@@ -67,6 +67,6 @@ public class InternshipSerializer implements Serializer<Internship>{
 	 * @return the string for filepath
 	 */
 	public String getFilePath() {
-		return  "assets/testcases/Internship_list.csv";
+		return  "assets/testcases/internship_list.csv";
 	}
 }

@@ -52,11 +52,11 @@ public class Test {
         System.out.println("=".repeat(60));
         List<Internship> internList = internshipManager.getAllInternships();
 
-        internshipManager.getVisibleInternshipsForStudent(3, "Computer Science").forEach(internship -> {
+        internshipManager.getVisibleInternshipsForStudent(1, "Computer Science").forEach(internship -> {
             System.out.println(internship.getDetailedInfo());
             System.out.println("-".repeat(60));
         });
-        User testS = userManager.getStudentByID("U2310002B");
+        User testS = userManager.getStudentByID("U2310001A");
         String major  = ((Student)testS).getMajor();
         System.out.print("MAJOR: " + major);
         String internshipID = "INT0001";
