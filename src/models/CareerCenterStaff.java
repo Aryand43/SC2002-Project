@@ -53,4 +53,3 @@ public class CareerCenterStaff extends User {
 
     }
     
-}
