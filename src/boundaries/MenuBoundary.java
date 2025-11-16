@@ -46,7 +46,7 @@ public class MenuBoundary {
         printSeparator();
     }
     /**
-     * Display list of internships
+     * Display list of ALL internships
      * @param internships List of internships to display
      */
     public void displayInternshipList(List<Internship> internships) {

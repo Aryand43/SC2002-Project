@@ -51,9 +51,14 @@ public class Test {
         Scanner sc = new Scanner(System.in);
         System.out.println("=".repeat(60));
         List<Internship> internList = internshipManager.getAllInternships();
-        UI.displayInternshipList(internList);
 
+        internshipManager.getVisibleInternshipsForStudent(3, "Computer Science").forEach(internship -> {
+            System.out.println(internship.getDetailedInfo());
+            System.out.println("-".repeat(60));
+        });
         User testS = userManager.getStudentByID("U2310002B");
+        String major  = ((Student)testS).getMajor();
+        System.out.print("MAJOR: " + major);
         String internshipID = sc.nextLine().trim();
         Internship internshipToApply = internshipManager.findInternshipByID(internshipID);
         if(internshipToApply != null){
