@@ -260,4 +260,19 @@ public class UserManager {
     public ArrayList<CareerCenterStaff> getStaffList(){
     	return this.staffList;
     }
+    
+    public void saveToFile() {
+    	 // Initializing lists into fields  
+        StaffSerializer staffSerializer = new StaffSerializer();
+    	FileHandler<CareerCenterStaff> staffFileHandler = new FileHandler<>(staffSerializer);
+    	staffFileHandler.writeToFile(this.staffList);
+
+    	StudentSerializer studentSerializer = new StudentSerializer();
+    	FileHandler<Student> studentFileHandler = new FileHandler<>(studentSerializer);
+    	studentFileHandler.writeToFile(this.studentList);
+
+    	CompanyRepresentativeSerializer companyRepSerializer = new CompanyRepresentativeSerializer();
+    	FileHandler<CompanyRepresentative> companyFileHandler = new FileHandler<>(companyRepSerializer);
+    	companyFileHandler.writeToFile(this.repList);
+    }
 }

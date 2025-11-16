@@ -176,7 +176,6 @@ public class Main {
                          switch (staffChoice) {
                              case 1:
                                  // View Company Representative account list
-                            	 
                                  printCompanyRepList(userManager.getRepList().stream().filter(s ->s.isApproved()==null).toList());
                                  break;
                              case 2:
@@ -325,6 +324,7 @@ public class Main {
         		 }
         	}
         System.out.println("Exiting Internship Management System... Goodbye!");
+        userManager.saveToFile();
         sc.close();
     }
 

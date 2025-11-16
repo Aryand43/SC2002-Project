@@ -56,7 +56,7 @@ public class ApplicationSerializer implements Serializer<Application>{
 	 */
 	@Override
 	public String serialize(Application application) {
-		String line = application.getID();
+		String line = application.getID() + "," + application.getStudentID() + "," + application.getInternshipID() + "," + application.getStatus();
 		return line;
 	}
 	
