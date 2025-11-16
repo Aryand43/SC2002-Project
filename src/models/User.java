@@ -36,7 +36,7 @@ public class User {
     protected final String name;
     protected final String email;
     protected String password;
-    protected final TypesOfUser userType;
+    protected TypesOfUser userType;
     protected boolean loggedIn;
     private boolean passwordChanged;
 
