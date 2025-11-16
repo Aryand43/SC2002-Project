@@ -53,6 +53,14 @@ public class Student extends User {
         this.applications = new ArrayList<>();
         this.userType = TypesOfUser.Student;
     }
+    
+    public Student(String ID, String name, String major, int yearOfStudy, String email, String password) {
+        super(ID, name, email, password);
+        this.yearOfStudy = yearOfStudy;
+        this.major = major;
+        this.applications = new ArrayList<>();
+        this.userType = TypesOfUser.Student;
+    }
 
     // -----------------------------
     // Getters and Setters

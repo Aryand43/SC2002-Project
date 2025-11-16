@@ -56,6 +56,23 @@ public class User {
         this.loggedIn = false;
         this.passwordChanged = false;
     }
+    
+    
+    public User(String ID, String name, String email, String password){
+        this.ID = ID;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.userType = TypesOfUser.User;
+        this.loggedIn = false;
+        if(password.equals("password")) {
+        	this.passwordChanged = false;
+        }
+        else {
+        	this.passwordChanged = true;
+        }
+    }
+    
 
     /**
      * Getter Function

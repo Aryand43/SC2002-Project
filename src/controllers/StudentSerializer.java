@@ -38,8 +38,9 @@ public class StudentSerializer implements Serializer<Student> {
         throw new IllegalArgumentException("Invalid year value for student: " + rowData[3], e);
     }
     String email = rowData[4].trim();
+    String password = rowData[5].trim();
 	System.out.println("current data: " + name);
-    return new Student(id, name, major, year, email);
+    return new Student(id, name, major, year, email, password);
 }
 
 	/**
@@ -51,7 +52,7 @@ public class StudentSerializer implements Serializer<Student> {
 	 */
 	@Override
 	public String serialize(Student student) {
-		String line = student.getID() + "," + student.getUserName() + "," + student.getMajor() + "," + student.getYearOfStudy() +"," + student.getEmail();
+		String line = student.getID() + "," + student.getUserName() + "," + student.getMajor() + "," + student.getYearOfStudy() +"," + student.getEmail() + "," +student.getPassword();
 		return line;
 	}
 	
