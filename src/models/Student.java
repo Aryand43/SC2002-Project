@@ -34,8 +34,8 @@ import java.util.ArrayList;
  */
 public class Student extends User {
     
-    private int yearOfStudy;                // Year 1–4
-    private String major;                   // CSC, EEE, MAE, etc.
+    private final int yearOfStudy;                // Year 1–4
+    private final String major;                   // CSC, EEE, MAE, etc.
     private ArrayList<Application> applications; // Up to 3 active applications
 
     /**
