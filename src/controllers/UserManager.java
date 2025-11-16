@@ -96,42 +96,61 @@ public class UserManager {
      * Else, user will be unable to login.
      * 
      */
-    public boolean login(String ID, String password){
+    
+    public boolean login(String ID, String password) {
 
-         for(User u: userList){
-            // If user is company rep, have to check email for login detials
-            if (u.getUserType() != User.TypesOfUser.CompanyRepresentative){
-                if(u.getID().equalsIgnoreCase(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
-                    System.out.println(u.getID());
-                    System.out.println(u.getPassword());
-                    u.setLogin(true);
-                    this.currentUser = u;
-                    if(currentUser.isPasswordChanged() == true) {
-                    	 System.out.println("Login Successful! Welcome " + currentUser.getUserName() + "!");
+        for (User u : userList) {
+
+            // If user is NOT a company rep → use ID for login
+            if (u.getUserType() != User.TypesOfUser.CompanyRepresentative) {
+
+                if (u.getID().equalsIgnoreCase(ID)) {
+
+                    if (u.getPassword().equals(password) && !u.isLoggedIn()) {
+                        u.setLogin(true);
+                        this.currentUser = u;
+
+                        if (currentUser.isPasswordChanged()) {
+                            System.out.println("Login Successful! Welcome " + currentUser.getUserName() + "!");
+                        } else {
+                            changePassword(currentUser.getID(), password);
+                            u.setLogin(false);
+                            System.out.println("Password Reset! Please login again!");
+                            return false;
+                        }
+                        return true;
                     }
-                    else {
-                    	changePassword(currentUser.getID(), password);
-                    	u.setLogin(false);
-                    	System.out.println("Password Resetted!, Please login again!");
-                    	return false;
+
+                    else if (!u.getPassword().equals(password)) {
+                        System.out.println("Wrong Password!");
+                        return false;
                     }
-                    return true;
                 }
             }
+
+            // Company representative login using email
             else {
-            System.out.println(u.getID());
-            System.out.println(u.getPassword());
-            if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
-                u.setLogin(true);
-                this.currentUser = u;
-                return true;
+                if (u.getEmail().equals(ID)) {
+
+                    if (u.getPassword().equals(password) && !u.isLoggedIn()) {
+                        u.setLogin(true);
+                        this.currentUser = u;
+                        return true;
+                    }
+
+                    else if (!u.getPassword().equals(password)) {
+                        System.out.println("Wrong Password!");
+                        return false;
+                    }
+                }
             }
-        }   
-    }
-        System.out.println("Login Failed!");
+        }
+
+        System.out.println("Login Failed! No Such User!");
         return false;
     }
-    
+
+         
     public ArrayList<User> getRespectiveUserList(){
     	ArrayList<User> userList = new ArrayList<>();
         for(CareerCenterStaff staff: staffList) {
