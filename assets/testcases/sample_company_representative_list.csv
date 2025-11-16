@@ -1,8 +1,8 @@
 CompanyRepID,Name,CompanyName,Department,Position,Email,Status,Password
-CR001,Sarah Johnson,Tech Innovations Pte Ltd,Human Resources,HR Manager,sarah.johnson@techinnovations.com.sg,Approved,
-CR002,Michael Chen,Singapore Digital Bank,Talent Acquisition,Senior Recruiter,michael.chen@sgdigitalbank.com,Approved,
-CR003,David Tan,Quantum Analytics,Data Science,Head of Analytics,david.tan@quantumanalytics.sg,Approved,
-CR004,John Lim,CyberSecure Systems,Security Operations,Security Director,john.lim@cybersecure.com,Approved,
-CR005,Amanda Lee,Creative Media Hub,Creative Department,Creative Director,amanda.lee@creativemedia.sg,Approved,
-CR006,Lisa Ng,FinTech Solutions Asia,Finance,Finance Manager,lisa.ng@fintechasia.com,Approved,
-CR007,James Koh,Robotics Dynamics,Research & Development,R&D Lead,james.koh@roboticsdynamics.sg,Approved,
+CR001,Sarah Johnson,Tech Innovations Pte Ltd,Human Resources,HR Manager,sarah.johnson@techinnovations.com.sg,Approved,password
+CR002,Michael Chen,Singapore Digital Bank,Talent Acquisition,Senior Recruiter,michael.chen@sgdigitalbank.com,Approved,password
+CR003,David Tan,Quantum Analytics,Data Science,Head of Analytics,david.tan@quantumanalytics.sg,Approved,password
+CR004,John Lim,CyberSecure Systems,Security Operations,Security Director,john.lim@cybersecure.com,Approved,password
+CR005,Amanda Lee,Creative Media Hub,Creative Department,Creative Director,amanda.lee@creativemedia.sg,Approved,password
+CR006,Lisa Ng,FinTech Solutions Asia,Finance,Finance Manager,lisa.ng@fintechasia.com,Approved,password
+CR007,James Koh,Robotics Dynamics,Research & Development,R&D Lead,james.koh@roboticsdynamics.sg,Approved,password
