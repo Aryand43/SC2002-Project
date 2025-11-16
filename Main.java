@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+import models.*;
 import models.User.TypesOfUser;
-import models.CompanyRepresentative;
+
+
 public class Main {
     private Scanner scanner = new Scanner(System.in);
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -43,7 +45,6 @@ public class Main {
         UserManager userManager = new UserManager();
         InternshipManager internshipManager = new InternshipManager();
 
-
         // ApplicationManager needs InternshipManager and UserManager to link applications to opportunities
         ApplicationManager applicationManager = new ApplicationManager(internshipManager, userManager);
 
@@ -59,7 +60,7 @@ public class Main {
         //Step 1: Prompt login UI for users to login
         while(input != 5) {
         	boolean login = false;
-        	while(login == false) {
+        	while(!login) {
         		UI.displayLoginMenu();
             	input = main.inputInteger("Please Enter Your Input: ", 1, 4);
             	switch(input) {
@@ -69,16 +70,24 @@ public class Main {
                     String userID = sc.nextLine();
                     
                     // Input password
-                    System.out.print("Enter password");
+                    System.out.print("Enter password: ");
                     String password = sc.nextLine();
-                    login = userManager.login(userID, password);
+                    userManager.login(userID, password);
+
+                    if (userManager.getCurrentUser().isPasswordChanged() == true){
+                        login = true;
+                        System.out.println("Login Successful! Welcome " + userManager.getCurrentUser().getUserName() + "!");
+                    }
+                    else if (userManager.getCurrentUser().isPasswordChanged() == false){
+                        userManager.changePassword(userManager.getCurrentUser().getID(), password);
+                    }
                     break;
             	case 2:
             		 System.out.print("Enter User ID: ");
                      String userID2 = sc.nextLine();
                      
                      // Input Email
-                     System.out.print("Enter Email");
+                     System.out.print("Enter Email: ");
                      String email = sc.nextLine();
                      
             		 userManager.resetPassword(userID2, email);
@@ -88,7 +97,7 @@ public class Main {
                      String userID3 = sc.nextLine();
                      
                      // Input oldPassword
-                     System.out.print("Enter oldpassword");
+                     System.out.print("Enter oldpassword: ");
                      String oldPassword = sc.nextLine();
                      
                      userManager.changePassword(userID3, oldPassword);
@@ -124,18 +133,20 @@ public class Main {
             TypesOfUser currentPermission = userManager.getCurrentUser().getUserType();
             int choice;
             
-        	while(login == true) {
+        	while(userManager.getCurrentUser() != null) {
         		 switch(currentPermission){
                  case Student: // Current user is student
                      UI.displayStudentInternshipMenu();
                      choice = main.inputInteger("Enter choice: ", 0, 5);
                      switch (choice){
                          case 1: // View Available Internships
-                             
-                             break;
+                            int studentYr = ((models.Student)userManager.getCurrentUser()).getYearOfStudy();
+                            String studentMajor = ((models.Student)userManager.getCurrentUser()).getMajor();
+                            internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
+                            break;
                          case 2: // Search Internships
                              
-                             break;
+                            break;
                          case 3: // Apply for Internship
                              
                              break;

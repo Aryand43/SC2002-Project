@@ -38,6 +38,7 @@ public class User {
     protected String password;
     protected TypesOfUser userType;
     protected boolean loggedIn;
+    private boolean passwordChanged;
 
      /**
      * Class Constructor
@@ -53,6 +54,7 @@ public class User {
         this.password = "password";
         this.userType = TypesOfUser.User;
         this.loggedIn = false;
+        this.passwordChanged = false;
     }
 
     /**
@@ -92,12 +94,25 @@ public class User {
     public boolean isLoggedIn(){return this.loggedIn;}
 
     /**
+     * Getter Function
+     * @return boolean value indicating if user has changed default password
+     */
+    public boolean isPasswordChanged(){return this.passwordChanged;}
+
+    /**
      * Setter Function
      * Sets user's login status to true. <br>
      * Login status is set true with @see {@link controllers.UserManager}, upon a successful login.<br>
      * Login status is set to false with @see {@link controllers.UserManager}, when user logs out.
      */
     public void setLogin(boolean b){this.loggedIn = b;}
+
+    /**
+     * Setter Function
+     * Sets user's "password changed" status to true <br>
+     * Indicates that user has changed default password.
+     */
+    public void setPasswordChanged(boolean b){this.passwordChanged = true;}
 
     /**
      * Set/Change user's password <br>
@@ -121,11 +136,13 @@ public class User {
     public String setPassword(String oldPass){
         Scanner sc = new Scanner(System.in);
         while(true){
-            if (oldPass.compareTo(this.password) == 0){
+            if (oldPass.equals(this.password)){
                 System.out.print("\nEnter new password (Blank password to exit): ");
                 String newPass = sc.nextLine();
                 if (isValidPassword(newPass)) {
                     this.password = newPass;
+                    this.setPasswordChanged(true);
+                    System.out.println("Password Sucessfully resetted!");
                     return newPass;
                 }
                 else if(newPass.equals("")){
@@ -137,7 +154,7 @@ public class User {
                     System.out.println("- At least 1 digit");
                     System.out.println("- At least 1 special character");
                 }
-            }   
+            } 
             else {
                 System.out.println("\nError: Wrong Password Entered!");
             }
@@ -167,7 +184,9 @@ public class User {
             System.out.println("Valid new password. Password successfully changed.\n");
             return true;
         } 
-        
+        else if (password.equals("")) {
+            return false;
+        }
         else {
             System.out.println("Error: Invalid new password.\n");
             return false;

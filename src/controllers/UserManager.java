@@ -99,38 +99,27 @@ public class UserManager {
     public boolean login(String ID, String password){
 
          for(User u: userList){
-             // If user is company rep, have to check email for login detials
-             if (u.getUserType() != User.TypesOfUser.CompanyRepresentative){
-                 System.out.println(u.getEmail());
-                 System.out.println(u.getPassword());
-                 if(u.getEmail().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
-                     u.setLogin(true);
-                     this.currentUser = u;
-                     System.out.printf("\n%s has successfully logged in!\n", u.getUserName());
-                     return true;
-                 }
-                 else if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == true){
-                     System.out.printf("\nError: %s already logged in!", u.getUserName());
-                     return false;
-                 }
-             }
-             else {
-                 System.out.println(u.getID());
-                 System.out.println(u.getPassword());
-                 if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
-                     u.setLogin(true);
-                     this.currentUser = u;
-                     System.out.printf("\n%s has successfully logged in!\n", u.getUserName());
-                     return true;
-                 }
-                 else if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == true){
-                     System.out.printf("\nError: %s already logged in!", u.getUserName());
-                     return false;
-                 }
-             }   
-         }
-         System.out.println("\nError: Wrong Password or ID inputted!");
-         return false;
+            // If user is company rep, have to check email for login detials
+            if (u.getUserType() != User.TypesOfUser.CompanyRepresentative){
+                if(u.getID().equalsIgnoreCase(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
+                    System.out.println(u.getID());
+                    System.out.println(u.getPassword());
+                    u.setLogin(true);
+                    this.currentUser = u;
+                    return true;
+                }
+            }
+            else {
+            System.out.println(u.getID());
+            System.out.println(u.getPassword());
+            if(u.getID().equals(ID) && u.getPassword().equals(password) && u.isLoggedIn() == false){
+                u.setLogin(true);
+                this.currentUser = u;
+                return true;
+            }
+        }   
+    }
+        return false;
     }
     
     public ArrayList<User> getRespectiveUserList(){
@@ -169,7 +158,6 @@ public class UserManager {
         this.clearCurrentUser();
     }
     
-    //placeholder for now
     public boolean approveCompanyRepresentative(String repID){
     	for(CompanyRepresentative cr: repList) {
     		if(cr.getID().equals(repID)) {
@@ -192,7 +180,6 @@ public class UserManager {
         return true;
     }
 
-    //placeholder for now
     public boolean rejectCompanyRepresentative(String repID){
     	for(CompanyRepresentative cr: repList) {
     		if(cr.getID().equals(repID)) {
@@ -230,8 +217,8 @@ public class UserManager {
     		System.out.println("No Such User/Mismatched UserId and oldPassword");
     	}
     	else {
-    		String newpassword = u.setPassword(oldPassword);
-    		System.out.println("Password Sucessfully resetted! New Password: " + newpassword);
+    		u.setPassword(oldPassword);
+            System.out.println("Login again with new password.");
     	}
     }
     

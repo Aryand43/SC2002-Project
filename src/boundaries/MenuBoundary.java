@@ -1,6 +1,7 @@
 package boundaries;
 
-import java.util.Scanner;
+import java.util.List;
+import models.Internship;
 
 public class MenuBoundary {
 
@@ -42,6 +43,21 @@ public class MenuBoundary {
         System.out.println("4. View My Applications");
         System.out.println("5. Filter Internships");
         System.out.println("0. Logout");
+        printSeparator();
+    }
+
+    public void displayInternshipList(List<Internship> internships) {
+        if (internships.isEmpty()) {
+            System.out.println("No internships found.");
+            return;
+        }
+        
+        for (int i = 0; i < internships.size(); i++) {
+            printSectionHeader("Internship " + (i + 1));
+            System.out.printf("%d. %s\n", (i + 1), internships.get(i).getDetailedInfo());
+        }
+        
+        System.out.println("\nTotal: " + internships.size() + " internship(s)");
         printSeparator();
     }
 

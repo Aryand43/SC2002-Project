@@ -3,6 +3,7 @@ import controllers.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Scanner;
 import models.*;
 
@@ -47,6 +48,11 @@ public class Test {
         ApplicationManager applicationManager = new ApplicationManager(internshipManager, userManager);
         MenuBoundary UI = new MenuBoundary();
         
+        System.out.println("=".repeat(60));
+        List<Internship> internList = internshipManager.getAllInternships();
+        UI.displayInternshipList(internList);
+
+
         System.out.println("=".repeat(60));
         System.out.println("--- Functional Integration Test: Student Application Limit ---");
         System.out.println("=".repeat(60));
