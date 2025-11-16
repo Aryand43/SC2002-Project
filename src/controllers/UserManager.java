@@ -230,30 +230,14 @@ public class UserManager {
      * Return list of students (concrete Student objects) stored in manager
      */
     public ArrayList<Student> getStudentList(){
-        ArrayList<Student> students = new ArrayList<>();
-        for (User u : this.studentList){
-            try {
-                students.add((Student) u);
-            } catch (ClassCastException e){
-                // skip or log if element isn't Student
-            }
-        }
-        return students;
+        return this.studentList;
     }
 
     /**
      * Return list of company representatives (concrete CompanyRepresentative objects)
      */
     public ArrayList<CompanyRepresentative> getRepList(){
-        ArrayList<CompanyRepresentative> reps = new ArrayList<>();
-        for (User u : this.repList){
-            try {
-                reps.add((CompanyRepresentative) u);
-            } catch (ClassCastException e){
-                // skip or log
-            }
-        }
-        return reps;
+    	return this.repList;
     }
 
     /**
@@ -274,14 +258,6 @@ public class UserManager {
      * Return list of career center staff (concrete CareerCenterStaff objects)
      */
     public ArrayList<CareerCenterStaff> getStaffList(){
-        ArrayList<CareerCenterStaff> staff = new ArrayList<>();
-        for (User u : this.staffList){
-            try {
-                staff.add((CareerCenterStaff) u);
-            } catch (ClassCastException e){
-                // skip or log
-            }
-        }
-        return staff;
+    	return this.staffList;
     }
 }

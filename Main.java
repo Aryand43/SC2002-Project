@@ -176,7 +176,8 @@ public class Main {
                          switch (staffChoice) {
                              case 1:
                                  // View Company Representative account list
-                                 printCompanyRepList(userManager.getRepList());
+                            	 
+                                 printCompanyRepList(userManager.getRepList().stream().filter(s ->s.isApproved()==null).toList());
                                  break;
                              case 2:
                                  // Authorize / Reject Company Representative
