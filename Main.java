@@ -62,7 +62,7 @@ public class Main {
         	boolean login = false;
         	while(!login) {
         		UI.displayLoginMenu();
-            	input = main.inputInteger("Please Enter Your Input: ", 1, 4);
+            	input = main.inputInteger("Please Enter Your Input: ", 1, 5);
             	switch(input) {
             	case 1:
             		 // Input username
@@ -72,15 +72,7 @@ public class Main {
                     // Input password
                     System.out.print("Enter password: ");
                     String password = sc.nextLine();
-                    userManager.login(userID, password);
-
-                    if (userManager.getCurrentUser().isPasswordChanged() == true){
-                        login = true;
-                        System.out.println("Login Successful! Welcome " + userManager.getCurrentUser().getUserName() + "!");
-                    }
-                    else if (userManager.getCurrentUser().isPasswordChanged() == false){
-                        userManager.changePassword(userManager.getCurrentUser().getID(), password);
-                    }
+                    login = userManager.login(userID, password);
                     break;
             	case 2:
             		 System.out.print("Enter User ID: ");
@@ -129,6 +121,9 @@ public class Main {
             		break;
             	}
         	}
+            if(input == 5) {
+            	break;
+            }
         	 //Step 2: Display respective user's main menu in the internship management system
             TypesOfUser currentPermission = userManager.getCurrentUser().getUserType();
             int choice;
@@ -350,7 +345,7 @@ public class Main {
         System.out.println("Exiting Internship Management System... Goodbye!");
         userManager.saveToFile();
         sc.close();
-    }
+        }
 
     /* Helper: print company rep list */
     private static void printCompanyRepList(java.util.List<models.CompanyRepresentative> reps) {
