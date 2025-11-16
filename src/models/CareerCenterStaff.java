@@ -51,6 +51,5 @@ public class CareerCenterStaff extends User {
 
     //Approve/reject company representative account is in user manager.
 
-    }
-    
 }
+

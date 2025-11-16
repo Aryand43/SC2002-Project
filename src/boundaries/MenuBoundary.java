@@ -63,12 +63,12 @@ public class MenuBoundary {
         System.out.println("\nTotal: " + internships.size() + " internship(s)");
         printSeparator();
     }
+    
     public void displayInternshipFilterMenu(){
         printSectionHeader("Filter By");
         System.out.println(" 1. Date Range");
         System.out.println(" 2. By Internship Level");
-        System.out.println(" 3. Keywords in Listing");
-        System.out.println(" 4. Custom (status, level, major, company)");
+        System.out.println(" 3. Custom (status, level, major, company)");
         printSeparator();
     }
     /**

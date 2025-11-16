@@ -47,11 +47,21 @@ public class Test {
         // ApplicationManager needs InternshipManager to link applications to opportunities
         ApplicationManager applicationManager = new ApplicationManager(internshipManager, userManager);
         MenuBoundary UI = new MenuBoundary();
-        
+
+        Scanner sc = new Scanner(System.in);
         System.out.println("=".repeat(60));
         List<Internship> internList = internshipManager.getAllInternships();
         UI.displayInternshipList(internList);
 
+        User testS = userManager.getStudentByID("U2310002B");
+        String internshipID = sc.nextLine().trim();
+        Internship internshipToApply = internshipManager.findInternshipByID(internshipID);
+        if(internshipToApply != null){
+            System.out.println("Application submitted successfully for Internship ID: " + internshipID);
+            Application newApplication = applicationManager.apply((Student)testS, internshipToApply);
+        } else {
+            System.out.println("Invalid Internship ID. Application failed.");
+        }
 
         System.out.println("=".repeat(60));
         System.out.println("--- Functional Integration Test: Student Application Limit ---");

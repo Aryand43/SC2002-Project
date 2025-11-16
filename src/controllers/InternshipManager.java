@@ -75,7 +75,7 @@ public class InternshipManager {
      */
     public Internship findInternshipByID(String internshipId) {
         if (internshipList.isEmpty()){
-            System.out.println("NO internship listings");
+            System.out.println("No internship listing");
         }
         return internshipList.stream()
             .filter(i -> i.getInternshipID().equals(internshipId))

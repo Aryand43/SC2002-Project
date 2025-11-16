@@ -60,6 +60,7 @@ public class Student extends User {
     public int getYearOfStudy() { return yearOfStudy; }
     public String getMajor() { return major; }
     public ArrayList<Application> getApplications() { return applications; }
+    public int noOfApplications() { return applications.size(); }
 
 
     // -----------------------------
