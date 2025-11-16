@@ -1,4 +1,4 @@
-InternshipID,Title,Description,Level,PreferredMajor,OpeningDate,ClosingDate,Status,CompanyName,CompanyRepId,TotalSlots,AvailableSlots,ConfirmedSlots,Visible
+
 INT0001,Software Development Intern,Develop web applications using Java and Spring Boot framework,BASIC,Computer Science,01/11/2024,30/12/2025,APPROVED,Tech Innovations Pte Ltd,sarah.johnson@techinnovations.com.sg,5,5,0,true
 INT0002,Data Analytics Intern,Analyze customer data and create visualization dashboards,INTERMEDIATE,Data Science & AI,15/10/2024,09/12/2025,APPROVED,Quantum Analytics,david.tan@quantumanalytics.sg,3,3,0,true
 INT0003,Cybersecurity Intern,Assist in penetration testing and security audits,ADVANCED,Computer Engineering,01/12/2024,28/02/2025,APPROVED,CyberSecure Systems,john.lim@cybersecure.com,2,2,0,true
@@ -25,4 +25,3 @@ INT0023,Aerodynamics Intern,Run CFD simulations for wing designs,ADVANCED,Mechan
 INT0024,Thermal Analysis Intern,Perform thermal modelling and analysis,INTERMEDIATE,Mechanical and Aerospace Engineering,15/11/2024,12/12/2025,APPROVED,HeatFlow Lab,simon.koh@heatflow.sg,3,3,0,true
 INT0025,Materials Testing Intern,Conduct tensile and fatigue tests,BASIC,Mechanical and Aerospace Engineering,01/12/2024,11/12/2025,PENDING,MatTest Co,olivia.ng@mattest.com,4,4,0,false
 INT0026,CAD Optimization Intern,Optimize CAD models for manufacturability,BASIC,Mechanical and Aerospace Engineering,01/11/2024,20/12/2025,APPROVED,DesignWorks,kelly.choi@designworks.sg,3,3,0,true
-
