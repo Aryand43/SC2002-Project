@@ -213,7 +213,7 @@ public class Main {
                                  break;
                              case 3:
                                  // View Pending Internships
-                                 printInternshipList(internshipManager.getPendingInternships());
+                                 UI.displayInternshipList(internshipManager.getPendingInternships());
                                  break;
                              case 4:
                                  // Approve / Reject Internship Opportunity Postings
@@ -275,31 +275,31 @@ public class Main {
                                      case 1: {
                                          System.out.print("Enter preferred major: ");
                                          String major = sc.nextLine().trim();
-                                         printInternshipList(reportGenerator.generateReportByPreferredMajor(major));
+                                         UI.displayInternshipList(reportGenerator.generateReportByPreferredMajor(major));
                                          break;
                                      }
                                      case 2: {
                                          System.out.print("Enter internship level (BASIC/INTERMEDIATE/ADVANCED): ");
                                          String level = sc.nextLine().trim();
-                                         printInternshipList(reportGenerator.generateReportByLevel(level));
+                                         UI.displayInternshipList(reportGenerator.generateReportByLevel(level));
                                          break;
                                      }
                                      case 3: {
                                          System.out.print("Enter status (PENDING/APPROVED/REJECTED/FILLED): ");
                                          String status = sc.nextLine().trim();
-                                         printInternshipList(reportGenerator.generateReportByStatus(status));
+                                         UI.displayInternshipList(reportGenerator.generateReportByStatus(status));
                                          break;
                                      }
                                      case 4: {
                                          System.out.print("Enter company name: ");
                                          String company = sc.nextLine().trim();
-                                         printInternshipList(reportGenerator.generateReportByCompany(company));
+                                         UI.displayInternshipList(reportGenerator.generateReportByCompany(company));
                                          break;
                                      }
                                      case 5: {
                                          System.out.print("Enter student ID: ");
                                          String studentId = sc.nextLine().trim();
-                                         java.util.List<models.Application> apps = reportGenerator.generateReportByStudent(studentId);
+                                         List<Application> apps = reportGenerator.generateReportByStudent(studentId);
                                          printApplicationList(apps);
                                          break;
                                      }
@@ -312,7 +312,7 @@ public class Main {
                                          String sMajor = sc.nextLine().trim();
                                          System.out.print("Enter company name (or leave blank): ");
                                          String sCompany = sc.nextLine().trim();
-                                         printInternshipList(reportGenerator.generateCustomReport(
+                                         UI.displayInternshipList(reportGenerator.generateCustomReport(
                                              sStatus.isEmpty() ? null : sStatus,
                                              sLevel.isEmpty() ? null : sLevel,
                                              sMajor.isEmpty() ? null : sMajor,
@@ -365,19 +365,6 @@ public class Main {
         for (models.CompanyRepresentative r : reps) {
             System.out.printf("%-12s %-25s %-20s%n",
                 r.getID(), r.getUserName(), r.getCompanyName());
-        }
-    }
-
-    /* Helper: print internships */
-    private static void printInternshipList(java.util.List<models.Internship> list) {
-        if (list == null || list.isEmpty()) {
-            System.out.println("No internships found.");
-            return;
-        }
-        System.out.printf("%-10s %-30s %-10s %-20s %-12s%n", "ID", "Title", "Level", "Company", "Status");
-        for (models.Internship i : list) {
-            System.out.printf("%-10s %-30s %-10s %-20s %-12s%n",
-                i.getInternshipID(), i.getTitle(), i.getLevel(), i.getCompanyName(), i.getStatus());
         }
     }
 
