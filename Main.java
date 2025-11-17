@@ -1,8 +1,6 @@
 import boundaries.*;
 import controllers.*;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 import models.*;
@@ -29,17 +27,6 @@ public class Main {
         }
     }
 
-    LocalDate inputDate(String prompt) {
-        while (true) {
-            try {
-                System.out.print(prompt);
-                String dateInput = scanner.nextLine().trim();
-                return LocalDate.parse(dateInput, DATE_FORMATTER);
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format. Please use dd/MM/yyyy (e.g., 25/12/2024).");
-            }
-        }
-    }
     public static void main (String[] args){
         Scanner sc = new Scanner(System.in);
         // 1. INITIALIZE ALL MANAGERS (Loads data from CSV files) & Variables
@@ -64,8 +51,8 @@ public class Main {
         		UI.displayLoginMenu();
             	input = main.inputInteger("Please Enter Your Input: ", 1, 5);
             	switch(input) {
-            	case 1:
-            		 // Input username
+            	case 1 -> {
+                    // Input username
                     System.out.print("Enter UserID: ");
                     String userID = sc.nextLine();
                     
@@ -73,49 +60,49 @@ public class Main {
                     System.out.print("Enter password: ");
                     String password = sc.nextLine();
                     login = userManager.login(userID, password);
-                    break;
-            	case 2:
-            		 System.out.print("Enter User ID: ");
-                     String userID2 = sc.nextLine();
-                     
-                     // Input Email
-                     System.out.print("Enter Email: ");
-                     String email = sc.nextLine();
-                     
-            		 userManager.resetPassword(userID2, email);
-            		 break;
-            	case 3:
-            		 System.out.print("Enter UserID: ");
-                     String userID3 = sc.nextLine();
-                     
-                     // Input oldPassword
-                     System.out.print("Enter oldpassword: ");
-                     String oldPassword = sc.nextLine();
-                     
-                     userManager.changePassword(userID3, oldPassword);
-                     break;
-            	case 4:
-            		System.out.println("Enter Username: ");
-            		String username = sc.nextLine();
+                        }
+            	case 2 -> {
+                    System.out.print("Enter User ID: ");
+                    String userID2 = sc.nextLine();
+                    
+                    // Input Email
+                    System.out.print("Enter Email: ");
+                    String email = sc.nextLine();
+                    
+                    userManager.resetPassword(userID2, email);
+                        }
+            	case 3 -> {
+                    System.out.print("Enter UserID: ");
+                    String userID3 = sc.nextLine();
+                    
+                    // Input oldPassword
+                    System.out.print("Enter oldpassword: ");
+                    String oldPassword = sc.nextLine();
+                    
+                    userManager.changePassword(userID3, oldPassword);
+                        }
+            	case 4 -> {
+                    System.out.println("Enter Username: ");
+                    String username = sc.nextLine();
+                    
+                    System.out.println("Enter Company Name: ");
+                    String companyName = sc.nextLine();
+                    
+                    System.out.println("Enter Department Name: ");
+                    String DepartmentName = sc.nextLine();
+                    
+                    System.out.println("Enter Your Position: ");
+                    String userPosition = sc.nextLine();
+                    
+                    System.out.println("Enter Your Email: ");
+                    String userEmail = sc.nextLine();
+                    
+                    CompanyRepresentative newCR = CompanyRepresentative.registerRep(username, companyName, DepartmentName, userPosition, userEmail);
+                    userManager.addCompanyRepresentative(newCR);
+                        }
             		
-            		System.out.println("Enter Company Name: ");
-            		String companyName = sc.nextLine();
-            		
-            		System.out.println("Enter Department Name: ");
-            		String DepartmentName = sc.nextLine();
-            		
-            		System.out.println("Enter Your Position: ");
-            		String userPosition = sc.nextLine();
-            		
-            		System.out.println("Enter Your Email: ");
-            		String userEmail = sc.nextLine();
-            		
-            		CompanyRepresentative newCR = CompanyRepresentative.registerRep(username, companyName, DepartmentName, userPosition, userEmail);
-            		userManager.addCompanyRepresentative(newCR);
-            		break;
-            		
-            	case 5:
-            		break;
+            	case 5 -> {
+                        }
             	}
             	if(input == 5) {
             		break;
@@ -141,20 +128,21 @@ public class Main {
                     List <Internship> ListingsVisibleToStudent = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
 
                     switch (choice){
-                        case 1: // View Available Internships
+                        case 1 -> // View Available Internships
                             UI.displayInternshipList(ListingsVisibleToStudent);
-                            break;
 
-                        case 2: // Search Internships (By keyword)
+                        case 2 -> {
+                            // Search Internships (By keyword)
                             UI.displayInternshipList(ListingsVisibleToStudent);
                             System.out.print("Enter keyword to search: ");
                             String keywordSearch = sc.nextLine().trim();
                             List<Internship> keywordList = internshipManager.search(keywordSearch);
                             System.out.print("Displaying search results for keyword: " + keywordSearch);
                             UI.displayInternshipList(keywordList);
-                        break;
+                        }
 
-                        case 3: // Apply for Internship
+                        case 3 -> {
+                            // Apply for Internship
                             System.out.print("Enter Internship ID to apply: ");
                             
                             String internshipID = sc.nextLine().trim();
@@ -167,21 +155,21 @@ public class Main {
                             } else {
                                 System.out.println("Invalid Internship ID. Application failed.");
                             }
-                            break;
-                        case 4: // View My Applications
-                            
-                            break;
-                        case 5: // Filter Internships
-                        
-                            break;
-                        case 6:  //Clear filters
-
-                            break;
-                        case 0: // Logout
+                        }
+                        case 4 -> {
+                        }
+                        case 5 -> {
+                        }
+                        case 6 -> {
+                        }
+                        case 0 -> // Logout
                             userManager.logout();
-                            break; 
                     }
+                    // View My Applications
+                    // Filter Internships
+                    //Clear filters
                     break;
+
                      
                  case CareerCenterStaff: // Current user is Career Center Staff
                      // Loop the staff menu until logout
@@ -193,11 +181,9 @@ public class Main {
                              break;
                          }
                          switch (staffChoice) {
-                             case 1:
-                                 // View Company Representative account list
+                             case 1 -> // View Company Representative account list
                                  printCompanyRepList(userManager.getRepList().stream().filter(s ->s.isApproved()==null).toList());
-                                 break;
-                             case 2:
+                             case 2 -> {
                                  // Authorize / Reject Company Representative
                                  System.out.print("Enter Company Representative ID to review: ");
                                  String repId = sc.nextLine().trim();
@@ -210,12 +196,10 @@ public class Main {
                                      boolean ok = userManager.rejectCompanyRepresentative(repId);
                                      System.out.println(ok ? "Company Representative rejected." : "Failed to reject (check ID).");
                                  }
-                                 break;
-                             case 3:
-                                 // View Pending Internships
+                        }
+                             case 3 -> // View Pending Internships
                                  UI.displayInternshipList(internshipManager.getPendingInternships());
-                                 break;
-                             case 4:
+                             case 4 -> {
                                  // Approve / Reject Internship Opportunity Postings
                                  System.out.print("Enter Internship ID: ");
                                  String internshipId = sc.nextLine().trim();
@@ -228,18 +212,16 @@ public class Main {
                                      boolean ok = internshipManager.rejectListing(internshipId);
                                      System.out.println(ok ? "Internship listing rejected." : "Failed to reject internship listing.");
                                  }
-                                 break;
-                             case 5:
-                                 // View Student Withdrawal Requests
+                        }
+                             case 5 -> // View Student Withdrawal Requests
                                  printApplicationList(applicationManager.getApplicationList().stream()
                                      .filter(a -> a.getStatus() == models.Application.ApplicationStatus.WITHDRAW_REQUESTED)
                                      .toList());
-                                 break;
-                             case 6:
+                             case 6 -> {
                                  // Approve / Reject Student Withdrawal Requests
                                  java.util.List<models.Application> withdraws = applicationManager.getApplicationList().stream()
-                                     .filter(a -> a.getStatus() == models.Application.ApplicationStatus.WITHDRAW_REQUESTED)
-                                     .toList();
+                                         .filter(a -> a.getStatus() == models.Application.ApplicationStatus.WITHDRAW_REQUESTED)
+                                         .toList();
                                  if (withdraws.isEmpty()) {
                                      System.out.println("No withdrawal requests found.");
                                      break;
@@ -256,8 +238,8 @@ public class Main {
                                      boolean ok = applicationManager.rejectStudentWithdrawal(appId);
                                      System.out.println(ok ? "Withdrawal rejected." : "Failed to reject withdrawal (check ID).");
                                  }
-                                 break;
-                             case 7:
+                        }
+                             case 7 -> {
                                  // Generate Reports (expose all ReportGenerator methods)
                                  System.out.println("Report types:");
                                  System.out.println(" 1. By Preferred Major");
@@ -270,40 +252,35 @@ public class Main {
                                  System.out.println(" 0. Back");
                                  int rpt = main.inputInteger("Select report type: ", 0, 7);
                                  switch (rpt) {
-                                     case 0:
-                                         break;
-                                     case 1: {
+                                     case 0 -> {
+                                    }
+                                     case 1 ->  {
                                          System.out.print("Enter preferred major: ");
                                          String major = sc.nextLine().trim();
                                          UI.displayInternshipList(reportGenerator.generateReportByPreferredMajor(major));
-                                         break;
                                      }
-                                     case 2: {
+                                     case 2 ->  {
                                          System.out.print("Enter internship level (BASIC/INTERMEDIATE/ADVANCED): ");
                                          String level = sc.nextLine().trim();
                                          UI.displayInternshipList(reportGenerator.generateReportByLevel(level));
-                                         break;
                                      }
-                                     case 3: {
+                                     case 3 ->  {
                                          System.out.print("Enter status (PENDING/APPROVED/REJECTED/FILLED): ");
                                          String status = sc.nextLine().trim();
                                          UI.displayInternshipList(reportGenerator.generateReportByStatus(status));
-                                         break;
                                      }
-                                     case 4: {
+                                     case 4 ->  {
                                          System.out.print("Enter company name: ");
                                          String company = sc.nextLine().trim();
                                          UI.displayInternshipList(reportGenerator.generateReportByCompany(company));
-                                         break;
                                      }
-                                     case 5: {
+                                     case 5 ->  {
                                          System.out.print("Enter student ID: ");
                                          String studentId = sc.nextLine().trim();
                                          List<Application> apps = reportGenerator.generateReportByStudent(studentId);
                                          printApplicationList(apps);
-                                         break;
                                      }
-                                     case 6: {
+                                     case 6 ->  {
                                          System.out.print("Enter status (or leave blank): ");
                                          String sStatus = sc.nextLine().trim();
                                          System.out.print("Enter level (or leave blank): ");
@@ -313,20 +290,17 @@ public class Main {
                                          System.out.print("Enter company name (or leave blank): ");
                                          String sCompany = sc.nextLine().trim();
                                          UI.displayInternshipList(reportGenerator.generateCustomReport(
-                                             sStatus.isEmpty() ? null : sStatus,
-                                             sLevel.isEmpty() ? null : sLevel,
-                                             sMajor.isEmpty() ? null : sMajor,
-                                             sCompany.isEmpty() ? null : sCompany));
-                                         break;
+                                                 sStatus.isEmpty() ? null : sStatus,
+                                                 sLevel.isEmpty() ? null : sLevel,
+                                                 sMajor.isEmpty() ? null : sMajor,
+                                                 sCompany.isEmpty() ? null : sCompany));
                                      }
-                                     case 7: {
+                                     case 7 ->  {
                                          System.out.println(reportGenerator.generateSummaryReport());
-                                         break;
                                      }
                                  }
-                                 break;
-                             default:
-                                 System.out.println("Unknown option.");
+                        }
+                             default -> System.out.println("Unknown option.");
                          }
                      }
                      break;
