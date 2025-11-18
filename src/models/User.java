@@ -63,7 +63,11 @@ public class User {
     }
     
     /**
-     * Class Constructor for serializer
+     * Class Constructor for serializer that allows extra parameter of password
+     * @param ID Sets the User ID
+     * @param name Sets the user name
+     * @param email Sets the user email
+     * @param password Sets the user password <br><br>
      */
     public User(String ID, String name, String email, String password){
         this.ID = ID;

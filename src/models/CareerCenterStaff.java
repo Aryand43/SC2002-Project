@@ -34,6 +34,15 @@ public class CareerCenterStaff extends User {
         this.department = department;
     }
     
+    /**
+     * Convenient Constructor for Serializer with extra Parameter of password
+     * @param ID Sets the staff ID
+     * @param name Sets the staff name
+     * @param role Sets the staff role
+     * @param department Sets the staff department (e.g. Career Services Office)
+     * @param email Sets the staff email
+     * @param password User's password<br><br>
+     */
     public CareerCenterStaff(String ID, String name, String role, String department,String email, String password) {
         super(ID, name, email, password);
         this.role = role;

@@ -33,8 +33,13 @@ public class Application {
         this.status = status;
     }
 
-    // Convenience constructor used by some serializers (id, studentId, internshipId, statusAsString)
-    
+    /**
+     * Convenience constructor used by some serializers (id, studentId, internshipId, statusAsString)
+     * @param id
+     * @param studentID
+     * @param internshipID
+     * @param status
+     */
     public Application(String id, String studentID, String internshipID, String status) {
         this.id = id;
         this.studentID = studentID;
@@ -47,7 +52,11 @@ public class Application {
         this.appliedDate = LocalDate.now().toString();
     }
     
-    // Simple constructor for apply() when student and internship objects are available
+    /**
+     * Simple constructor for apply() when student and internship objects are available
+     * @param studentID
+     * @param internshipID
+     */
     public Application(String studentID, String internshipID) {
         this.id = "APP" + System.currentTimeMillis();
         this.studentID = studentID;

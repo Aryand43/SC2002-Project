@@ -24,8 +24,16 @@ public class CompanyRepresentative extends User {
         this.listings = new ArrayList<>();        
     }
     
-    /*
-     * Constructor for serializer
+    /**
+     * Constructor for Serializer where it takes extra parameter of status & password
+     * @param ID Company Rep ID
+     * @param name Company Rep Name
+     * @param email Company Rep Email (To Be used as loginID)
+     * @param companyName Company Name
+     * @param department Which department the Company Rep belogns to
+     * @param position Which position the Company Representative holds
+     * @param status Status of the account creation
+     * @param password Password of the Company Representative
      */
     public CompanyRepresentative(String ID, String name, String email, String companyName, String department, String position, Boolean status, String password){
         super(ID, name, email,password);
@@ -37,6 +45,16 @@ public class CompanyRepresentative extends User {
         this.listings = new ArrayList<>();        
     }
     
+    /**
+     * Alternate version of Serializer for company representative where the password is non existent yet
+     * @param ID Company Rep ID
+     * @param name Company Rep Name
+     * @param email Company Rep Email (To Be used as loginID)
+     * @param companyName Company Name
+     * @param department Which department the Company Rep belogns to
+     * @param position Which position the Company Representative holds
+     * @param status Status of the account creatio
+     */
     public CompanyRepresentative(String ID, String name, String email, String companyName, String department, String position, Boolean status){
         super(ID, name, email);
         this.companyName = companyName;

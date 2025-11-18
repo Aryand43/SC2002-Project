@@ -54,6 +54,15 @@ public class Student extends User {
         this.userType = TypesOfUser.Student;
     }
     
+    /**
+     * Convenient Constructor for the Serializer that takes in extra parameter of password
+     * @param ID Student ID
+     * @param name Student name
+     * @param major Student Major
+     * @param yearOfStudy 1–4
+     * @param email Student email
+     * @param password Student's password that is remembered by the system
+     */
     public Student(String ID, String name, String major, int yearOfStudy, String email, String password) {
         super(ID, name, email, password);
         this.yearOfStudy = yearOfStudy;

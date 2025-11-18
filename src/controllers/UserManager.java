@@ -96,7 +96,6 @@ public class UserManager {
      * Else, user will be unable to login.
      * 
      */
-    
     public boolean login(String ID, String password) {
 
         for (User u : userList) {
@@ -159,7 +158,10 @@ public class UserManager {
         return false;
     }
 
-         
+    /**
+     * Function that combines Student, Staff, Company Representative into one userlist by upcasting them provided if their account is approved
+     * @return ArrayList of User objects.
+     */
     public ArrayList<User> getRespectiveUserList(){
     	ArrayList<User> userList = new ArrayList<>();
         for(CareerCenterStaff staff: staffList) {
@@ -196,6 +198,11 @@ public class UserManager {
         this.clearCurrentUser();
     }
     
+    /**
+     * Function that approves Company Representative's application for account by getting their ID and returns the a status to indicate if the approval was a success.
+     * @param String repID
+     * @return Boolean
+     */
     public boolean approveCompanyRepresentative(String repID){
     	for(CompanyRepresentative cr: repList) {
     		if(cr.getID().equals(repID)) {
@@ -217,7 +224,12 @@ public class UserManager {
     	}
         return true;
     }
-
+    
+    /**
+     * Function that rejects Company Representative's application for account by getting their ID and returns the a status to indicate if the rejection was a success.
+     * @param String repID
+     * @return Boolean
+     */
     public boolean rejectCompanyRepresentative(String repID){
     	for(CompanyRepresentative cr: repList) {
     		if(cr.getID().equals(repID)) {
@@ -238,6 +250,11 @@ public class UserManager {
         return true;
     }
     
+    /**
+     * Function that resets the password of User to the default password when they forget their password.
+     * @param userID
+     * @param userEmail
+     */
     public void resetPassword(String userID, String userEmail) {
     	User resetUser = userList.stream().filter(s -> s.getID().equals(userID)).filter(s -> s.getEmail().equals(userEmail)).findFirst().orElse(null);
     	if (resetUser == null) {
@@ -249,6 +266,11 @@ public class UserManager {
     	}
     }
     
+    /**
+     * Function that enables user to change the password by asking user for their input of oldPassword and their ID.
+     * @param userID
+     * @param oldPassword
+     */
     public void changePassword(String userID, String oldPassword){
     	User u = userList.stream().filter(s -> s.getID().equals(userID)).filter(s -> s.getPassword().equals(oldPassword)).findFirst().orElse(null);
     	if(u == null) {
@@ -260,6 +282,10 @@ public class UserManager {
     	}
     }
     
+    /**
+     * Function that adds Companyrepresentative to the ArrayList of CompanyRepresentative
+     * @param cr
+     */
     public void addCompanyRepresentative(CompanyRepresentative cr) {
     	repList.add(cr);
     }
@@ -299,6 +325,9 @@ public class UserManager {
     	return this.staffList;
     }
     
+    /**
+     * Function that saves the List of Students, Staff, Company Representative back into the CSV file.
+     */
     public void saveToFile() {
         StaffSerializer staffSerializer = new StaffSerializer();
     	FileHandler<CareerCenterStaff> staffFileHandler = new FileHandler<>(staffSerializer);

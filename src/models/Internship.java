@@ -192,6 +192,30 @@ public class Internship {
     }
 
     /**
+     * Domain method: Confirm a slot when a placement is accepted
+     * Automatically handles visibility and status updates
+     */
+    public void confirmSlot() {
+        incrementConfirmedSlots();
+        if (isFull()) {
+            setInvisible();
+            setStatus(InternshipStatus.FILLED);
+        }
+    }
+
+    /**
+     * Domain method: Withdraw a confirmed slot
+     * Automatically handles visibility restoration
+     */
+    public void withdrawSlot() {
+        decrementConfirmedSlots();
+        if (!isFull() && getAvailableSlots() > 0 && getStatus() == InternshipStatus.FILLED) {
+            setVisible();
+            setStatus(InternshipStatus.APPROVED);
+        }
+    }
+
+    /**
      * Get detailed information of internship listing
      */
     public String getDetailedInfo() {
