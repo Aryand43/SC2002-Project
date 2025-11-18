@@ -1,6 +1,5 @@
 import boundaries.*;
 import controllers.*;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -10,7 +9,6 @@ import models.User.TypesOfUser;
 
 public class Main {
     private Scanner scanner;
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     int inputInteger(String prompt, int min, int max) {
         while (true) {

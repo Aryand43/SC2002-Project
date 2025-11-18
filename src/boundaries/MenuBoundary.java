@@ -1,6 +1,7 @@
 package boundaries;
 
 import java.util.List;
+import models.Application;
 import models.Internship;
 
 public class MenuBoundary {
@@ -33,39 +34,7 @@ public class MenuBoundary {
 		System.out.println("5. Exit");
 		printSeparator();
     }
-    
-    /**
-     * Display Student Internship Menu
-     */
-    public void displayStudentInternshipMenu() {
-        printSectionHeader("Student Internship Menu");
-        System.out.println("1. View Available Internships (with filter)");
-        System.out.println("2. Search Internships");
-        System.out.println("3. Apply for Internship");
-        System.out.println("4. View My Applications");
-        System.out.println("5. Accept/Withdraw Internship Offer");
-        System.out.println("0. Logout");
-        printSeparator();
-    }
-    /**
-     * Display list of ALL internships
-     * @param internships List of internships to display
-     */
-    public void displayInternshipList(List<Internship> internships) {
-        if (internships.isEmpty()) {
-            System.out.println("No internships found.");
-            return;
-        }
-        
-        for (int i = 0; i < internships.size(); i++) {
-            printSectionHeader("Internship " + (i + 1));
-            System.out.printf("%d. %s\n", (i + 1), internships.get(i).getDetailedInfo());
-        }
-        
-        System.out.println("\nTotal: " + internships.size() + " internship(s)");
-        printSeparator();
-    }
-    
+
     public void displayInternshipFilterMenu(){
         printSectionHeader("Filter By");
         System.out.println(" 1. Date Range");
