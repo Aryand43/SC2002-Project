@@ -133,7 +133,8 @@ public class Main {
                     switch (choice){
                                                 // ...inside switch(choice) for Student...
                         case 1 -> {
-                            // View & Filter Available Internships0
+                            // View & Filter Available Internships
+
                             UI.displayInternshipList(ListingsVisibleToStudent);
 
                             System.out.println("\nFilter internships");
