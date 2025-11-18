@@ -134,6 +134,14 @@ public class Main {
                     
                     List <Internship> ListingsVisibleToStudent = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
 
+                     List<Application> myApplications = applicationManager.getApplicationList().stream()
+                                .filter(a -> a.getStudentID().equals(curUser.getID()))
+                                .toList();
+                                
+                    //Add it to student object, with the respective applications
+                    for(Application a : myApplications){
+                        ((Student)curUser).addApplication(a);
+                    }
                     switch (choice){
                         case 1 -> // View Available Internships
                             UI.displayInternshipList(ListingsVisibleToStudent);
@@ -164,16 +172,8 @@ public class Main {
                             }
                         }
                         case 4 -> {
-                            List<Application> myApplications = applicationManager.getApplicationList().stream()
-                                .filter(a -> a.getStudentID().equals(curUser.getID()))
-                                .toList();
-                            
                             UI.displayApplicationList(myApplications);
 
-                            //Add it to student object, with the respective applications
-                            for(Application a : myApplications){
-                                ((Student)curUser).addApplication(a);
-                            }
                             
                             // After displaying applications, check if more than one is successful
                             List<Application> successfulApps = myApplications.stream()

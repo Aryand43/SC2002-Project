@@ -118,9 +118,9 @@ public class MenuBoundary {
             System.out.println("No applications to show.");
             return;
         }
-        System.out.printf("%-19s %-12s %-14s %-15s%n", "AppID", "StudentID", "InternshipID", "Status");
+        System.out.printf("%-19s %-12s %-14s %-15s %-12s%n", "AppID", "StudentID", "InternshipID", "Status", "Applied Date");
         for (models.Application a : applications) {
-            System.out.printf("%-19s %-12s %-14s %-15s%n", a.getID(), a.getStudentID(), a.getInternshipID(), a.getStatus());
+            System.out.printf("%-19s %-12s %-14s %-15s %-12s%n", a.getID(), a.getStudentID(), a.getInternshipID(), a.getStatus(), a.getAppliedDate());
         }
         printSeparator();
     }
