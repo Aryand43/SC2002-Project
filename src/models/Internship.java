@@ -125,7 +125,7 @@ public class Internship {
     
     /**
      * Check if internship is open for applications. IF date is before opening date, listing should not be visible.<br>
-     * If date is after clsoing date, listing should also be hidden. The lsiting is only visible if within closing and opening date. 
+     * If date is after clsoing date, listing should also be hidden. The listing is only visible if within closing and opening date. 
      */
     public boolean isOpenForApplications() {
         LocalDate today = LocalDate.now();

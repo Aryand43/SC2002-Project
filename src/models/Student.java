@@ -106,12 +106,29 @@ public class Student extends User {
             return false;
         }
 
-        // Check year of study restrictions
+         // NEW: Check visibility of internship
+        if (!internship.isVisible()) {
+        System.out.println("This internship is not currently visible and cannot be applied for.");
+        return false;
+        }
+
+        //Checking the restriction for Year 1-2 students
         if (yearOfStudy <= 2 && internship.getLevel() != Internship.InternshipLevel.BASIC) {
             System.out.println("Year 1 and 2 students can only apply for Basic-level internships.");
             return false;
         }
 
+        // Major preference restriction
+        if (internship.getPreferredMajor() != null 
+            && !internship.getPreferredMajor().isEmpty()
+            && !internship.getPreferredMajor().contains(this.major)) {
+        System.out.println("Your major (" + this.major + 
+                           ") does not match the required major preference for this internship.");
+        return false;
+    }
+        // Add application
+        //applications.add(application); SHOULD only add once approved by ApplicationManager
+        System.out.println("Application submitted, waiting approval: " + internship.getTitle());
         return true;
     }
 
