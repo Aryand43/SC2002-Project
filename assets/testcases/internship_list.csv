@@ -4,19 +4,19 @@ INT0002,Data Analytics Intern,Analyze customer data and create visualization das
 INT0003,Cybersecurity Intern,Assist in penetration testing and security audits,ADVANCED,Computer Engineering,01/12/2024,28/02/2025,APPROVED,CyberSecure Systems,john.lim@cybersecure.com,2,2,0,true
 INT0004,Mobile App Development,Build mobile applications for iOS and Android platforms,INTERMEDIATE,Computer Science,01/11/2024,11/12/2025,PENDING,Tech Innovations Pte Ltd,sarah.johnson@techinnovations.com.sg,4,4,0,false
 INT0005,Machine Learning Intern,Work on ML models for predictive analytics,ADVANCED,Data Science & AI,15/11/2024,15/12/2025,APPROVED,Quantum Analytics,david.tan@quantumanalytics.sg,2,2,0,true
-INT0006,Electrical Engineering Intern,Design and test circuit boards for IoT devices,BASIC,Electrical and Electronic Engineering,01/10/2024,30/12/2024,REJECTED,Smart Manufacturing Co,raj.kumar@smartmfg.com.sg,6,6,0,true
+INT0006,Electrical Engineering Intern,Design and test circuit boards for IoT devices,BASIC,Electrical and Electronic Engineering,01/10/2024,30/12/2024,REJECTED,Smart Manufacturing Co,raj.kumar@smartmfg.com.sg,6,6,0,false
 INT0007,Power Systems Intern,Assist in power grid analysis and optimization,INTERMEDIATE, Electrical and Electronic Engineering,15/11/2024,27/12/2025,APPROVED,Smart Manufacturing Co,raj.kumar@smartmfg.com.sg,4,4,0,true
 INT0008,Robotics Engineering Intern,Develop control systems for industrial robots,ADVANCED, Electrical and Electronic Engineering,01/12/2024,26/12/2025,APPROVED,Robotics Dynamics,james.koh@roboticsdynamics.sg,3,3,0,true
 INT0009,Mechanical Design Intern,Create CAD models for mechanical components,BASIC,Mechanical and Aerospace Engineering,01/11/2024,30/12/2025,PENDING,Global Engineering Solutions,priya.sharma@globaleng.com,5,5,0,false
-INT0010,HVAC Systems Intern,Design heating and cooling systems for buildings,INTERMEDIATE,Mechanical and Aerospace Engineering,15/10/2024,15/12/2025,PENDING,GreenTech Industries,emily.wong@greentech.com.sg,4,4,0,true
+INT0010,HVAC Systems Intern,Design heating and cooling systems for buildings,INTERMEDIATE,Mechanical and Aerospace Engineering,15/10/2024,15/12/2025,PENDING,GreenTech Industries,emily.wong@greentech.com.sg,4,4,0,false
 INT0011,Backend Engineer Intern,Develop REST APIs and backend services,BASIC,Computer Science,01/11/2024,30/12/2025,APPROVED,CodeForge Solutions,amy.lee@codeforge.com,4,4,0,true
 INT0012,Frontend Engineer Intern,Build responsive UI components with React,INTERMEDIATE,Computer Science,01/11/2024,31/12/2025,APPROVED,PixelWave Studios,ben.lim@pixelwave.com,3,3,0,true
 INT0013,DevOps Intern,Automate deployment pipelines and CI/CD,INTERMEDIATE,Computer Science,15/11/2024,15/12/2025,APPROVED,CloudStream Pte Ltd,kevin.ong@cloudstream.sg,2,2,0,false
-INT0014,Database Intern,Design and optimize relational databases,BASIC,Computer Science,01/12/2024,30/12/2025,PENDING,DataWorks Ltd,sophia.tan@dataworks.com,3,3,0,true
+INT0014,Database Intern,Design and optimize relational databases,BASIC,Computer Science,01/12/2024,30/12/2025,PENDING,DataWorks Ltd,sophia.tan@dataworks.com,3,3,0,false
 INT0015,NLP Intern,Implement NLP pipelines for text analytics,ADVANCED,Data Science & AI,01/11/2024,30/12/2025,APPROVED,Language Labs,alan.choo@languagelabs.sg,2,2,0,true
 INT0016,Computer Vision Intern,Develop image recognition models,ADVANCED,Data Science & AI,15/11/2024,15/12/2025,APPROVED,Visionary AI,mei.chen@visionaryai.com,2,2,0,true
 INT0017,Data Engineer Intern,Build ETL pipelines and data lakes,INTERMEDIATE,Data Science & AI,01/11/2024,30/12/2025,APPROVED,Streamline Analytics,jason.koh@streamlineanalytics.sg,4,4,0,false
-INT0018,Data Visualization Intern,Create dashboards and visual reports,BASIC,Data Science & AI,01/12/2024,29/12/2025,PENDING,InsightViz,rita.leong@insightviz.com,3,3,0,true
+INT0018,Data Visualization Intern,Create dashboards and visual reports,BASIC,Data Science & AI,01/12/2024,29/12/2025,PENDING,InsightViz,rita.leong@insightviz.com,3,3,0,false
 INT0019,Embedded Systems Intern,Work on microcontroller firmware and drivers,INTERMEDIATE,Computer Engineering,01/11/2024,22/12/2025,APPROVED,Embedded Solutions,cheng.wu@embedsol.com,3,3,0,true
 INT0020,FPGA Intern,Design FPGA logic for acceleration,ADVANCED,Computer Engineering,15/11/2024,15/12/2025,APPROVED,AccelTech,fahmi.ahmad@acceltech.sg,2,2,0,true
 INT0021,Network Systems Intern,Configure and test network protocols,BASIC,Computer Engineering,01/12/2024,30/12/2025,PENDING,NetCore Labs,hannah.tan@netcore.com,4,4,0,false
