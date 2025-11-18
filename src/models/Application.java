@@ -4,6 +4,32 @@ import java.time.LocalDate;
 
 public class Application {
     public enum ApplicationStatus {PENDING, SUCCESSFUL, UNSUCCESSFUL, WITHDRAWN, WITHDRAW_REQUESTED}
+    
+    /**
+     * Defines valid state transitions for an application.
+     * Used by FSM to enforce allowed transitions.
+     */
+    public enum StateTransition {
+        // Acceptance flow
+        ACCEPT(ApplicationStatus.PENDING, ApplicationStatus.SUCCESSFUL),
+        REJECT_APPLICATION(ApplicationStatus.PENDING, ApplicationStatus.UNSUCCESSFUL),
+        
+        // Withdrawal flow
+        REQUEST_WITHDRAWAL(ApplicationStatus.SUCCESSFUL, ApplicationStatus.WITHDRAW_REQUESTED),
+        APPROVE_WITHDRAWAL(ApplicationStatus.WITHDRAW_REQUESTED, ApplicationStatus.WITHDRAWN),
+        REJECT_WITHDRAWAL(ApplicationStatus.WITHDRAW_REQUESTED, ApplicationStatus.SUCCESSFUL);
+        
+        private final ApplicationStatus from;
+        private final ApplicationStatus to;
+        
+        StateTransition(ApplicationStatus from, ApplicationStatus to) {
+            this.from = from;
+            this.to = to;
+        }
+        
+        public ApplicationStatus getFromState() { return from; }
+        public ApplicationStatus getToState() { return to; }
+    }
 
     private String id;
     private String studentID; 
@@ -90,6 +116,68 @@ public class Application {
     public Internship getInternship(){return this.internshipRef;}
     public void setInternship(Internship internshipRef) {
         this.internshipRef = internshipRef;
+    }
+
+    /**
+     * Validates if am application state transition is allowed according to FSM rules.
+     * @param transition The desired transition
+     * @return true if the transition is valid from the current state
+     */
+    private boolean isTransitionAllowed(StateTransition transition) {
+        return this.status == transition.getFromState();
+    }
+    
+    /**
+     * Performs the application state transition if allowed by FSM.
+     * @param transition The desired transition
+     * @return true if transition succeeded, false if transition is not allowed
+     */
+    private boolean performTransition(StateTransition transition) {
+        if (!isTransitionAllowed(transition)) {
+            return false;
+        }
+        this.status = transition.getToState();
+        return true;
+    }
+
+    /**
+     * Accept this application (state machine transition: PENDING to SUCCESSFUL)
+     * @return true if transition succeeded
+     */
+    public boolean accept() {
+        return performTransition(StateTransition.ACCEPT);
+    }
+
+    /**
+     * Reject this application (state machine transition: PENDING to UNSUCCESSFUL)
+     * @return true if transition succeeded
+     */
+    public boolean reject() {
+        return performTransition(StateTransition.REJECT_APPLICATION);
+    }
+
+    /**
+     * Student requests withdrawal (state machine transition: SUCCESSFUL to WITHDRAW_REQUESTED)
+     * @return true if transition succeeded
+     */
+    public boolean requestWithdrawal() {
+        return performTransition(StateTransition.REQUEST_WITHDRAWAL);
+    }
+
+    /**
+     * Approve a pending withdrawal (state machine transition: WITHDRAW_REQUESTED to WITHDRAWN)
+     * @return true if transition succeeded
+     */
+    public boolean approveWithdrawal() {
+        return performTransition(StateTransition.APPROVE_WITHDRAWAL);
+    }
+
+    /**
+     * Reject a withdrawal request (state machine transition: WITHDRAW_REQUESTED to SUCCESSFUL)
+     * @return true if transition succeeded
+     */
+    public boolean rejectWithdrawal() {
+        return performTransition(StateTransition.REJECT_WITHDRAWAL);
     }
 
     public void setStudentRef(Student studentRef) {

@@ -1,46 +1,46 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import models.*;
 
-//Minimal ApplicationManager implementation to satisfy ReportGenerator usage.
+/**
+ * ApplicationManager manages application workflows using FSM.
+ * The Application model enforces valid state transitions via StateTransition enum.
+ * <br><br>
+ * Valid state transitions (defined in Application.StateTransition):
+ * - ACCEPT: PENDING to SUCCESSFUL <br>
+ * - REJECT_APPLICATION: PENDING to UNSUCCESSFUL <br>
+ * - REQUEST_WITHDRAWAL: SUCCESSFUL to WITHDRAW_REQUESTED <br>
+ * - APPROVE_WITHDRAWAL: WITHDRAW_REQUESTED to WITHDRAWN <br>
+ * - REJECT_WITHDRAWAL: WITHDRAW_REQUESTED to SUCCESSFUL <br>
+ */
 public class ApplicationManager {
-    private ArrayList<Application> applicationList;
+    private ApplicationRepository repository;
     private InternshipManager internshipManager;
-    private FileHandler<Application> fileHandler;
     private UserManager userManager;
 
     public ApplicationManager() {
-        this.applicationList = new ArrayList<>();
+        // empty manager for testing or manual wiring
     }
 
     public ApplicationManager(InternshipManager internshipManager) {
-        this();
         this.internshipManager = internshipManager;
-        ApplicationSerializer serializer = new ApplicationSerializer();
-        this.fileHandler = new FileHandler<>(serializer);
-        this.applicationList = fileHandler.readFromFile();
+        ApplicationPersistence persistence = new FileApplicationPersistence();
+        this.repository = new ApplicationRepository(persistence);
     }
 
     public ApplicationManager(InternshipManager internshipManager, UserManager userManager) {
-        this();
         this.internshipManager = internshipManager;
         this.userManager = userManager;
-        ApplicationSerializer serializer = new ApplicationSerializer();
-        this.fileHandler = new FileHandler<>(serializer);
-        this.applicationList = fileHandler.readFromFile();
+        ApplicationPersistence persistence = new FileApplicationPersistence();
+        this.repository = new ApplicationRepository(persistence);
         // After loading applications, resolve references to Student and Internship objects
         resolveObjectReferences();
     }
-
-    public void saveApplicationsToFile() {
-        fileHandler.writeToFile(new ArrayList<>(applicationList));
-    }
-
+    
     // Return current applications
     public List<Application> getApplicationList() {
-        return new ArrayList<>(applicationList);
+        return repository != null ? repository.getAll() : List.of();
     }
 
     // Apply for an internship
@@ -48,14 +48,18 @@ public class ApplicationManager {
         Application app = new Application(student.getID(), opportunity.getInternshipID());
         app.setStudent(student);
         app.setInternship(opportunity);
-        applicationList.add(app);
+        if (repository != null) repository.add(app);
+        // Add application to student's collection after successful persistence
+        if (student != null) student.addApplication(app);
         return app;
     }
 
-    // Accept a placement for a student and application
+    // Accept a placement for a student and application (orchestrates domain + side-effects)
     public boolean acceptPlacement(Student student, Application application) {
         if (application == null) return false;
-        application.setStatus(Application.ApplicationStatus.SUCCESSFUL);
+        boolean transitioned = application.accept();
+        if (!transitioned) return false;
+        if (repository != null) repository.update(application);
         // If internship manager available, update listing confirmation
         if (internshipManager != null && application.getInternshipID() != null) {
             internshipManager.updateListingOnConfirmation(application.getInternshipID());
@@ -63,17 +67,30 @@ public class ApplicationManager {
         return true;
     }
 
-    // Student requests withdrawal (mark requested)
-    public boolean requestWithdrawal(Application application) {
+    // Reject an application
+    public boolean rejectApplication(Application application) {
         if (application == null) return false;
-        application.setStatus(Application.ApplicationStatus.WITHDRAW_REQUESTED);
+        boolean transitioned = application.reject();
+        if (!transitioned) return false;
+        if (repository != null) repository.update(application);
         return true;
     }
 
-    // Approve withdrawal (finalize)
+    // Student requests withdrawal
+    public boolean requestWithdrawal(Application application) {
+        if (application == null) return false;
+        boolean transitioned = application.requestWithdrawal();
+        if (!transitioned) return false;
+        if (repository != null) repository.update(application);
+        return true;
+    }
+
+    // Approve withdrawal request
     public boolean approveWithdrawal(Application application) {
         if (application == null) return false;
-        application.setStatus(Application.ApplicationStatus.WITHDRAWN);
+        boolean transitioned = application.approveWithdrawal();
+        if (!transitioned) return false;
+        if (repository != null) repository.update(application);
         if (internshipManager != null && application.getInternshipID() != null) {
             internshipManager.updateListingOnWithdrawal(application.getInternshipID());
         }
@@ -83,12 +100,13 @@ public class ApplicationManager {
     // Reject withdrawal request
     public boolean rejectWithdrawal(Application application) {
         if (application == null) return false;
-        application.setStatus(Application.ApplicationStatus.SUCCESSFUL);
-        // TODO: Ensure we track original state if more states are added later
+        boolean transitioned = application.rejectWithdrawal();
+        if (!transitioned) return false;
+        if (repository != null) repository.update(application);
         return true;
     }
 
-    // Helpers used elsewhere in project: accept/reject by application ID
+    // accept/reject by application ID
     public boolean approveStudentWithdrawal(String applicationID) {
         Application app = findByID(applicationID);
         return approveWithdrawal(app);
@@ -100,25 +118,20 @@ public class ApplicationManager {
     }
 
     public Application findByID(String id) {
-        for (Application a : applicationList) {
-            if (a.getID().equals(id)) return a;
-        }
-        return null;
+        return repository != null ? repository.findById(id) : null;
     }
 
     private void resolveObjectReferences() {
-        if (userManager == null) {
+        if (userManager == null || repository == null) {
             return;
         }
-        for (Application app : applicationList) {
+        for (Application app : repository.getAll()) {
             app.setStudentRef((Student) userManager.getStudentByID(app.getStudentID()));
             app.setInternship(internshipManager.findInternshipByID(app.getInternshipID()));
         }
     }
     
     public void saveTofile() {
-    	ApplicationSerializer serializer = new ApplicationSerializer();
-        this.fileHandler = new FileHandler<>(serializer);
-        this.fileHandler.writeToFile(applicationList);
+        if (repository != null) repository.save();
     }
 }

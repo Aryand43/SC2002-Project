@@ -8,7 +8,7 @@ import models.User.TypesOfUser;
 
 
 public class Main {
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     int inputInteger(String prompt, int min, int max) {
@@ -41,6 +41,8 @@ public class Main {
 
         MenuBoundary UI = new MenuBoundary();
         Main main = new Main(); // Need to create new main obj to call input validation methods
+        // Use the same Scanner instance across main and local code to avoid input stream clashes
+        main.scanner = sc;
         int input = 0;
 
         //MAIN CODE HERE FOR THE INTERNSHIP MANAGEMENT SYSTEM
@@ -59,7 +61,7 @@ public class Main {
                     // Input password
                     System.out.print("Enter password: ");
                     String password = sc.nextLine();
-                    login = userManager.login(userID, password);
+                    login = userManager.login(userID, password, sc);
                         }
             	case 2 -> {
                     System.out.print("Enter User ID: ");
@@ -79,7 +81,7 @@ public class Main {
                     System.out.print("Enter oldpassword: ");
                     String oldPassword = sc.nextLine();
                     
-                    userManager.changePassword(userID3, oldPassword);
+                    userManager.changePassword(userID3, oldPassword, sc);
                         }
             	case 4 -> {
                     System.out.println("Enter Username: ");
@@ -147,13 +149,13 @@ public class Main {
                             
                             String internshipID = sc.nextLine().trim();
                             Internship internshipToApply = internshipManager.findInternshipByID(internshipID);
-                            // First Check if student can apply. Validation done in applyForInternship() (e.g NOT MORE THAN 3 INTERNSHIPS, etc)
-                            boolean applied = ((Student)curUser).applyForInternship(internshipToApply);
-                            if(applied){
+                            // Validate that student can apply (year/level restrictions, application limit, etc.)
+                            boolean canApply = ((Student)curUser).canApply(internshipToApply);
+                            if(canApply){
+                                applicationManager.apply((Student)curUser, internshipToApply);
                                 System.out.println("Application submitted successfully for Internship ID: " + internshipID);
-                                Application newApplication = applicationManager.apply((Student)curUser, internshipToApply);
                             } else {
-                                System.out.println("Invalid Internship ID. Application failed.");
+                                System.out.println("Cannot apply for this internship. See message above for details.");
                             }
                         }
                         case 4 -> {

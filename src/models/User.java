@@ -162,11 +162,17 @@ public class User {
     	this.passwordChanged = false;
     }
     
-    public String setPassword(String oldPass){
-        Scanner sc = new Scanner(System.in);
+    /**
+     * Change user's password <br>
+     * @param oldPass current password to validate against
+     * @param sc Scanner instance to read new password from
+     * @return the new password if changed, empty string if cancelled
+     */
+    public String setPassword(String oldPass, Scanner sc){
         while(true){
             if (oldPass.equals(this.password)){
                 System.out.print("\nEnter new password (Blank password to exit): ");
+                if (!sc.hasNextLine()) return "";
                 String newPass = sc.nextLine();
                 if (isValidPassword(newPass)) {
                     this.password = newPass;
@@ -186,8 +192,18 @@ public class User {
             } 
             else {
                 System.out.println("\nError: Wrong Password Entered!");
+                return "";
             }
         }
+    }
+
+    /**
+     * Method overload for setPassword to use internal Scanner instance
+     * @param oldPass current password to validate against
+     */
+    public String setPassword(String oldPass){
+        Scanner sc = new Scanner(System.in);
+        return setPassword(oldPass, sc);
     }
     
     /**

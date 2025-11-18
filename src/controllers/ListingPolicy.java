@@ -1,7 +1,7 @@
 package controllers;
 
 /**
- * Encapsulates business rules for creating internship listings.
+ * Encapsulates requirements for creating internship listings.
  * Open/Closed Principle: New policies can be added without modifying existing code.
  */
 public interface ListingPolicy {

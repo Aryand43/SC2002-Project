@@ -1,13 +1,13 @@
 package controllers;
 
-import models.Internship;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import models.Internship;
 
 /**
- * Repository pattern for internship data access.
- * Handles all CRUD operations and queries on internships.
+ * Repository for internship data access.
+ * Handles actions like delete/edit/add and queries on internships.
  * Single Responsibility: Data access and retrieval only.
  */
 public class InternshipRepository {

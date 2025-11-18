@@ -5,29 +5,25 @@ import java.util.ArrayList;
 /**
  * Represents a Student user in the Internship Management System.
  * <p>
- * A student can:
-* <ul>
-* <li>Apply for internships (max 3 active applications)</li>
-* <li>Accept one internship offer</li>
-* <li>Request to withdraw applications</li>
-* <li>View all submitted applications</li>
-* </ul>
-* </p>
- * A Student object will contain:
+ * A student holds and manages a collection of their internship applications.
+ * The Student class focuses on student-specific data and validation rules:
  * <ul>
- *   <li>Year of Study (1–4)</li>
- *   <li>Major (CSC, EEE, MAE, etc.)</li>
- *   <li>Visibility status (true/false)</li>
- *   <li>List of Internship Applications (max 3)</li>
+ *   <li>Year of Study (1–4): determines which internship levels can be accessed</li>
+ *   <li>Major (CSC, EEE, MAE, etc.): for categorization and filtering</li>
+ *   <li>Application History: collection of submitted applications</li>
  * </ul>
- * 
- * <br>Based on system requirements:
+ * </p>
+ * <p>
+ * Application Restrictions:
  * <ul>
  *   <li>Year 1–2: can only apply for Basic-level internships</li>
- *   <li>Year 3–4: can apply for any level (Basic, Intermesdiate, Advanced)</li>
- *   <li>Only 1 internship can be accepted</li>
- *   <li>Student can withdraw an application (subject to approval)</li>
+ *   <li>Year 3: can apply for any level (Basic, Intermediate, Advanced)</li>
+ *   <li>Maximum 3 active applications at any time</li>
+ *   <li>Only 1 internship offer can be accepted (managed by ApplicationManager)</li>
  * </ul>
+ * </p>
+ * <p>
+ * </p>
  * 
  * This class extends {@link models.User}.
  * @author Joel Lee
@@ -81,94 +77,52 @@ public class Student extends User {
 
 
     // -----------------------------
-    // Internship Management
+    // Internship Application Validation
     // -----------------------------
 
     /**
-     * Apply for a new internship opportunity.
-     * @param application Application object
-     * @return true if application successful, false otherwise
+     * Validates if a student can apply for an internship.
+     * Checks:
+     * 1. Application limit (max 3 active applications)
+     * 2. Year of Study restriction (Years 1–2 can only apply for BASIC level)
+     * 3. Internship validity
+     * 
+     * This method is for validation only. The actual application creation
+     * and persistence is handled by ApplicationManager.apply().
+     * 
+     * @param internship The internship student is trying to apply for
+     * @return true if student can apply, false otherwise
      */
-    public boolean applyForInternship(Internship internship) {
+    public boolean canApply(Internship internship) {
+        // Check if student has reached the 3 application limit
         if (applications.size() >= 3) {
             System.out.println("You can only apply for a maximum of 3 internship opportunities at once.");
             return false;
         }
 
+        // Check if internship is valid
         if (internship == null) {
             System.out.println("Invalid internship listing");
             return false;
         }
 
-        //Checking the restriction for Year 1-2 students
+        // Check year of study restrictions
         if (yearOfStudy <= 2 && internship.getLevel() != Internship.InternshipLevel.BASIC) {
             System.out.println("Year 1 and 2 students can only apply for Basic-level internships.");
             return false;
         }
 
-        // Add application
-        //applications.add(application); SHOULD only add once approved by ApplicationManager
-        System.out.println("Application submitted, waiting approval: " + internship.getTitle());
         return true;
-    }   
-
-    /**
-     * Accept an internship offer if status is "Successful".
-     * Automatically withdraws all other applications.
-     */
-    public void acceptInternship(String internshipID) {
-        Application accepted = null;
-        for (Application app : applications) {
-            if (app.getInternship() != null && app.getInternship().getInternshipID().equals(internshipID) &&
-                app.getStatus() == Application.ApplicationStatus.SUCCESSFUL) {
-                accepted = app;
-                break;
-            }
-        }
-
-        if (accepted == null) {
-            System.out.println("No successful internship found with the given ID.");
-            return;
-        }
-
-        // Withdraw other applications
-        for (Application app : applications) {
-            if (app.getInternship() == null) continue;
-            if (!app.getInternship().getInternshipID().equals(internshipID)) {
-                app.setStatus(Application.ApplicationStatus.WITHDRAWN);
-            }
-        }
-
-        // Update confirmed slots on the accepted internship
-        accepted.getInternship().incrementConfirmedSlots();
-
-        System.out.printf("Internship '%s' accepted. All other applications withdrawn.%n", accepted.getInternship().getTitle());
     }
 
     /**
-     * Request to withdraw an internship application.
-     * @param internshipID ID of internship to withdraw
+     * Adds an application to the student's application list.
+     * (Called by ApplicationManager after successful persistence)
+     * @param application The application to add
      */
-    public void requestWithdrawal(String internshipID) {
-        for (Application app : applications) {
-            if (app.getInternship() != null && app.getInternship().getInternshipID().equals(internshipID)) {
-                app.setStatus(Application.ApplicationStatus.WITHDRAW_REQUESTED);
-                System.out.printf("Withdrawal requested for internship '%s' (Subject to Career Center approval).%n", app.getInternship().getTitle());
-                return;
-            }
-        }
-        System.out.println("No internship found with the given ID.");
-    }
-
-    /**
-     * View applications and their statuses (Pending, Successful, Unsuccessful, Withdrawn)
-     */
-    public void viewApplications() {
-        System.out.println("Your Internship Applications:");
-        for (Application app : applications) {
-            String title = app.getInternship() == null ? "<unknown>" : app.getInternship().getTitle();
-            String level = app.getInternship() == null ? "<unknown>" : app.getInternship().getLevel().toString();
-            System.out.printf("- %s (%s): %s%n", title, level, app.getStatus());
+    public void addApplication(Application application) {
+        if (application != null && !applications.contains(application)) {
+            applications.add(application);
         }
     }
 
