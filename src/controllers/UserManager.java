@@ -176,7 +176,7 @@ public class UserManager {
     	}
     	
     	for(CompanyRepresentative cr: repList) {
-    		if(cr.isApproved() == true) {
+    		if(cr.isApproved() != null && cr.isApproved() == true) {
     		User u = cr;
     		userList.add(u);
     		}
