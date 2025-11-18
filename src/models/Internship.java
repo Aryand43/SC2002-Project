@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Internship {
     public enum InternshipLevel {BASIC, INTERMEDIATE, ADVANCED};
     public enum InternshipStatus {PENDING, APPROVED, REJECTED, FILLED};
-    private static int idCounter = 11;
+    private static int idCounter = 27;
 
     protected String internshipId;
     protected String title;

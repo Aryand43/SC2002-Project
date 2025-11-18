@@ -1,0 +1,23 @@
+package controllers;
+
+import java.util.List;
+import models.Application;
+
+public class FileApplicationPersistence implements ApplicationPersistence {
+    private FileHandler<Application> fileHandler;
+
+    public FileApplicationPersistence() {
+        ApplicationSerializer serializer = new ApplicationSerializer();
+        this.fileHandler = new FileHandler<>(serializer);
+    }
+
+    @Override
+    public List<Application> load() {
+        return fileHandler.readFromFile();
+    }
+
+    @Override
+    public void save(List<Application> applications) {
+        fileHandler.writeToFile(new java.util.ArrayList<>(applications));
+    }
+}

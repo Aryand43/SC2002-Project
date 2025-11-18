@@ -61,11 +61,11 @@ public class Test {
         System.out.print("MAJOR: " + major);
         String internshipID = "INT0001";
         Internship internshipToApply = internshipManager.findInternshipByID(internshipID);
-        // First Check if student can apply. Validation done in applyForInternship() (e.g NOT MORE THAN 3 INTERNSHIPS, etc)
-        boolean applied = ((Student)testS).applyForInternship(internshipToApply);
-        if(applied){
+        // Validate that student can apply (year/level restrictions, application limit, etc.)
+        boolean canApply = ((Student)testS).canApply(internshipToApply);
+        if(canApply){
             System.out.println("Application submitted successfully for Internship ID: " + internshipID);
-            Application newApplication = applicationManager.apply((Student)testS, internshipToApply);
+            applicationManager.apply((Student)testS, internshipToApply);
         } else {
             System.out.println("Application failed.");
         }
@@ -103,26 +103,38 @@ public class Test {
         // 3. SCENARIO: Apply for 3 internships
         
         // Apply 1
-        Application app1 = applicationManager.apply(student, int0001);
-        boolean success1 = student.applyForInternship(int0001);
+        boolean success1 = student.canApply(int0001);
+        Application app1 = null;
+        if (success1) {
+            app1 = applicationManager.apply(student, int0001);
+        }
         System.out.printf("Attempt 1 (INT0001): %s\n", success1 ? "SUCCESS" : "FAILURE");
 
         // Apply 2
-        Application app2 = applicationManager.apply(student, int0002);
-        boolean success2 = student.applyForInternship(int0002);
+        boolean success2 = student.canApply(int0002);
+        Application app2 = null;
+        if (success2) {
+            app2 = applicationManager.apply(student, int0002);
+        }
         System.out.printf("Attempt 2 (INT0002): %s\n", success2 ? "SUCCESS" : "FAILURE");
 
         // Apply 3
-        Application app3 = applicationManager.apply(student, int0003);
-        boolean success3 = student.applyForInternship(int0003);
+        boolean success3 = student.canApply(int0003);
+        Application app3 = null;
+        if (success3) {
+            app3 = applicationManager.apply(student, int0003);
+        }
         System.out.printf("Attempt 3 (INT0003): %s\n", success3 ? "SUCCESS" : "FAILURE");
         
         System.out.println("-".repeat(60));
         
         // 4. SCENARIO: Test the application limit (Attempt 4)
         
-        Application app4 = applicationManager.apply(student, int0005);
-        boolean success4 = student.applyForInternship(int0005);
+        boolean success4 = student.canApply(int0005);
+        Application app4 = null;
+        if (success4) {
+            app4 = applicationManager.apply(student, int0005);
+        }
         System.out.printf("Attempt 4 (INT0005): %s\n", success4 ? "SUCCESS (RULE VIOLATION)" : "FAILURE (Limit Check Passed)");
         
         // 5. VERIFICATION
