@@ -423,6 +423,7 @@ public class Main {
                         applicationManager
                     );
                     crBoundary.run();
+                    userManager.logout();
                     break;
 
 

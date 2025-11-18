@@ -94,8 +94,11 @@ public class CompanyRepBoundary {
                 case 0 -> {
                     // Logout handled by the main program logic after this method returns
                     System.out.println("Logging out...");
+                    break;
                 }
+                default -> System.out.println("Invalid choice. Please try again."); 
             }
+            if (choice==0) break;
         }
     }
 
