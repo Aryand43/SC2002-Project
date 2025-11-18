@@ -53,6 +53,7 @@ public class UserManager {
     	CompanyRepresentativeSerializer companyRepSerializer = new CompanyRepresentativeSerializer();
     	FileHandler<CompanyRepresentative> companyFileHandler = new FileHandler<>(companyRepSerializer);
     	repList = companyFileHandler.readFromFile();
+        
         userList = getRespectiveUserList();
     }
     
@@ -96,11 +97,11 @@ public class UserManager {
      * Else, user will be unable to login.
      * 
      */
-    public boolean login(String ID, String password) {
+    public boolean login(String ID, String password, java.util.Scanner sc) {
 
         for (User u : userList) {
 
-            // If user is NOT a company rep → use ID for login
+            // If user is NOT a company rep, use ID for login
             if (u.getUserType() != User.TypesOfUser.CompanyRepresentative) {
 
                 if (u.getID().equalsIgnoreCase(ID)) {
@@ -112,7 +113,7 @@ public class UserManager {
                         if (currentUser.isPasswordChanged()) {
                             System.out.println("Login Successful! Welcome " + currentUser.getUserName() + "!");
                         } else {
-                            changePassword(currentUser.getID(), password);
+                            changePassword(currentUser.getID(), password, sc);
                             u.setLogin(false);
                             System.out.println("Password Reset! Please login again!");
                             return false;
@@ -271,15 +272,21 @@ public class UserManager {
      * @param userID
      * @param oldPassword
      */
-    public void changePassword(String userID, String oldPassword){
-    	User u = userList.stream().filter(s -> s.getID().equals(userID)).filter(s -> s.getPassword().equals(oldPassword)).findFirst().orElse(null);
-    	if(u == null) {
-    		System.out.println("No Such User/Mismatched UserId and oldPassword");
-    	}
-    	else {
-    		u.setPassword(oldPassword);
+    public void changePassword(String userID, String oldPassword, java.util.Scanner sc){
+     User u = userList.stream().filter(s -> s.getID().equals(userID)).filter(s -> s.getPassword().equals(oldPassword)).findFirst().orElse(null);
+     if(u == null) {
+      System.out.println("No Such User/Mismatched UserId and oldPassword");
+     }
+     else {
+      u.setPassword(oldPassword, sc);
             System.out.println("Login again with new password.");
-    	}
+     }
+    }
+
+    // Backwards-compatible wrapper that uses System.in Scanner
+    public void changePassword(String userID, String oldPassword){
+        java.util.Scanner sc = new java.util.Scanner(System.in);
+        changePassword(userID, oldPassword, sc);
     }
     
     /**

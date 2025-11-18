@@ -1,6 +1,5 @@
 package models; 
 import java.util.ArrayList;
-import models.Internship;
 import models.Application.ApplicationStatus; 
 
 public class CompanyRepresentative extends User {
@@ -53,7 +52,7 @@ public class CompanyRepresentative extends User {
      * @param companyName Company Name
      * @param department Which department the Company Rep belogns to
      * @param position Which position the Company Representative holds
-     * @param status Status of the account creatio
+     * @param status Status of the account creation
      */
     public CompanyRepresentative(String ID, String name, String email, String companyName, String department, String position, Boolean status){
         super(ID, name, email);
