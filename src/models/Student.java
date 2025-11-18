@@ -106,7 +106,7 @@ public class Student extends User {
             return false;
         }
 
-         // NEW: Check visibility of internship
+         // Check visibility of internship
         if (!internship.isVisible()) {
         System.out.println("This internship is not currently visible and cannot be applied for.");
         return false;

@@ -119,7 +119,7 @@ public class CompanyRepBoundary {
         System.out.println("\n--- Create New Internship Listing ---");
         String title = inputString("Enter Title: ");
         String description = inputString("Enter Description: ");
-        String major = inputString("Enter Preferred Major (e.g., Computer Science): ");
+        String major = inputString("Enter Preferred Major (e.g., CS): ");
         int slots = inputInteger("Enter Total Slots (1-10): ", 1, 10);
 
         System.out.println("Select Internship Level:");

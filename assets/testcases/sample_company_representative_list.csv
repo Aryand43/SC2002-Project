@@ -1,4 +1,4 @@
-CompanyRepID,Name,CompanyName,Department,Position,Email,Status, Password
+CompanyRepID,Name,CompanyName,Department,Position,Email,Status,Password
 CR001,Sarah Johnson,Human Resources,HR Manager,sarah.johnson@techinnovations.com.sg,Tech Innovations Pte Ltd,false,password
 CR002,Michael Chen,Talent Acquisition,Senior Recruiter,michael.chen@sgdigitalbank.com,Singapore Digital Bank,false,password
 CR003,David Tan,Data Science,Head of Analytics,david.tan@quantumanalytics.sg,Quantum Analytics,false,password
@@ -6,3 +6,4 @@ CR004,John Lim,Security Operations,Security Director,john.lim@cybersecure.com,Cy
 CR005,Amanda Lee,Creative Department,Creative Director,amanda.lee@creativemedia.sg,Creative Media Hub,false,password
 CR006,Lisa Ng,Finance,Finance Manager,lisa.ng@fintechasia.com,FinTech Solutions Asia,false,password
 CR007,James Koh,Research & Development,R&D Lead,james.koh@roboticsdynamics.sg,Robotics Dynamics,false,password
+CR008,Cheng Wu,Talent Acquisition,HR Manager,cheng.wu@embedsol.com,Embedded Solutions,false,password

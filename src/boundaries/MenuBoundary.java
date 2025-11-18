@@ -39,13 +39,11 @@ public class MenuBoundary {
      */
     public void displayStudentInternshipMenu() {
         printSectionHeader("Student Internship Menu");
-        System.out.println("1. View Available Internships");
+        System.out.println("1. View Available Internships (with filter)");
         System.out.println("2. Search Internships");
         System.out.println("3. Apply for Internship");
         System.out.println("4. View My Applications");
-        System.out.println("5. Filter Internships");
-        System.out.println("6. Accept Internship Offer");
-        System.out.println("7. Withdraw Application");
+        System.out.println("5. Accept/Withdraw Internship Offer");
         System.out.println("0. Logout");
         printSeparator();
     }
