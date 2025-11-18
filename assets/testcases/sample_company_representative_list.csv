@@ -1,9 +1,8 @@
 CompanyRepID,Name,CompanyName,Department,Position,Email,Status,Password
-CR001,Sarah Johnson,Human Resources,HR Manager,sarah.johnson@techinnovations.com.sg,Tech Innovations Pte Ltd,false,password
-CR002,Michael Chen,Talent Acquisition,Senior Recruiter,michael.chen@sgdigitalbank.com,Singapore Digital Bank,false,password
-CR003,David Tan,Data Science,Head of Analytics,david.tan@quantumanalytics.sg,Quantum Analytics,false,password
-CR004,John Lim,Security Operations,Security Director,john.lim@cybersecure.com,CyberSecure Systems,false,password
-CR005,Amanda Lee,Creative Department,Creative Director,amanda.lee@creativemedia.sg,Creative Media Hub,false,password
-CR006,Lisa Ng,Finance,Finance Manager,lisa.ng@fintechasia.com,FinTech Solutions Asia,false,password
-CR007,James Koh,Research & Development,R&D Lead,james.koh@roboticsdynamics.sg,Robotics Dynamics,false,password
-CR008,Cheng Wu,Embedded Solutions,Talent Acquisition,HR Manager,cheng.wu@embedsol.com,true,_Password123
+CR001,Sarah Johnson,Tech Innovations Pte Ltd,Human Resources,HR Manager,sarah.johnson@techinnovations.com.sg,null,password
+CR002,Michael Chen,Singapore Digital Bank,Talent Acquisition,Senior Recruiter,michael.chen@sgdigitalbank.com,null,password
+CR003,David Tan,Quantum Analytics,Data Science,Head of Analytics,david.tan@quantumanalytics.sg,null,password
+CR004,John Lim,CyberSecure Systems,Security Operations,Security Director,john.lim@cybersecure.com,null,password
+CR005,Amanda Lee,Creative Media Hub,Creative Department,Creative Director,amanda.lee@creativemedia.sg,null,password
+CR006,Lisa Ng,FinTech Solutions Asia,Finance,Finance Manager,lisa.ng@fintechasia.com,null,password
+CR007,James Koh,Robotics Dynamics,Research & Development,R&D Lead,james.koh@roboticsdynamics.sg,null,password
