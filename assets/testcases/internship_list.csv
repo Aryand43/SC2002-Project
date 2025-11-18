@@ -1,3 +1,4 @@
+InternshipID,Title,Description,Level,PreferredMajor,OpeningDate,ClosingDate,Status,CompanyName,CompanyRepId,TotalSlots,AvailableSlots,ConfirmedSlots,Visible
 INT0001,Software Development Intern,Develop web applications using Java and Spring Boot framework,BASIC,CSC,01/11/2024,30/12/2025,APPROVED,Tech Innovations Pte Ltd,sarah.johnson@techinnovations.com.sg,5,5,0,true
 INT0002,Data Analytics Intern,Analyze customer data and create visualization dashboards,INTERMEDIATE,DSAI,15/10/2024,09/12/2025,APPROVED,Quantum Analytics,david.tan@quantumanalytics.sg,3,3,0,true
 INT0003,Cybersecurity Intern,Assist in penetration testing and security audits,ADVANCED,CE,01/12/2024,28/02/2025,APPROVED,CyberSecure Systems,john.lim@cybersecure.com,2,2,0,true

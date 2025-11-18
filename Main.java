@@ -120,14 +120,18 @@ public class Main {
             
         	while(userManager.getCurrentUser() != null) {
                 User curUser = userManager.getCurrentUser();
-        		 switch(currentPermission){
-                 case Student: // Current user is student
+                switch(currentPermission){
+
+                case Student: // Current user is student
+                while(true){
                     UI.displayStudentInternshipMenu();
-                    choice = main.inputInteger("Enter choice: ", 0, 5);
                     int studentYr = ((Student)curUser).getYearOfStudy();
                     String studentMajor = ((Student)curUser).getMajor();
                     System.out.printf("\n%s current year of study: %d", curUser.getUserName(), studentYr);
                     System.out.printf("\n%s current major: %s\n\n", curUser.getUserName(), studentMajor);
+                    choice = main.inputInteger("Enter choice: ", 0, 7);
+                    List<Application> myApps = ((Student)curUser).getApplications();
+                    
                     List <Internship> ListingsVisibleToStudent = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
 
                     switch (choice){
@@ -160,8 +164,17 @@ public class Main {
                             }
                         }
                         case 4 -> {
-                            List<Application> myApplications = ((Student)curUser).getApplications();
-                            printApplicationList(myApplications);
+                            List<Application> myApplications = applicationManager.getApplicationList().stream()
+                                .filter(a -> a.getStudentID().equals(curUser.getID()))
+                                .toList();
+                            
+                            UI.displayApplicationList(myApplications);
+
+                            //Add it to student object, with the respective applications
+                            for(Application a : myApplications){
+                                ((Student)curUser).addApplication(a);
+                            }
+                            
                             // After displaying applications, check if more than one is successful
                             List<Application> successfulApps = myApplications.stream()
                                 .filter(a -> a.getStatus() == Application.ApplicationStatus.SUCCESSFUL)
@@ -279,15 +292,37 @@ public class Main {
                                 }
                                 System.out.println("Your choice has been saved. Other accepted internships have been withdrawn and are now available for other students.");
                             }
-                            break;
                         }
-                        case 0 -> // Logout
+                        case 7 -> {
+                            // Withdraw Application
+                            myApps = ((Student)curUser).getApplications();
+                            List<Application> pendingOrSuccessfulApps = myApps.stream()
+                                .filter(a -> a.getStatus() == Application.ApplicationStatus.PENDING ||
+                                             a.getStatus() == Application.ApplicationStatus.SUCCESSFUL)
+                                .toList();
+                            if (pendingOrSuccessfulApps.isEmpty()) {
+                                System.out.println("You have no pending or successful applications to withdraw.");
+                                break;
+                            }
+                            UI.displayApplicationList(pendingOrSuccessfulApps);
+                            System.out.print("Enter Application ID to withdraw: ");
+                            String appIdToWithdraw = sc.nextLine().trim();
+                            Application appToWithdraw = applicationManager.findByID(appIdToWithdraw);
+                            if (appToWithdraw != null && (appToWithdraw.getStatus() == Application.ApplicationStatus.PENDING ||
+                                                         appToWithdraw.getStatus() == Application.ApplicationStatus.SUCCESSFUL)) {
+                                applicationManager.requestWithdrawal(appToWithdraw);
+                                System.out.println("Withdrawal request submitted for Application ID: " + appIdToWithdraw);
+                            } else {
+                                System.out.println("Invalid Application ID or cannot withdraw this application.");
+                            }
+                        }
+                        case 0 ->{// Logout
                             userManager.logout();
+                        }
+                        default -> System.out.println("Invalid option. Please try again.");
                     }
-                    break;
-
-                     
-                 case CareerCenterStaff: // Current user is Career Center Staff
+                }
+                case CareerCenterStaff: // Current user is Career Center Staff
                      // Loop the staff menu until logout
                      while (true) {
                          UI.displayStaffInternshipMenu();
@@ -330,7 +365,7 @@ public class Main {
                                  }
                         }
                              case 5 -> // View Student Withdrawal Requests
-                                 printApplicationList(applicationManager.getApplicationList().stream()
+                                 UI.displayApplicationList(applicationManager.getApplicationList().stream()
                                      .filter(a -> a.getStatus() == models.Application.ApplicationStatus.WITHDRAW_REQUESTED)
                                      .toList());
                              case 6 -> {
@@ -342,7 +377,7 @@ public class Main {
                                      System.out.println("No withdrawal requests found.");
                                      break;
                                  }
-                                 printApplicationList(withdraws);
+                                 UI.displayApplicationList(withdraws);
                                  System.out.print("Enter Application ID to act on: ");
                                  String appId = sc.nextLine().trim();
                                  System.out.println("1. Approve Withdrawal\n2. Reject Withdrawal");
@@ -394,7 +429,7 @@ public class Main {
                                          System.out.print("Enter student ID: ");
                                          String studentId = sc.nextLine().trim();
                                          List<Application> apps = reportGenerator.generateReportByStudent(studentId);
-                                         printApplicationList(apps);
+                                         UI.displayApplicationList(apps);
                                      }
                                      case 6 ->  {
                                          System.out.print("Enter status (or leave blank): ");
@@ -455,18 +490,6 @@ public class Main {
         for (models.CompanyRepresentative r : reps) {
             System.out.printf("%-12s %-25s %-20s%n",
                 r.getID(), r.getUserName(), r.getCompanyName());
-        }
-    }
-
-    /* Helper: print application list */
-    private static void printApplicationList(java.util.List<models.Application> apps) {
-        if (apps == null || apps.isEmpty()) {
-            System.out.println("No applications to show.");
-            return;
-        }
-        System.out.printf("%-12s %-12s %-12s %-15s%n", "AppID", "StudentID", "InternshipID", "Status");
-        for (models.Application a : apps) {
-            System.out.printf("%-12s %-12s %-12s %-15s%n", a.getID(), a.getStudentID(), a.getInternshipID(), a.getStatus());
         }
     }
 }
