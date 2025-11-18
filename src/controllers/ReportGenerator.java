@@ -125,9 +125,13 @@ public class ReportGenerator {
      * Generates a report of all applications for a specific student<br>
      * @param studentId The student ID to generate the report for
      * @return List of {@link models.Application} objects submitted by the specified student<br>
-     * Returns an empty list if no applications are found for the student
+     * Returns null if student ID doesn't exist, empty list if no applications found
      */
     public List<Application> generateReportByStudent(String studentId) {
+        // Validate student exists
+        if (userManager.getStudentByID(studentId) == null) {
+            return null; // Return null to indicate invalid student ID
+        }
         List<Application> allApplications = applicationManager.getApplicationList();
         return allApplications.stream()
                 .filter(app -> app.getStudent() != null && studentId.equals(app.getStudent().getID()))
@@ -174,7 +178,8 @@ public class ReportGenerator {
         report.append(" - PENDING: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.PENDING).count()).append("\n");
         report.append(" - SUCCESSFUL: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.SUCCESSFUL).count()).append("\n");
         report.append(" - UNSUCCESSFUL: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.UNSUCCESSFUL).count()).append("\n");
-        report.append(" - WITHDRAWN: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.WITHDRAWN).count()).append("\n\n");
+        report.append(" - WITHDRAWN: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.WITHDRAWN).count()).append("\n");
+        report.append(" - WITHDRAW_REQUESTED: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.WITHDRAW_REQUESTED).count()).append("\n\n");
 
         return report.toString();
     }
