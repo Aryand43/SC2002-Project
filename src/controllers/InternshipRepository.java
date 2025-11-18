@@ -7,7 +7,7 @@ import models.Internship;
 
 /**
  * Repository for internship data access.
- * Handles actions like delete/edit/add and queries on internships.
+ * Handles actions like delete/edit/add internships.
  * Single Responsibility: Data access and retrieval only.
  */
 public class InternshipRepository {

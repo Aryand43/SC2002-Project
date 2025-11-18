@@ -136,9 +136,10 @@ public class CompanyRepBoundary {
         LocalDate closeDate = inputDate("Enter Closing Date");
 
         if (level != null) {
+            String listingID = "INT" + String.format("%04d", internshipManager.getAllInternships().size() + 1);
             internshipManager.createListing(
                 currentUser.getID(), title, description, level, major, 
-                openDate, closeDate, currentUser.getCompanyName(), slots
+                openDate, closeDate, currentUser.getCompanyName(), slots, listingID
             );
         } else {
             System.out.println("Failed to create listing due to invalid input.");

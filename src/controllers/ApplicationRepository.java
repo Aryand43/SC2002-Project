@@ -6,7 +6,7 @@ import models.Application;
 
 /**
  * Repository for applications.
- * Handles actions like delete/edit/add and queries for application.
+ * Handles actions like delete/edit/add application.
  * Single Responsibility: Data access and retrieval only.
  */
 public class ApplicationRepository {

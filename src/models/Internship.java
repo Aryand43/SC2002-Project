@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter;
 public class Internship {
     public enum InternshipLevel {BASIC, INTERMEDIATE, ADVANCED};
     public enum InternshipStatus {PENDING, APPROVED, REJECTED, FILLED};
-    private static int idCounter = 27;
 
     protected String internshipId;
     protected String title;
@@ -62,6 +61,7 @@ public class Internship {
      * Constructor Class for newly created internshiphs within program
      */
     public Internship(
+        String listingID,
         String title, 
         String description,
         InternshipLevel level,
@@ -72,7 +72,7 @@ public class Internship {
         String companyRepId,
         int totalSlots) {
     
-        this.internshipId = generateInternshipID();
+        this.internshipId = listingID;
         this.title = title;
         this.description = description;
         this.level = level;
@@ -123,14 +123,6 @@ public class Internship {
     public void setVisible() { this.visible = true; }
     public void setInvisible() { this.visible = false; }
     
-    /**
-     * Generates an Internship ID that starts with INT padded with 0's if idCOunter is less than 4 digits
-     * @return an unique ID for each internship listing (For listings not in the file)
-     */
-    private static String generateInternshipID() {
-        return "INT" + String.format("%04d", idCounter++);
-    }
-
     /**
      * Check if internship is open for applications. IF date is before opening date, listing should not be visible.<br>
      * If date is after clsoing date, listing should also be hidden. The lsiting is only visible if within closing and opening date. 

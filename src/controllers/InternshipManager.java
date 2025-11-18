@@ -57,7 +57,8 @@ public class InternshipManager {
             LocalDate openingDate,
             LocalDate closingDate,
             String companyName,
-            int totalSlots) {
+            int totalSlots, 
+            String listingId) {
         
         try {
             // Validate representative listing count against policy
@@ -81,7 +82,7 @@ public class InternshipManager {
             }
 
             Internship internship = new Internship(
-                title, description, level, preferredMajor,
+                listingId, title, description, level, preferredMajor,
                 openingDate, closingDate, companyName, companyRepId, totalSlots
             );
 
