@@ -109,11 +109,19 @@ public class ApplicationManager {
     // accept/reject by application ID
     public boolean approveStudentWithdrawal(String applicationID) {
         Application app = findByID(applicationID);
+        if (app == null) {
+            System.out.println("Error: Application with ID '" + applicationID + "' not found.");
+            return false;
+        }
         return approveWithdrawal(app);
     }
 
     public boolean rejectStudentWithdrawal(String applicationID) {
         Application app = findByID(applicationID);
+        if (app == null) {
+            System.out.println("Error: Application with ID '" + applicationID + "' not found.");
+            return false;
+        }
         return rejectWithdrawal(app);
     }
 

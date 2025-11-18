@@ -223,7 +223,8 @@ public class UserManager {
     			}
     		}
     	}
-        return true;
+    	System.out.println("Error: Company Representative with ID '" + repID + "' not found.");
+        return false;
     }
     
     /**
@@ -248,7 +249,8 @@ public class UserManager {
     			}
     		}
     	}
-        return true;
+    	System.out.println("Error: Company Representative with ID '" + repID + "' not found.");
+        return false;
     }
     
     /**
