@@ -1,6 +1,7 @@
 import boundaries.*;
 import controllers.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import models.*;
@@ -121,28 +122,19 @@ public class Main {
                 User curUser = userManager.getCurrentUser();
         		 switch(currentPermission){
                  case Student: // Current user is student
-                     // Custom menu with case 6
-                     System.out.println("==============================");
-                     System.out.println("Student Internship Menu");
-                     System.out.println("1. View Available Internships");
-                     System.out.println("2. Search Internships");
-                     System.out.println("3. Apply for Internship");
-                     System.out.println("4. View My Applications");
-                     System.out.println("5. Filter Internships");
-                     System.out.println("6. Clear Filters");
-                     System.out.println("0. Logout");
-                     System.out.println("==============================");
-                     choice = main.inputInteger("Enter choice: ", 0, 6);
-                     int studentYr = ((Student)curUser).getYearOfStudy();
-                     String studentMajor = ((Student)curUser).getMajor();
+                    UI.displayStudentInternshipMenu();
+                    choice = main.inputInteger("Enter choice: ", 0, 5);
+                    int studentYr = ((Student)curUser).getYearOfStudy();
+                    String studentMajor = ((Student)curUser).getMajor();
+                    System.out.printf("\n%s current year of study: %d", curUser.getUserName(), studentYr);
+                    System.out.printf("\n%s current major: %s\n\n", curUser.getUserName(), studentMajor);
+                    List <Internship> ListingsVisibleToStudent = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
 
                     switch (choice){
-                        case 1: // View Available Internships
-                            List<Internship> availableInternships = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
-                            printInternshipList(availableInternships);                            
-                            break;
+                        case 1 -> // View Available Internships
+                            UI.displayInternshipList(ListingsVisibleToStudent);
 
-                        case 2:
+                        case 2 -> {
                             // Search Internships (By keyword)
                             UI.displayInternshipList(ListingsVisibleToStudent);
                             System.out.print("Enter keyword to search: ");
@@ -150,11 +142,12 @@ public class Main {
                             List<Internship> keywordList = internshipManager.search(keywordSearch);
                             System.out.print("Displaying search results for keyword: " + keywordSearch);
                             UI.displayInternshipList(keywordList);
-                            break;
+                        }
 
-                        case 3:
+                        case 3 -> {
                             // Apply for Internship
                             System.out.print("Enter Internship ID to apply: ");
+                            
                             String internshipID = sc.nextLine().trim();
                             Internship internshipToApply = internshipManager.findInternshipByID(internshipID);
                             // Validate that student can apply (year/level restrictions, application limit, etc.)
@@ -162,21 +155,11 @@ public class Main {
                             if(canApply){
                                 applicationManager.apply((Student)curUser, internshipToApply);
                                 System.out.println("Application submitted successfully for Internship ID: " + internshipID);
-                                Application newApplication = applicationManager.apply((Student)curUser, internshipToApply);
-                                // Add to student's application list
-                                ((Student)curUser).getApplications().add(newApplication);
                             } else {
                                 System.out.println("Cannot apply for this internship. See message above for details.");
                             }
-                            // Show student's applications after applying
-                            List<Application> myApplicationsAfterApply = ((Student)curUser).getApplications();
-                            printApplicationList(myApplicationsAfterApply);
-                        
-                            break;
                         }
-                        
-
-                        case 4: // View My Applications
+                        case 4 -> {
                             List<Application> myApplications = ((Student)curUser).getApplications();
                             printApplicationList(myApplications);
                             // After displaying applications, check if more than one is successful
@@ -193,15 +176,13 @@ public class Main {
                                 // Set the rest to UNSUCCESSFUL
                                 for (Application app : successfulApps) {
                                     if (app != chosen) {
-                                        app.setStatus(Application.ApplicationStatus.UNSUCCESSFUL);
+                                        app.setStatus(Application.ApplicationStatus.WITHDRAWN);
                                     }
                                 }
-                                applicationManager.saveApplicationsToFile();
                                 System.out.println("Your choice has been saved. Only one internship is now accepted.");
                             }
-                            break;
-
-                        case 5: // Filter Internships
+                        }
+                        case 5 -> {    // Filter Internships
                             System.out.println("\nFilter Internships by:");
                             System.out.println("1. Level (BASIC/INTERMEDIATE/ADVANCED)");
                             System.out.println("2. Company Name");
@@ -253,24 +234,23 @@ public class Main {
                             }
                             // Always print the table, even if empty
                             System.out.println("\nFiltered Results:");
-                            printInternshipList(filteredList == null ? java.util.Collections.emptyList() : filteredList);
-                            break;
-                        
-                        case 6:  //Clear filters
+                            UI.displayInternshipList(filteredList == null ? Collections.emptyList() : filteredList);
+                        }
+                        case 6 -> {       
                             // Automatically approve all pending applications and internships for this student
                             List<Application> studentApplicationsCase6 = ((Student)curUser).getApplications();
                             boolean anyApproved = false;
                             for (Application app : studentApplicationsCase6) {
                                 if (app.getStatus() == Application.ApplicationStatus.PENDING) {
                                     app.setStatus(Application.ApplicationStatus.SUCCESSFUL);
-                                    if (app.getInternship() != null) {
+
+                                if (app.getInternship() != null) {
                                         app.getInternship().setStatus(models.Internship.InternshipStatus.APPROVED);
                                     }
                                     anyApproved = true;
                                 }
                             }
                             if (anyApproved) {
-                                applicationManager.saveApplicationsToFile();
                                 System.out.println("All your pending applications have been approved and marked successful.");
                             } else {
                                 System.out.println("No pending applications to approve.");
@@ -297,17 +277,13 @@ public class Main {
                                         }
                                     }
                                 }
-                                applicationManager.saveApplicationsToFile();
                                 System.out.println("Your choice has been saved. Other accepted internships have been withdrawn and are now available for other students.");
                             }
                             break;
-
-                        case 0: // Logout
+                        }
+                        case 0 -> // Logout
                             userManager.logout();
                     }
-                    // View My Applications
-                    // Filter Internships
-                    //Clear filters
                     break;
 
                      
@@ -482,39 +458,15 @@ public class Main {
         }
     }
 
-    /* Helper: print internships */
-    private static void printInternshipList(java.util.List<models.Internship> list) {
-        if (list == null || list.isEmpty()) {
-            System.out.println("No internships found.");
-            return;
-        }
-        // Improved alignment: fixed-width columns with separators
-        String format = "| %-10s | %-25s | %-12s | %-20s | %-10s |%n";
-        String line = "+------------+---------------------------+--------------+----------------------+------------+";
-        System.out.println(line);
-        System.out.printf(format, "ID", "Title", "Level", "Company", "Status");
-        System.out.println(line);
-        for (models.Internship i : list) {
-            System.out.printf(format,
-                i.getInternshipID(), i.getTitle(), i.getLevel(), i.getCompanyName(), i.getStatus());
-        }
-        System.out.println(line);
-    }
-
     /* Helper: print application list */
     private static void printApplicationList(java.util.List<models.Application> apps) {
         if (apps == null || apps.isEmpty()) {
             System.out.println("No applications to show.");
             return;
         }
-        String format = "| %-18s | %-12s | %-12s | %-10s |%n";
-        String line = "+--------------------+--------------+--------------+------------+";
-        System.out.println(line);
-        System.out.printf(format, "AppID", "StudentID", "InternshipID", "Status");
-        System.out.println(line);
+        System.out.printf("%-12s %-12s %-12s %-15s%n", "AppID", "StudentID", "InternshipID", "Status");
         for (models.Application a : apps) {
-            System.out.printf(format, a.getID(), a.getStudentID(), a.getInternshipID(), a.getStatus());
+            System.out.printf("%-12s %-12s %-12s %-15s%n", a.getID(), a.getStudentID(), a.getInternshipID(), a.getStatus());
         }
-        System.out.println(line);
     }
 }

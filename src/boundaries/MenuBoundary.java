@@ -44,6 +44,8 @@ public class MenuBoundary {
         System.out.println("3. Apply for Internship");
         System.out.println("4. View My Applications");
         System.out.println("5. Filter Internships");
+        System.out.println("6. Accept Internship Offer");
+        System.out.println("7. Withdraw Application");
         System.out.println("0. Logout");
         printSeparator();
     }
