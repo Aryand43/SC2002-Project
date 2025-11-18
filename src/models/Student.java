@@ -73,8 +73,22 @@ public class Student extends User {
     public int getYearOfStudy() { return yearOfStudy; }
     public String getMajor() { return major; }
     public ArrayList<Application> getApplications() { return applications; }
-    public int noOfApplications() { return applications.size(); }
-
+    /**
+     * Returns the number of active (non-withdrawn) applications.
+     * Withdrawn applications are not counted towards the 3-application limit.
+     */
+    public int noOfApplications() {
+        int count = 0;
+        for (Application app : applications) {
+            if (app.getStatus() != Application.ApplicationStatus.WITHDRAWN) {
+                count++;
+            }
+        }
+        return count;
+    }
+    public boolean isMaxReached(){
+        return noOfApplications() >= 3;
+    }
 
     // -----------------------------
     // Internship Application Validation
@@ -94,11 +108,6 @@ public class Student extends User {
      * @return true if student can apply, false otherwise
      */
     public boolean canApply(Internship internship) {
-        // Check if student has reached the 3 application limit
-        if (applications.size() >= 3) {
-            System.out.println("You can only apply for a maximum of 3 internship opportunities at once.");
-            return false;
-        }
 
         // Check if internship is valid
         if (internship == null) {
@@ -106,13 +115,13 @@ public class Student extends User {
             return false;
         }
 
-         // Check visibility of internship
+        // Check visibility of internship
         if (!internship.isVisible()) {
-        System.out.println("This internship is not currently visible and cannot be applied for.");
-        return false;
+            System.out.println("This internship is not currently visible and cannot be applied for.");
+            return false;
         }
 
-        //Checking the restriction for Year 1-2 students
+        // Checking the restriction for Year 1-2 students
         if (yearOfStudy <= 2 && internship.getLevel() != Internship.InternshipLevel.BASIC) {
             System.out.println("Year 1 and 2 students can only apply for Basic-level internships.");
             return false;
@@ -122,18 +131,20 @@ public class Student extends User {
         if (internship.getPreferredMajor() != null 
             && !internship.getPreferredMajor().isEmpty()
             && !internship.getPreferredMajor().contains(this.major)) {
-        System.out.println("Your major (" + this.major + 
-                           ") does not match the required major preference for this internship.");
-        return false;
+            System.out.println("Your major (" + this.major + ") does not match the required major preference for this internship.");
+            return false;
         }
 
-        //Check if already applied to that internship
-        for (Application a : this.getApplications()){
-            if(a.getInternship().getInternshipID() == internship.getInternshipID()){
-                System.out.print("You have already applied for this internship!");
-                return false;
+        // Check if already applied to that internship
+        for (Application a : this.getApplications()) {
+            Internship appliedInternship = a.getInternship();
+            if (appliedInternship != null && appliedInternship.getInternshipID() != null && internship.getInternshipID() != null) {
+                if (appliedInternship.getInternshipID().equals(internship.getInternshipID())) {
+                    System.out.print("You have already applied for this internship!");
+                    return false;
+                }
             }
-        }  
+        }
         return true;
     }
 
