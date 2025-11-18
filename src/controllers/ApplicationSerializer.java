@@ -1,6 +1,5 @@
 package controllers;
 
-import java.time.format.DateTimeFormatter;
 import models.Application;
 import models.Student;
 /**
@@ -14,8 +13,6 @@ import models.Student;
  * 
  */
 public class ApplicationSerializer implements Serializer<Application>{
-	// Use dd/MM/yyyy to match CSV date format
-	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private UserManager userManager;
     private InternshipManager internshipManager;

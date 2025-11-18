@@ -28,6 +28,7 @@ public class InternshipSerializer implements Serializer<Internship>{
 	 * @param line the line to deserialize
 	 * @return the Internship Object reconstructed from the line of text
 	 */
+	@Override
 	public Internship deserialize(String line) {
 		String[] rowData = line.split(",");
 		Internship internship = new Internship(rowData[0],rowData[1],rowData[2],InternshipLevel.valueOf(rowData[3]),rowData[4],LocalDate.parse(rowData[5], FORMATTER),LocalDate.parse(rowData[6], FORMATTER),InternshipStatus.valueOf(rowData[7]),rowData[8], rowData[9], Integer.parseInt(rowData[10]), Integer.parseInt(rowData[11]), Integer.parseInt(rowData[12]), Boolean.parseBoolean(rowData[13]) );
@@ -43,6 +44,7 @@ public class InternshipSerializer implements Serializer<Internship>{
 	 * @param internship the Internship to serialize
 	 * @return a string that is comma delimited for csv file
 	 */
+	@Override
 	public String serialize(Internship internship) {
 		String line = internship.getInternshipID() + "," + internship.getTitle() + "," + internship.getDescription() + "," + internship.getLevel().toString() + "," + internship.getPreferredMajor() + "," + FORMATTER.format(internship.getOpeningDate()) + "," + FORMATTER.format(internship.getClosingDate())
 				+ "," + internship.getStatus().toString() + "," + internship.getCompanyName() + "," + internship.getCompanyRepId() + "," + String.valueOf(internship.getTotalSlots()) + "," + String.valueOf(internship.getAvailableSlots()) + "," + String.valueOf(internship.getConfirmedSlots()) + ","
@@ -56,6 +58,7 @@ public class InternshipSerializer implements Serializer<Internship>{
 	 * 
 	 * @return the string for Header
 	 */
+	@Override
 	public String getHeader() {
 		return "";
 	}
@@ -66,6 +69,7 @@ public class InternshipSerializer implements Serializer<Internship>{
 	 * 
 	 * @return the string for filepath
 	 */
+	@Override
 	public String getFilePath() {
 		return  "assets/testcases/internship_list.csv";
 	}

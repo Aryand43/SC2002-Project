@@ -25,14 +25,14 @@ public class ApplicationManager {
 
     public ApplicationManager(InternshipManager internshipManager) {
         this.internshipManager = internshipManager;
-        ApplicationPersistence persistence = new FileApplicationPersistence();
+        DataPersistence<Application> persistence = new FileApplicationPersistence();
         this.repository = new ApplicationRepository(persistence);
     }
 
     public ApplicationManager(InternshipManager internshipManager, UserManager userManager) {
         this.internshipManager = internshipManager;
         this.userManager = userManager;
-        ApplicationPersistence persistence = new FileApplicationPersistence();
+        DataPersistence<Application> persistence = new FileApplicationPersistence();
         this.repository = new ApplicationRepository(persistence);
         // After loading applications, resolve references to Student and Internship objects
         resolveObjectReferences();
@@ -49,8 +49,6 @@ public class ApplicationManager {
         app.setStudent(student);
         app.setInternship(opportunity);
         if (repository != null) repository.add(app);
-        // Add application to student's collection after successful persistence
-        if (student != null) student.addApplication(app);
         return app;
     }
 

@@ -12,9 +12,9 @@ import models.Internship;
  */
 public class InternshipRepository {
     private ArrayList<Internship> internshipList;
-    private InternshipPersistence persistence;
+    private DataPersistence<Internship> persistence;
 
-    public InternshipRepository(InternshipPersistence persistence) {
+    public InternshipRepository(DataPersistence<Internship> persistence) {
         this.persistence = persistence;
         this.internshipList = new ArrayList<>(persistence.load());
     }

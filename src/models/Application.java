@@ -3,7 +3,7 @@ package models;
 import java.time.LocalDate;
 
 public class Application {
-    public enum ApplicationStatus {PENDING, SUCCESSFUL, UNSUCCESSFUL, WITHDRAWN, WITHDRAW_REQUESTED}
+    public enum ApplicationStatus {ACCEPTED, PENDING, SUCCESSFUL, UNSUCCESSFUL, WITHDRAWN, WITHDRAW_REQUESTED}
     
     /**
      * Defines valid state transitions for an application.

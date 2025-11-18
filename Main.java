@@ -6,7 +6,6 @@ import java.util.Scanner;
 import models.*;
 import models.User.TypesOfUser;
 
-
 public class Main {
     private Scanner scanner;
 
@@ -118,26 +117,27 @@ public class Main {
             
         	while(userManager.getCurrentUser() != null) {
                 User curUser = userManager.getCurrentUser();
-        		 switch(currentPermission){
-                 case Student: // Current user is student
+                switch(currentPermission){
+                    case Student: // Current user is student
+                    while (true){
                     UI.displayStudentInternshipMenu();
-                    choice = main.inputInteger("Enter choice: ", 0, 5);
+                    choice = main.inputInteger("Enter choice: ", 0, 6);
                     int studentYr = ((Student)curUser).getYearOfStudy();
                     String studentMajor = ((Student)curUser).getMajor();
                     System.out.printf("\n%s current year of study: %d", curUser.getUserName(), studentYr);
                     System.out.printf("\n%s current major: %s\n\n", curUser.getUserName(), studentMajor);
                     List <Internship> ListingsVisibleToStudent = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
 
-                     List<Application> myApplications = applicationManager.getApplicationList().stream()
-                                .filter(a -> a.getStudentID().equals(curUser.getID()))
-                                .toList();
+                    List<Application> myApplications = applicationManager.getApplicationList().stream()
+                            .filter(a -> a.getStudentID().equals(curUser.getID()))
+                            .toList();
                                 
                     //Add it to student object, with the respective applications
                     for(Application a : myApplications){
                         ((Student)curUser).addApplication(a);
                     }
                     switch (choice){
-                                                // ...inside switch(choice) for Student...
+                                                
                         case 1 -> {
                             // View & Filter Available Internships
 
@@ -193,7 +193,6 @@ public class Main {
                             UI.displayInternshipList(filteredList == null ? Collections.emptyList() : filteredList);
                         }
 
-
                         case 2 -> {
                             // Search Internships (By keyword)
                             UI.displayInternshipList(ListingsVisibleToStudent);
@@ -223,35 +222,13 @@ public class Main {
                                 System.out.println("Cannot apply for this internship. See message above for details.");
                             }
                         }
-                        case 4 -> {
+                        case 4 -> { //View Student Applications 
                             UI.displayApplicationList(myApplications);
-
-                            
-                            // After displaying applications, check if more than one is successful
-                            List<Application> successfulApps = myApplications.stream()
-                                .filter(a -> a.getStatus() == Application.ApplicationStatus.SUCCESSFUL)
-                                .toList();
-                            if (successfulApps.size() > 1) {
-                                System.out.println("You have multiple accepted internships. Please pick one to keep:");
-                                for (int i = 0; i < successfulApps.size(); i++) {
-                                    System.out.printf("%d. %s (InternshipID: %s)\n", i + 1, successfulApps.get(i).getID(), successfulApps.get(i).getInternshipID());
-                                }
-                                int pick = main.inputInteger("Enter the number of the internship to accept: ", 1, successfulApps.size());
-                                Application chosen = successfulApps.get(pick - 1);
-                                // Set the rest to UNSUCCESSFUL
-                                for (Application app : successfulApps) {
-                                    if (app != chosen) {
-                                        app.setStatus(Application.ApplicationStatus.WITHDRAWN);
-                                    }
-                                }
-                                System.out.println("Your choice has been saved. Only one internship is now accepted.");
-                            }
                         }
-                       
                         case 5 -> {
                             // Accept/Withdraw Internship Offer
                             List<Application> approvedOffers = ((Student)curUser).getApplications().stream()
-                                .filter(a -> a.getStatus() == Application.ApplicationStatus.SUCCESSFUL)
+                                .filter(a -> a.getStatus() == Application.ApplicationStatus.SUCCESSFUL || a.getStatus() == Application.ApplicationStatus.ACCEPTED)
                                 .toList();
 
                             if (approvedOffers.isEmpty()) {
@@ -260,7 +237,7 @@ public class Main {
                             }
 
                             System.out.println("Approved Internship Offers:");
-                            printApplicationList(approvedOffers);
+                            UI.displayApplicationList(approvedOffers);
 
                             System.out.println("Select an offer to act on:");
                             for (int i = 0; i < approvedOffers.size(); i++) {
@@ -273,24 +250,24 @@ public class Main {
                             int action = main.inputInteger("Choose action: ", 1, 2);
 
                             if (action == 1) {
-                                selected.setStatus(Application.ApplicationStatus.SUCCESSFUL);
+                                selected.setStatus(Application.ApplicationStatus.ACCEPTED);
+                                for (Application a : myApplications){
+                                    if (a.getStatus() != Application.ApplicationStatus.ACCEPTED){
+                                        a.setStatus(Application.ApplicationStatus.WITHDRAWN); // Set the others to withdrawn
+                                    }
+                                }
+                                selected.getInternship().incrementConfirmedSlots();
+                                internshipManager.updateInternship(selected.getInternship());
                                 System.out.println("Offer accepted. You have secured this internship.");
                             } else {
-                                selected.setStatus(Application.ApplicationStatus.WITHDRAWN);
-                                if (selected.getInternship() != null) {
-                                    selected.getInternship().decrementConfirmedSlots();
-                                }
-                                System.out.println("Offer withdrawn. The internship slot is now available to others.");
+                                selected.setStatus(Application.ApplicationStatus.WITHDRAW_REQUESTED);
+                                System.out.println("Withdrawn request sent. Please wait for approval.");
                             }
-                            break;
                         }
-
-
                         case 0 -> // Logout
                             userManager.logout();
                     }
-                    break;
-
+                }
                      
                  case CareerCenterStaff: // Current user is Career Center Staff
                      // Loop the staff menu until logout
@@ -347,7 +324,7 @@ public class Main {
                                  }
                         }
                              case 5 -> // View Student Withdrawal Requests
-                                 printApplicationList(applicationManager.getApplicationList().stream()
+                                 UI.displayApplicationList(applicationManager.getApplicationList().stream()
                                      .filter(a -> a.getStatus() == models.Application.ApplicationStatus.WITHDRAW_REQUESTED)
                                      .toList());
                              case 6 -> {
@@ -359,7 +336,7 @@ public class Main {
                                      System.out.println("No withdrawal requests found.");
                                      break;
                                  }
-                                 printApplicationList(withdraws);
+                                 UI.displayApplicationList(withdraws);
                                  System.out.print("Enter Application ID to act on: ");
                                  String appId = sc.nextLine().trim();
                                  System.out.println("1. Approve Withdrawal\n2. Reject Withdrawal");
@@ -417,7 +394,7 @@ public class Main {
                                          System.out.print("Enter student ID: ");
                                          String studentId = sc.nextLine().trim();
                                          List<Application> apps = reportGenerator.generateReportByStudent(studentId);
-                                         printApplicationList(apps);
+                                         UI.displayApplicationList(apps);
                                      }
                                      case 6 ->  {
                                          System.out.print("Enter status (or leave blank): ");
@@ -479,18 +456,6 @@ public class Main {
         for (models.CompanyRepresentative r : reps) {
             System.out.printf("%-12s %-25s %-20s%n",
                 r.getID(), r.getUserName(), r.getCompanyName());
-        }
-    }
-
-    /* Helper: print application list */
-    private static void printApplicationList(java.util.List<models.Application> apps) {
-        if (apps == null || apps.isEmpty()) {
-            System.out.println("No applications to show.");
-            return;
-        }
-        System.out.printf("%-18s %-12s %-14s %-12s%n", "AppID", "StudentID", "InternshipID", "Status");
-        for (models.Application a : apps) {
-            System.out.printf("%-18s %-12s %-14s %-12s%n", a.getID(), a.getStudentID(), a.getInternshipID(), a.getStatus());
         }
     }
 }

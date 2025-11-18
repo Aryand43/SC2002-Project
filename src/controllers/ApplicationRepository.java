@@ -10,10 +10,10 @@ import models.Application;
  * Single Responsibility: Data access and retrieval only.
  */
 public class ApplicationRepository {
-    private ApplicationPersistence persistence;
+    private DataPersistence<Application> persistence;
     private List<Application> applications;
 
-    public ApplicationRepository(ApplicationPersistence persistence) {
+    public ApplicationRepository(DataPersistence<Application> persistence) {
         this.persistence = persistence;
         List<Application> loaded = persistence.load();
         this.applications = (loaded != null) ? new ArrayList<>(loaded) : new ArrayList<>();

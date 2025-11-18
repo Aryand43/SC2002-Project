@@ -1,15 +1,15 @@
 package controllers;
 
-import models.Internship;
 import java.util.ArrayList;
 import java.util.List;
+import models.Internship;
 
 /**
  * Wrapper around FileHandler to implement InternshipPersistence interface.
  * Decouples InternshipManager from FileHandler specifics.
  */
-public class FileInternshipPersistence implements InternshipPersistence {
-    private FileHandler<Internship> fileHandler;
+public class FileInternshipPersistence implements DataPersistence<Internship> {
+    private final FileHandler<Internship> fileHandler;
 
     public FileInternshipPersistence() {
         InternshipSerializer serializer = new InternshipSerializer();

@@ -22,7 +22,7 @@ public class InternshipManager {
      * Constructor with dependency injection
      */
     public InternshipManager() {
-        InternshipPersistence persistence = new FileInternshipPersistence();
+        DataPersistence<Internship> persistence = new FileInternshipPersistence();
         this.repository = new InternshipRepository(persistence);
         this.approvalService = new InternshipApprovalService(repository);
         this.queryService = new InternshipQueryService(repository);

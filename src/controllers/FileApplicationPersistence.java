@@ -3,7 +3,7 @@ package controllers;
 import java.util.List;
 import models.Application;
 
-public class FileApplicationPersistence implements ApplicationPersistence {
+public class FileApplicationPersistence implements DataPersistence<Application> {
     private FileHandler<Application> fileHandler;
 
     public FileApplicationPersistence() {

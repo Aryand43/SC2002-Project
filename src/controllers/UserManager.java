@@ -179,10 +179,7 @@ public class UserManager {
     		if(cr.isApproved() == true) {
     		User u = cr;
     		userList.add(u);
-    		}
-    		else {
-    			continue;
-    		}
+        }
     	}
     	
     	
