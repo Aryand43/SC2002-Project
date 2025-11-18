@@ -1,6 +1,7 @@
 package models;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Application {
     public enum ApplicationStatus {ACCEPTED, PENDING, SUCCESSFUL, UNSUCCESSFUL, WITHDRAWN, WITHDRAW_REQUESTED}
@@ -83,12 +84,15 @@ public class Application {
      * @param studentID
      * @param internshipID
      */
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     public Application(String studentID, String internshipID) {
         this.id = "APP" + System.currentTimeMillis();
         this.studentID = studentID;
         this.internshipID = internshipID;
         this.status = ApplicationStatus.PENDING;
-        this.appliedDate = LocalDate.now().toString();
+        LocalDate localDate = LocalDate.now();
+        this.appliedDate = localDate.format(FORMATTER);
         this.studentRef = null; // Explicitly set to null
         this.internshipRef = null; // Explicitly set to null
     }

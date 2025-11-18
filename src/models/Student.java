@@ -125,10 +125,15 @@ public class Student extends User {
         System.out.println("Your major (" + this.major + 
                            ") does not match the required major preference for this internship.");
         return false;
-    }
-        // Add application
-        //applications.add(application); SHOULD only add once approved by ApplicationManager
-        System.out.println("Application submitted, waiting approval: " + internship.getTitle());
+        }
+
+        //Check if already applied to that internship
+        for (Application a : this.getApplications()){
+            if(a.getInternship().getInternshipID() == internship.getInternshipID()){
+                System.out.print("You have already applied for this internship!");
+                return false;
+            }
+        }  
         return true;
     }
 

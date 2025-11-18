@@ -218,8 +218,6 @@ public class Main {
                             if(canApply){
                                 applicationManager.apply((Student)curUser, internshipToApply);
                                 System.out.println("Application submitted successfully for Internship ID: " + internshipID);
-                            } else {
-                                System.out.println("Cannot apply for this internship. See message above for details.");
                             }
                         }
                         case 4 -> { //View Student Applications 
