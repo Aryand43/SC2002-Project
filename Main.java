@@ -162,6 +162,10 @@ public class Main {
                             
                             String internshipID = sc.nextLine().trim();
                             Internship internshipToApply = internshipManager.findInternshipByID(internshipID);
+                            if (internshipToApply == null) {
+                                System.out.println("Error: Internship with ID '" + internshipID + "' not found.");
+                                break;
+                            }
                             // Validate that student can apply (year/level restrictions, application limit, etc.)
                             boolean canApply = ((Student)curUser).canApply(internshipToApply);
                             if(canApply){
@@ -342,10 +346,16 @@ public class Main {
                                  int decision = main.inputInteger("Choose action: ", 1, 2);
                                  if (decision == 1) {
                                      boolean ok = userManager.approveCompanyRepresentative(repId);
-                                     System.out.println(ok ? "Company Representative approved." : "Failed to approve (check ID).");
+                                     if (ok) {
+                                         System.out.println("Company Representative approved successfully.");
+                                     }
+                                     // Error message already printed by UserManager
                                  } else {
                                      boolean ok = userManager.rejectCompanyRepresentative(repId);
-                                     System.out.println(ok ? "Company Representative rejected." : "Failed to reject (check ID).");
+                                     if (ok) {
+                                         System.out.println("Company Representative rejected successfully.");
+                                     }
+                                     // Error message already printed by UserManager
                                  }
                         }
                              case 3 -> // View Pending Internships
@@ -358,10 +368,16 @@ public class Main {
                                  int ir = main.inputInteger("Choose action: ", 1, 2);
                                  if (ir == 1) {
                                      boolean ok = internshipManager.approveListing(internshipId);
-                                     System.out.println(ok ? "Internship listing approved." : "Failed to approve internship listing.");
+                                     if (ok) {
+                                         System.out.println("Internship listing approved successfully.");
+                                     }
+                                     // Error message already printed by InternshipManager
                                  } else {
                                      boolean ok = internshipManager.rejectListing(internshipId);
-                                     System.out.println(ok ? "Internship listing rejected." : "Failed to reject internship listing.");
+                                     if (ok) {
+                                         System.out.println("Internship listing rejected successfully.");
+                                     }
+                                     // Error message already printed by InternshipManager
                                  }
                         }
                              case 5 -> // View Student Withdrawal Requests
@@ -384,10 +400,16 @@ public class Main {
                                  int wa = main.inputInteger("Choose action: ", 1, 2);
                                  if (wa == 1) {
                                      boolean ok = applicationManager.approveStudentWithdrawal(appId);
-                                     System.out.println(ok ? "Withdrawal approved." : "Failed to approve withdrawal (check ID).");
+                                     if (ok) {
+                                         System.out.println("Withdrawal approved successfully.");
+                                     }
+                                     // Error message already printed by ApplicationManager
                                  } else {
                                      boolean ok = applicationManager.rejectStudentWithdrawal(appId);
-                                     System.out.println(ok ? "Withdrawal rejected." : "Failed to reject withdrawal (check ID).");
+                                     if (ok) {
+                                         System.out.println("Withdrawal rejected successfully.");
+                                     }
+                                     // Error message already printed by ApplicationManager
                                  }
                         }
                              case 7 -> {

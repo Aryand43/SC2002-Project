@@ -149,32 +149,32 @@ public class ReportGenerator {
      */
     public String generateSummaryReport() {
         StringBuilder report = new StringBuilder();
-        report.append("=== INTERNSHIP PLACEMENT SYSTEM SUMMARY REPORT ===\\n\\n");
+        report.append("=== INTERNSHIP PLACEMENT SYSTEM SUMMARY REPORT ===\n\n");
 
         List<Student> students = userManager.getStudentList();
         List<CompanyRepresentative> companyReps = userManager.getRepList();
         List<CareerCenterStaff> staff = userManager.getStaffList();
 
-        report.append("Total Students: ").append(students.size()).append("\\n");
-        report.append("Total Company Representatives: ").append(companyReps.size()).append("\\n");
+        report.append("Total Students: ").append(students.size()).append("\n");
+        report.append("Total Company Representatives: ").append(companyReps.size()).append("\n");
         report.append("Approved Company Representatives: ")
-                .append(companyReps.stream().filter(CompanyRepresentative::isApproved).count()).append("\\n");
-        report.append("Total Career Center Staff: ").append(staff.size()).append("\\n\\n");
+                .append(companyReps.stream().filter(CompanyRepresentative::isApproved).count()).append("\n");
+        report.append("Total Career Center Staff: ").append(staff.size()).append("\n\n");
 
         List<Internship> allInternships = internshipManager.getAllInternships();
-        report.append("Total Internship Opportunities: ").append(allInternships.size()).append("\\n");
+        report.append("Total Internship Opportunities: ").append(allInternships.size()).append("\n");
 
-        report.append(" - PENDING: ").append(allInternships.stream().filter(i -> i.getStatus() == Internship.InternshipStatus.PENDING).count()).append("\\n");
-        report.append(" - APPROVED: ").append(allInternships.stream().filter(i -> i.getStatus() == Internship.InternshipStatus.APPROVED).count()).append("\\n");
-        report.append(" - REJECTED: ").append(allInternships.stream().filter(i -> i.getStatus() == Internship.InternshipStatus.REJECTED).count()).append("\\n");
-        report.append(" - FILLED: ").append(allInternships.stream().filter(i -> i.getStatus() == Internship.InternshipStatus.FILLED).count()).append("\\n\\n");
+        report.append(" - PENDING: ").append(allInternships.stream().filter(i -> i.getStatus() == Internship.InternshipStatus.PENDING).count()).append("\n");
+        report.append(" - APPROVED: ").append(allInternships.stream().filter(i -> i.getStatus() == Internship.InternshipStatus.APPROVED).count()).append("\n");
+        report.append(" - REJECTED: ").append(allInternships.stream().filter(i -> i.getStatus() == Internship.InternshipStatus.REJECTED).count()).append("\n");
+        report.append(" - FILLED: ").append(allInternships.stream().filter(i -> i.getStatus() == Internship.InternshipStatus.FILLED).count()).append("\n\n");
 
         List<Application> allApplications = applicationManager.getApplicationList();
-        report.append("Total Applications: ").append(allApplications.size()).append("\\n");
-        report.append(" - PENDING: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.PENDING).count()).append("\\n");
-        report.append(" - SUCCESSFUL: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.SUCCESSFUL).count()).append("\\n");
-        report.append(" - UNSUCCESSFUL: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.UNSUCCESSFUL).count()).append("\\n");
-        report.append(" - WITHDRAWN: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.WITHDRAWN).count()).append("\\n\\n");
+        report.append("Total Applications: ").append(allApplications.size()).append("\n");
+        report.append(" - PENDING: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.PENDING).count()).append("\n");
+        report.append(" - SUCCESSFUL: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.SUCCESSFUL).count()).append("\n");
+        report.append(" - UNSUCCESSFUL: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.UNSUCCESSFUL).count()).append("\n");
+        report.append(" - WITHDRAWN: ").append(allApplications.stream().filter(app -> app.getStatus() == Application.ApplicationStatus.WITHDRAWN).count()).append("\n\n");
 
         return report.toString();
     }
