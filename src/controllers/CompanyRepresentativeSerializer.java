@@ -23,7 +23,12 @@ public class CompanyRepresentativeSerializer implements Serializer<CompanyRepres
 	 */
 	public CompanyRepresentative deserialize(String line) {
 		String[] rowData = line.split(",");
-		Boolean status = (rowData[6] == null) ? null: Boolean.valueOf(rowData[6]);
+		Boolean status;
+		if (rowData[6].trim().equalsIgnoreCase("null") || rowData[6].trim().isEmpty()) {
+			status = null;
+		} else {
+			status = Boolean.valueOf(rowData[6]);
+		}
 		CompanyRepresentative cr;
 		if (rowData.length > 7 && rowData[7] != null && !rowData[7].isEmpty()) {
 		    // rowData[7] exists and has a value

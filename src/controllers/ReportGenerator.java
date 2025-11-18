@@ -158,7 +158,7 @@ public class ReportGenerator {
         report.append("Total Students: ").append(students.size()).append("\n");
         report.append("Total Company Representatives: ").append(companyReps.size()).append("\n");
         report.append("Approved Company Representatives: ")
-                .append(companyReps.stream().filter(CompanyRepresentative::isApproved).count()).append("\n");
+                .append(companyReps.stream().filter(cr -> cr.isApproved() != null && cr.isApproved()).count()).append("\n");
         report.append("Total Career Center Staff: ").append(staff.size()).append("\n\n");
 
         List<Internship> allInternships = internshipManager.getAllInternships();

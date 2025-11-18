@@ -373,28 +373,64 @@ public class Main {
                                      case 1 ->  {
                                          System.out.print("Enter preferred major: ");
                                          String major = sc.nextLine().trim();
-                                         UI.displayInternshipList(reportGenerator.generateReportByPreferredMajor(major));
+                                         if (major.isEmpty()) {
+                                             System.out.println("Error: Preferred major cannot be empty.");
+                                         } else {
+                                             List<Internship> results = reportGenerator.generateReportByPreferredMajor(major);
+                                             if (results.isEmpty()) {
+                                                 System.out.println("No internships found. Please type the major in abbreviation, e.g. input MAE instead of Mechanical and Aerospace Engineering");
+                                             } else {
+                                                 UI.displayInternshipList(results);
+                                             }
+                                         }
                                      }
                                      case 2 ->  {
                                          System.out.print("Enter internship level (BASIC/INTERMEDIATE/ADVANCED): ");
                                          String level = sc.nextLine().trim();
-                                         UI.displayInternshipList(reportGenerator.generateReportByLevel(level));
+                                         if (level.isEmpty()) {
+                                             System.out.println("Error: Internship level cannot be empty.");
+                                         } else {
+                                             List<Internship> results = reportGenerator.generateReportByLevel(level);
+                                             if (results.isEmpty()) {
+                                                 System.out.println("No internships found. Valid levels are: BASIC, INTERMEDIATE, ADVANCED");
+                                             } else {
+                                                 UI.displayInternshipList(results);
+                                             }
+                                         }
                                      }
                                      case 3 ->  {
                                          System.out.print("Enter status (PENDING/APPROVED/REJECTED/FILLED): ");
                                          String status = sc.nextLine().trim();
-                                         UI.displayInternshipList(reportGenerator.generateReportByStatus(status));
+                                         if (status.isEmpty()) {
+                                             System.out.println("Error: Status cannot be empty.");
+                                         } else {
+                                             List<Internship> results = reportGenerator.generateReportByStatus(status);
+                                             if (results.isEmpty()) {
+                                                 System.out.println("No internships found. Valid statuses are: PENDING, APPROVED, REJECTED, FILLED");
+                                             } else {
+                                                 UI.displayInternshipList(results);
+                                             }
+                                         }
                                      }
                                      case 4 ->  {
                                          System.out.print("Enter company name: ");
                                          String company = sc.nextLine().trim();
-                                         UI.displayInternshipList(reportGenerator.generateReportByCompany(company));
+                                         if (company.isEmpty()) {
+                                             System.out.println("Error: Company name cannot be empty.");
+                                         } else {
+                                             UI.displayInternshipList(reportGenerator.generateReportByCompany(company));
+                                         }
                                      }
                                      case 5 ->  {
                                          System.out.print("Enter student ID: ");
                                          String studentId = sc.nextLine().trim();
                                          List<Application> apps = reportGenerator.generateReportByStudent(studentId);
                                          UI.displayApplicationList(apps);
+                                         if (apps == null) {
+                                             System.out.println("Error: Student with ID '" + studentId + "' not found.");
+                                         } else {
+                                             UI.displayApplicationList(apps);
+                                         }
                                      }
                                      case 6 ->  {
                                          System.out.print("Enter status (or leave blank): ");
