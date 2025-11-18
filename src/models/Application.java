@@ -66,7 +66,7 @@ public class Application {
      * @param internshipID
      * @param status
      */
-    public Application(String id, String studentID, String internshipID, String status) {
+    public Application(String id, String studentID, String internshipID, String status, String date) {
         this.id = id;
         this.studentID = studentID;
         this.internshipID = internshipID;
@@ -75,7 +75,7 @@ public class Application {
         } catch (Exception e) {
             this.status = ApplicationStatus.PENDING;
         }
-        this.appliedDate = LocalDate.now().toString();
+        this.appliedDate = date;
     }
     
     /**

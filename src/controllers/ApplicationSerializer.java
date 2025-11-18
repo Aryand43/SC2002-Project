@@ -1,9 +1,8 @@
 package controllers;
 
+import java.time.format.DateTimeFormatter;
 import models.Application;
 import models.Student;
-import controllers.UserManager;
-import controllers.InternshipManager;
 /**
  * Implements the serializing and deserializing of Application entity and the relevant metadata for its file
  * <p>
@@ -15,6 +14,8 @@ import controllers.InternshipManager;
  * 
  */
 public class ApplicationSerializer implements Serializer<Application>{
+	// Use dd/MM/yyyy to match CSV date format
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private UserManager userManager;
     private InternshipManager internshipManager;
@@ -36,7 +37,7 @@ public class ApplicationSerializer implements Serializer<Application>{
 	@Override
 	public Application deserialize(String line) {
 		String[] rowData = line.split(",");
-		Application application = new Application(rowData[0],rowData[1],rowData[2],rowData[3]);
+		Application application = new Application(rowData[0],rowData[1],rowData[2],rowData[3],rowData[4]);
 		if (userManager != null) {
 		    application.setStudentRef((Student) userManager.getStudentByID(application.getStudentID()));
 		}
@@ -56,7 +57,8 @@ public class ApplicationSerializer implements Serializer<Application>{
 	 */
 	@Override
 	public String serialize(Application application) {
-		String line = application.getID() + "," + application.getStudentID() + "," + application.getInternshipID() + "," + application.getStatus();
+		String line = application.getID() + "," + application.getStudentID() + "," + application.getInternshipID() + "," + 
+		application.getStatus() + "," + application.getAppliedDate();
 		return line;
 	}
 	

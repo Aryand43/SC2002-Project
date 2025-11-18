@@ -102,4 +102,56 @@ public class MenuBoundary {
         System.out.println("0. Logout");
         printSeparator();
     }
+
+    /**
+     * Display Student Internship Menu
+     */
+    public void displayStudentInternshipMenu() {
+        printSectionHeader("Student Internship Menu");
+        System.out.println("1. View Available Internships");
+        System.out.println("2. Search Internships");
+        System.out.println("3. Apply for Internship");
+        System.out.println("4. View My Applications");
+        System.out.println("5. Filter Internships");
+        System.out.println("6. Accept Internship Offer");
+        System.out.println("7. Withdraw Application");
+        System.out.println("0. Logout");
+        printSeparator();
+    }
+    
+    /**
+     * Displays a formatted list of internships associated with the parameter 
+     * @param internships List of internships to display
+     */
+    public void displayInternshipList(List<Internship> internships) {
+        if (internships.isEmpty()) {
+            System.out.println("No internships found.");
+            return;
+        }
+        
+        for (int i = 0; i < internships.size(); i++) {
+            printSectionHeader("Internship " + (i + 1));
+            System.out.printf("%d. %s\n", (i + 1), internships.get(i).getDetailedInfo());
+        }
+        
+        System.out.println("\nTotal: " + internships.size() + " internship(s)");
+        printSeparator();
+    }
+
+    /**
+     * Displays formatted list of applications associated with the parameter 
+     * @param internships List of internships to display
+     */
+    public void displayApplicationList(List<Application> applications) {
+        printSectionHeader("Viewing My Applications");
+        if (applications  == null || applications.isEmpty()) {
+            System.out.println("No applications to show.");
+            return;
+        }
+        System.out.printf("%-19s %-12s %-14s %-15s %-12s%n", "AppID", "StudentID", "InternshipID", "Status", "Applied Date");
+        for (models.Application a : applications) {
+            System.out.printf("%-19s %-12s %-14s %-15s %-12s%n", a.getID(), a.getStudentID(), a.getInternshipID(), a.getStatus(), a.getAppliedDate());
+        }
+        printSeparator();
+    }
 }
