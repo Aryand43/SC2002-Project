@@ -17,7 +17,7 @@ INT0017,Data Engineer Intern,Build ETL pipelines and data lakes,INTERMEDIATE,DSA
 INT0018,Data Visualization Intern,Create dashboards and visual reports,BASIC,DSAI,01/12/2024,29/12/2025,PENDING,InsightViz,rita.leong@insightviz.com,3,3,0,true
 INT0019,Embedded Systems Intern,Work on microcontroller firmware and drivers,INTERMEDIATE,CE,01/11/2024,22/12/2025,APPROVED,Embedded Solutions,cheng.wu@embedsol.com,3,3,0,true
 INT0020,FPGA Intern,Design FPGA logic for acceleration,ADVANCED,CE,15/11/2024,15/12/2025,APPROVED,AccelTech,fahmi.ahmad@acceltech.sg,2,2,0,true
-INT0021,Network Systems Intern,Configure and test network protocols,BASIC,CE,01/12/2024,30/12/2025,PENDING,NetCore Labs,hannah.tan@netcore.com,4,4,0,false
+INT0021,Network Systems Intern,Configure and test network protocols,BASIC,CE,01/12/2024,30/12/2025,APPROVED,NetCore Labs,hannah.tan@netcore.com,4,4,0,true
 INT0022,Hardware Testing Intern,Perform validation and reliability tests,INTERMEDIATE,CE,01/11/2024,25/12/2025,APPROVED,TestWorks,julian.lim@testworks.sg,3,3,0,true
 INT0023,Aerodynamics Intern,Run CFD simulations for wing designs,ADVANCED,MAE,01/11/2024,24/12/2025,APPROVED,AeroTech Solutions,li.na@aerotech.com,2,2,0,true
 INT0024,Thermal Analysis Intern,Perform thermal modelling and analysis,INTERMEDIATE,MAE,15/11/2024,12/12/2025,APPROVED,HeatFlow Lab,simon.koh@heatflow.sg,3,3,0,true

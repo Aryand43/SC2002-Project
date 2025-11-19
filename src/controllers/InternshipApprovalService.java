@@ -4,8 +4,8 @@ import models.Internship;
 import models.Internship.InternshipStatus;
 
 /**
- * Handles approval and rejection workflows for internship listings.
- * Single Responsibility: Internship approval/rejection logic.
+ * Handles approval and rejection workflows for internship listings.<br>
+ * Single Responsibility: Internship approval/rejection logic.<br>
  * Open/Closed: New approval workflows can be added by extending or composing with this class.
  */
 public class InternshipApprovalService {

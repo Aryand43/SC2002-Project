@@ -206,6 +206,12 @@ public class Main {
 
                         case 3 -> {
                             // Apply for Internship
+                            // Pre-check that student has reached max before allowing to input internship ID
+                            if (((Student)curUser).isMaxReached()){
+                                System.out.println("You have reached the maximum number of active applications (3). Please withdraw an application before applying for a new internship.");
+                                break;
+                            }
+
                             System.out.print("Enter Internship ID to apply: ");
                             
                             String internshipID = sc.nextLine().trim();
@@ -229,8 +235,6 @@ public class Main {
                                 applicationManager.apply((Student)curUser, internshipToApply);
                                 applicationManager.saveTofile(); // Save applications after applying
                                 System.out.println("Application submitted successfully for Internship ID: " + internshipID);
-                            } else {
-                                System.out.println("Cannot apply for this internship. See message above for details.");
                             }
                         }
                         case 4 -> { //View Student Applications 
@@ -267,8 +271,7 @@ public class Main {
                                         a.setStatus(Application.ApplicationStatus.WITHDRAWN); // Set the others to withdrawn
                                     }
                                 }
-                                selected.getInternship().incrementConfirmedSlots();
-                                internshipManager.updateInternship(selected.getInternship());
+                                internshipManager.updateListingOnConfirmation(selected.getInternshipID());
                                 System.out.println("Offer accepted. You have secured this internship.");
                             } else {
                                 selected.setStatus(Application.ApplicationStatus.WITHDRAW_REQUESTED);

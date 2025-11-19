@@ -8,15 +8,23 @@ import models.Student;
  * 
  * Responsible for converting Student objects to and from their string representation
  * to the correct format to be written back into the file, as well as providing file related metadata such as 
- * filepath and header
- * @param Student the type of entity to be serialized and deserialized
+ * filepath and header.<br><br>
+ * Student is the type of entity to be serialized and deserialized
  * 
  */
 public class StudentSerializer implements Serializer<Student> {
 	
 	/**
-	 * Deserializes the given string into the Student Object by creating a new instance of Student
-	 * by separting the line by commas into StudentID, Name , Major, Year and Email
+	 * Deserializes the given string into the Student Object by creating a 
+	 * new instance of Student by separting the line by commas into:<br>
+	 * <ol>
+	 * <li>StudentID</li>
+	 * <li>Name</li>
+	 * <li>Major</li>
+	 * <li>Year</li>
+	 * <li>Email</li>
+	 * <li>Password</li>
+	 * </ol>
 	 * 
 	 * @param line the line to deserialize
 	 * @return the Student reconstructed from the line of text
@@ -45,9 +53,9 @@ public class StudentSerializer implements Serializer<Student> {
 
 	/**
 	 * Serializes the Student into a string of information to be stored into the corresponding file
-	 * by retrieving the StudentID, Name , Major, Year and Email of the Student
+	 * by retrieving the StudentID, Name , Major, Year, Email and password of the Student
 	 * 
-	 * @param Student the student object to serialize
+	 * @param student the student object to serialize
 	 * @return a string that is comma delimited for csv file
 	 */
 	@Override

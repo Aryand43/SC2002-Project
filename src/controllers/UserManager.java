@@ -7,7 +7,6 @@ import models.Student;
 import models.User;
 
 /**
- * <b>USER MANAGER CLASS</b><br>
  * The User Manager will be in charge of logging in and logging out. 
  * <br>User Manager will also be used in authorizing the company representative only if a staff account is used.<br>
  * @author Shayne Low
@@ -65,20 +64,20 @@ public class UserManager {
 
     /**
      * Setter Function
-     * @return When user logs out, clear the current user object in User Manager
+     * When user logs out, clear the current user object in User Manager
      */
     public void clearCurrentUser(){this.currentUser = null;}
 
-    /**
-     * Method to get list of user type at login stage, where there is no current user in the program.<br>
-     * User's ID decides which list is used. 
-     * <ol>
-     * <li>If the ID inputted by the user starts with "U"/"u", user is a student</li>
-     * <li>If the ID inputted by the user starts with "CR"/"cr", user is a company representative</li>
-     * <li>Else, user is a staff</li>
-     * </ol>
-     * @return The respective list of objects associated with the ID.
-     */
+    // /**
+    //  * Method to get list of user type at login stage, where there is no current user in the program.<br>
+    //  * User's ID decides which list is used. <br>
+    //  * <ol>
+    //  * <li>If the ID inputted by the user starts with "U"/"u", user is a student</li>
+    //  * <li>If the ID inputted by the user starts with "CR"/"cr", user is a company representative</li>
+    //  * <li>Else, user is a staff</li>
+    //  * </ol>
+    //  * @return The respective list of objects associated with the ID.
+    //  */
     // public ArrayList<User> getRespectiveUserList(String ID){   
     //     if (Character.toString(ID.charAt(0)).equalsIgnoreCase("U")){
     //         return this.studentList;
@@ -198,7 +197,7 @@ public class UserManager {
     
     /**
      * Function that approves Company Representative's application for account by getting their ID and returns the a status to indicate if the approval was a success.
-     * @param String repID
+     * @param repID Company Representative ID
      * @return Boolean
      */
     public boolean approveCompanyRepresentative(String repID){
@@ -226,7 +225,7 @@ public class UserManager {
     
     /**
      * Function that rejects Company Representative's application for account by getting their ID and returns the a status to indicate if the rejection was a success.
-     * @param String repID
+     * @param repID Company Representative ID
      * @return Boolean
      */
     public boolean rejectCompanyRepresentative(String repID){
@@ -252,8 +251,8 @@ public class UserManager {
     
     /**
      * Function that resets the password of User to the default password when they forget their password.
-     * @param userID
-     * @param userEmail
+     * @param userID User ID
+     * @param userEmail User Email
      */
     public void resetPassword(String userID, String userEmail) {
     	User resetUser = userList.stream().filter(s -> s.getID().equals(userID)).filter(s -> s.getEmail().equals(userEmail)).findFirst().orElse(null);
@@ -268,8 +267,8 @@ public class UserManager {
     
     /**
      * Function that enables user to change the password by asking user for their input of oldPassword and their ID.
-     * @param userID
-     * @param oldPassword
+     * @param userID User ID
+     * @param oldPassword Old Password
      */
     public void changePassword(String userID, String oldPassword, java.util.Scanner sc){
      User u = userList.stream().filter(s -> s.getID().equals(userID)).filter(s -> s.getPassword().equals(oldPassword)).findFirst().orElse(null);
@@ -290,7 +289,7 @@ public class UserManager {
     
     /**
      * Function that adds Companyrepresentative to the ArrayList of CompanyRepresentative
-     * @param cr
+     * @param cr Company Representative object to be added
      */
     public void addCompanyRepresentative(CompanyRepresentative cr) {
     	repList.add(cr);

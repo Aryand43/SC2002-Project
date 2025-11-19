@@ -5,8 +5,8 @@ import java.util.List;
 import models.Internship;
 
 /**
- * Wrapper around FileHandler to implement InternshipPersistence interface.
- * Decouples InternshipManager from FileHandler specifics.
+ * Concrete implementation from DataPersistence. @see DataPersistence for more information on methods
+ * Decouples Manager from FileHandler implementation.
  */
 public class FileInternshipPersistence implements DataPersistence<Internship> {
     private final FileHandler<Internship> fileHandler;

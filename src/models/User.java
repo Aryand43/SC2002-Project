@@ -2,8 +2,7 @@ package models;
 import java.util.Scanner;
 
 /**
- * <b>USER CLASS</b><br>
- * A User object will contain
+ * Represents an User object. A User will contain:
  * <ol>   
  * <li>User ID</li>
  * <li>Name</li>
@@ -143,20 +142,9 @@ public class User {
     public void setPasswordChanged(boolean b){this.passwordChanged = true;}
 
     /**
-     * Set/Change user's password <br>
-     * @param oldPass Takes in user's old password to enable password change.
-     * <br><br>
-     * Checks if user's new password has:
-     * <ul>
-     * <li>At least 8 characters</li>
-     * <li>At least 1 Uppercase letter</li>
-     * <li>At least 1 Digit</li>
-     * <li>At least 1 Special Character</li>
-     * </ul>
-     * @return 
-     * User's new password
+     * Resets user's password to default value "password" <br>
+     * Sets user's "password changed" status to false
      */
-    
     public void resetDefaultPassword() {
     	this.password = "password";
     	this.passwordChanged = false;
@@ -164,6 +152,14 @@ public class User {
     
     /**
      * Change user's password <br>
+     * <br>
+     * Checks if user's new password has:
+     * <ul>
+     * <li>At least 8 characters</li>
+     * <li>At least 1 Uppercase letter</li>
+     * <li>At least 1 Digit</li>
+     * <li>At least 1 Special Character</li>
+     * </ul>
      * @param oldPass current password to validate against
      * @param sc Scanner instance to read new password from
      * @return the new password if changed, empty string if cancelled
@@ -208,13 +204,13 @@ public class User {
     
     /**
      * Helper function for setPassword() to validate new password entered.
-     * @param pasword Takes in user's old password to enable password change.
-     * <br><br>
-     * @return 
+     * @param password Takes in user's old password to enable password change.
+     * <br>
      * <ol> 
      * <li>true with system message: "Valid new password"</li>
      * <li>false with system message: "Invalid new password" and returns false</li>
      * </ol>
+     * @return boolean value indicating if new password is valid
      */
     public static boolean isValidPassword(String password) {
         boolean length = password.length() >= 8; // Password length is at least 8

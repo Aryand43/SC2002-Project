@@ -6,10 +6,10 @@ import models.Student;
  * Implements the serializing and deserializing of Application entity and the relevant metadata for its file
  * <p>
  * 
- * Responsible for converting Application objects to and from their string representation
- * to the correct format to be written back into the file, as well as providing file related metadata such as 
- * filepath and header
- * @param Application the type of entity to be serialized and deserialized
+ * Responsible for converting Application objects to and from their string representation<br>
+ * to the correct format to be written back into the file, as well as providing file related <br>
+ * metadata such as filepath and header.<br><br>
+ * Application is the type of entity to be serialized and deserialized
  * 
  */
 public class ApplicationSerializer implements Serializer<Application>{
@@ -25,9 +25,15 @@ public class ApplicationSerializer implements Serializer<Application>{
     }
 
 	/**
-	 * Deserializes the given string into the Application by creating a new instance of Application
-	 * by separting the line by commas into 
-	 * 
+	 * Deserializes the given string into the Application by creating a<br> 
+	 * new instance of Application by separting the line by commas into:
+	 * <ol>
+	 * <li>App id</li>
+	 * <li>Student ID</li>
+	 * <li>Internship ID</li>
+	 * <li>Status</li>
+	 * <li>Applied Date</li>
+	 * </ol>
 	 * @param line the line to deserialize
 	 * @return the Application Object reconstructed from the line of text
 	 */

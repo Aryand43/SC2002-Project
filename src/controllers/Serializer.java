@@ -4,8 +4,8 @@ package controllers;
  * Interface that defines the  contract for serializing and deserialzing entities of type {@code T}
  * <p>
  * 
- * A {@code Serializer} is responsible for converting entity objects to and from their string representation
- * to the correct format to be written back into the file, as well as providing file related metadata such as 
+ * A {@code Serializer} is responsible for converting entity objects to and from their string representation<br>
+ * to the correct format to be written back into the file, as well as providing file related metadata such as<br>
  * filepath and header
  * @param <T> the type of entity to be serialized and deserialized
  */

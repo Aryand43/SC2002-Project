@@ -12,7 +12,9 @@ import models.CompanyRepresentative;
 import models.Internship;
 import models.Internship.InternshipLevel;
 
-
+/*
+ * Boundary class for Company Representative interactions
+ */
 public class CompanyRepBoundary {
 
     private final Scanner scanner;

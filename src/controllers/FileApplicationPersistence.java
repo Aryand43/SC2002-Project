@@ -3,6 +3,11 @@ package controllers;
 import java.util.List;
 import models.Application;
 
+
+/**
+ * Concrete implementation from DataPersistence. @see DataPersistence @see DataPersistence for more information on methods<br>
+ * Decouples Manager from FileHandler implementation.
+ */
 public class FileApplicationPersistence implements DataPersistence<Application> {
     private FileHandler<Application> fileHandler;
 

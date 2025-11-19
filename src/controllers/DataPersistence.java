@@ -3,7 +3,7 @@ package controllers;
 import java.util.List;
 
 /**
- * Abstraction for persistence layer.
+ * Abstraction for persistence layer.<br>
  * Decouples Manager from FileHandler implementation.
  */
 public interface DataPersistence<T>{

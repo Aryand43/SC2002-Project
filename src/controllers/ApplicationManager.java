@@ -7,7 +7,7 @@ import models.*;
  * ApplicationManager manages application workflows using FSM.
  * The Application model enforces valid state transitions via StateTransition enum.
  * <br><br>
- * Valid state transitions (defined in Application.StateTransition):
+ * Valid state transitions (defined in Application.StateTransition):<br>
  * - ACCEPT: PENDING to SUCCESSFUL <br>
  * - REJECT_APPLICATION: PENDING to UNSUCCESSFUL <br>
  * - REQUEST_WITHDRAWAL: SUCCESSFUL to WITHDRAW_REQUESTED <br>
@@ -38,12 +38,20 @@ public class ApplicationManager {
         resolveObjectReferences();
     }
     
-    // Return current applications
+    /**
+     * Returns the list of all applications.
+     * @return List of all applications, or empty list if repository is null
+     */
     public List<Application> getApplicationList() {
         return repository != null ? repository.getAll() : List.of();
     }
 
-    // Apply for an internship
+    /**
+     * Creates a new application for a student to apply for an internship.
+     * @param student The student applying
+     * @param opportunity The internship opportunity
+     * @return The newly created Application
+     */
     public Application apply(Student student, Internship opportunity) {
         Application app = new Application(student.getID(), opportunity.getInternshipID());
         app.setStudent(student);
@@ -52,7 +60,13 @@ public class ApplicationManager {
         return app;
     }
 
-    // Accept a placement for a student and application (orchestrates domain + side-effects)
+    /**
+     * Accepts a placement for a student and application. <br>
+     * The necessary details in internship listing is then updated with InternshipManager.
+     * @param student The student accepting placement
+     * @param application The application being accepted
+     * @return true if transition succeeded, false otherwise
+     */
     public boolean acceptPlacement(Student student, Application application) {
         if (application == null) return false;
         boolean transitioned = application.accept();
@@ -65,7 +79,11 @@ public class ApplicationManager {
         return true;
     }
 
-    // Reject an application
+    /**
+     * Rejects an application (state transition: PENDING to UNSUCCESSFUL).
+     * @param application The application to reject
+     * @return true if transition succeeded, false otherwise
+     */
     public boolean rejectApplication(Application application) {
         if (application == null) return false;
         boolean transitioned = application.reject();
@@ -74,7 +92,12 @@ public class ApplicationManager {
         return true;
     }
 
-    // Student requests withdrawal
+    /**
+     * Student requests withdrawal from a successful application.<br>
+     * State transition: SUCCESSFUL to WITHDRAW_REQUESTED.
+     * @param application The application to request withdrawal for
+     * @return true if transition succeeded, false otherwise
+     */
     public boolean requestWithdrawal(Application application) {
         if (application == null) return false;
         boolean transitioned = application.requestWithdrawal();
@@ -83,7 +106,13 @@ public class ApplicationManager {
         return true;
     }
 
-    // Approve withdrawal request
+    /**
+     * Approves a withdrawal request.<br>
+     * State transition: WITHDRAW_REQUESTED to WITHDRAWN.<br>
+     * Updates internship slot availability.
+     * @param application The application with withdrawal request to approve
+     * @return true if transition succeeded, false otherwise
+     */
     public boolean approveWithdrawal(Application application) {
         if (application == null) return false;
         boolean transitioned = application.approveWithdrawal();
@@ -95,7 +124,12 @@ public class ApplicationManager {
         return true;
     }
 
-    // Reject withdrawal request
+    /**
+     * Rejects a withdrawal request.<br>
+     * State transition: WITHDRAW_REQUESTED back to SUCCESSFUL.
+     * @param application The application with withdrawal request to reject
+     * @return true if transition succeeded, false otherwise
+     */
     public boolean rejectWithdrawal(Application application) {
         if (application == null) return false;
         boolean transitioned = application.rejectWithdrawal();
@@ -104,7 +138,11 @@ public class ApplicationManager {
         return true;
     }
 
-    // accept/reject by application ID
+    /**
+     * Approves a student withdrawal request by application ID.
+     * @param applicationID The ID of the application
+     * @return true if withdrawal was approved, false otherwise
+     */
     public boolean approveStudentWithdrawal(String applicationID) {
         Application app = findByID(applicationID);
         if (app == null) {
@@ -114,6 +152,11 @@ public class ApplicationManager {
         return approveWithdrawal(app);
     }
 
+    /**
+     * Rejects a student withdrawal request by application ID.
+     * @param applicationID The ID of the application
+     * @return true if rejection was successful, false otherwise
+     */
     public boolean rejectStudentWithdrawal(String applicationID) {
         Application app = findByID(applicationID);
         if (app == null) {

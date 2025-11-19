@@ -24,12 +24,12 @@ public class CompanyRepresentative extends User {
     }
     
     /**
-     * Constructor for Serializer where it takes extra parameter of status & password
+     * Constructor for Serializer where it takes extra parameter of status and password
      * @param ID Company Rep ID
      * @param name Company Rep Name
      * @param email Company Rep Email (To Be used as loginID)
      * @param companyName Company Name
-     * @param department Which department the Company Rep belogns to
+     * @param department Which department the Company Rep belongs to
      * @param position Which position the Company Representative holds
      * @param status Status of the account creation
      * @param password Password of the Company Representative

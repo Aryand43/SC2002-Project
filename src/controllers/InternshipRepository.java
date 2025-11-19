@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import models.Internship;
 
 /**
- * Repository for internship data access.
- * Handles actions like delete/edit/add internships.
+ * Repository for internship data access.<br>
+ * Handles actions like delete/edit/add internships. <br>
  * Single Responsibility: Data access and retrieval only.
  */
 public class InternshipRepository {

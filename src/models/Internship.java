@@ -125,7 +125,7 @@ public class Internship {
     
     /**
      * Check if internship is open for applications. IF date is before opening date, listing should not be visible.<br>
-     * If date is after clsoing date, listing should also be hidden. The listing is only visible if within closing and opening date. 
+     * If date is after closing date, listing should also be hidden. The listing is only visible if within closing and opening date. 
      */
     public boolean isOpenForApplications() {
         LocalDate today = LocalDate.now();
@@ -143,6 +143,7 @@ public class Internship {
      * <li>Year 1 and 2 students can ONLY apply for BASIC internships.</li>
      * <li>Year 3 and above students can apply for ALL levels (Basic, Intermediate, Advanced).
      * <li>Students can only see internships of the SAME major
+     * </ul>
      */
     public boolean isStudentEligible(int yearOfStudy) {
         // Check eligibility based on year of study
@@ -184,8 +185,8 @@ public class Internship {
     }
 
     /**
-     * Domain method: Confirm a slot when a placement is accepted
-     * Automatically handles visibility and status updates
+     * Confirm a slot when a placement is accepted <br>
+     * Also automatically handles visibility and status updates
      */
     public void confirmSlot() {
         incrementConfirmedSlots();
@@ -196,8 +197,8 @@ public class Internship {
     }
 
     /**
-     * Domain method: Withdraw a confirmed slot
-     * Automatically handles visibility restoration
+     * Withdraw a confirmed slot <br>
+     * Also automatically handles visibility restoration
      */
     public void withdrawSlot() {
         decrementConfirmedSlots();

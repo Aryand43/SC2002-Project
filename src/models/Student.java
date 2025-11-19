@@ -3,28 +3,24 @@ package models;
 import java.util.ArrayList;
 
 /**
- * Represents a Student user in the Internship Management System.
- * <p>
+ * Represents a Student user in the Internship Management System.<br>
+ * <br>
  * A student holds and manages a collection of their internship applications.
- * The Student class focuses on student-specific data and validation rules:
+ * The Student class focuses on student-specific data and validation rules:<br>
  * <ul>
- *   <li>Year of Study (1–4): determines which internship levels can be accessed</li>
+ *   <li>Year of Study (1 to 4): determines which internship levels can be accessed</li>
  *   <li>Major (CSC, EEE, MAE, etc.): for categorization and filtering</li>
  *   <li>Application History: collection of submitted applications</li>
  * </ul>
- * </p>
- * <p>
- * Application Restrictions:
+ * <br>
+ * Application Restrictions:<br>
  * <ul>
- *   <li>Year 1–2: can only apply for Basic-level internships</li>
+ *   <li>Year 1 to 2: can only apply for Basic-level internships</li>
  *   <li>Year 3: can apply for any level (Basic, Intermediate, Advanced)</li>
  *   <li>Maximum 3 active applications at any time</li>
  *   <li>Only 1 internship offer can be accepted (managed by ApplicationManager)</li>
  * </ul>
- * </p>
- * <p>
- * </p>
- * 
+
  * This class extends {@link models.User}.
  * @author Joel Lee
  */
@@ -73,20 +69,35 @@ public class Student extends User {
     public int getYearOfStudy() { return yearOfStudy; }
     public String getMajor() { return major; }
     public ArrayList<Application> getApplications() { return applications; }
-    public int noOfApplications() { return applications.size(); }
-
+    /**
+     * Returns the number of active (non-withdrawn) applications.<br>
+     * Withdrawn applications are not counted towards the 3-application limit.
+     */
+    public int noOfApplications() {
+        int count = 0;
+        for (Application app : applications) {
+            if (app.getStatus() != Application.ApplicationStatus.WITHDRAWN) {
+                count++;
+            }
+        }
+        return count;
+    }
+    public boolean isMaxReached(){
+        return noOfApplications() >= 3;
+    }
 
     // -----------------------------
     // Internship Application Validation
     // -----------------------------
 
     /**
-     * Validates if a student can apply for an internship.
-     * Checks:
-     * 1. Application limit (max 3 active applications)
-     * 2. Year of Study restriction (Years 1–2 can only apply for BASIC level)
-     * 3. Internship validity
-     * 
+     * Validates if a student can apply for an internship.<br>
+     * Checks:<br>
+     * <ul>
+     * <li>Application limit (max 3 active applications) </li>
+     * <li>Year of Study restriction (Years 1–2 can only apply for BASIC level) </li>
+     * <li>Internship validity </li>
+     * </ul><br>
      * This method is for validation only. The actual application creation
      * and persistence is handled by ApplicationManager.apply().
      * 
@@ -94,11 +105,6 @@ public class Student extends User {
      * @return true if student can apply, false otherwise
      */
     public boolean canApply(Internship internship) {
-        // Check if student has reached the 3 application limit
-        if (applications.size() >= 3) {
-            System.out.println("You can only apply for a maximum of 3 internship opportunities at once.");
-            return false;
-        }
 
         // Check if internship is valid
         if (internship == null) {
@@ -106,13 +112,13 @@ public class Student extends User {
             return false;
         }
 
-         // Check visibility of internship
+        // Check visibility of internship
         if (!internship.isVisible()) {
-        System.out.println("This internship is not currently visible and cannot be applied for.");
-        return false;
+            System.out.println("This internship is not currently visible and cannot be applied for.");
+            return false;
         }
 
-        //Checking the restriction for Year 1-2 students
+        // Checking the restriction for Year 1-2 students
         if (yearOfStudy <= 2 && internship.getLevel() != Internship.InternshipLevel.BASIC) {
             System.out.println("Year 1 and 2 students can only apply for Basic-level internships.");
             return false;
@@ -122,13 +128,20 @@ public class Student extends User {
         if (internship.getPreferredMajor() != null 
             && !internship.getPreferredMajor().isEmpty()
             && !internship.getPreferredMajor().contains(this.major)) {
-        System.out.println("Your major (" + this.major + 
-                           ") does not match the required major preference for this internship.");
-        return false;
-    }
-        // Add application
-        //applications.add(application); SHOULD only add once approved by ApplicationManager
-        System.out.println("Application submitted, waiting approval: " + internship.getTitle());
+            System.out.println("Your major (" + this.major + ") does not match the required major preference for this internship.");
+            return false;
+        }
+
+        // Check if already applied to that internship
+        for (Application a : this.getApplications()) {
+            Internship appliedInternship = a.getInternship();
+            if (appliedInternship != null && appliedInternship.getInternshipID() != null && internship.getInternshipID() != null) {
+                if (appliedInternship.getInternshipID().equals(internship.getInternshipID())) {
+                    System.out.print("You have already applied for this internship!");
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
