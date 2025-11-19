@@ -112,11 +112,12 @@ public class Main {
             	break;
             }
         	 //Step 2: Display respective user's main menu in the internship management system
-            TypesOfUser currentPermission = userManager.getCurrentUser().getUserType();
-            int choice;
-            
+          
         	while(userManager.getCurrentUser() != null) {
                 User curUser = userManager.getCurrentUser();
+                TypesOfUser currentPermission = userManager.getCurrentUser().getUserType();
+                int choice;
+               
                 switch(currentPermission){
                     case Student: // Current user is student
                     while (true){
@@ -213,10 +214,20 @@ public class Main {
                                 System.out.println("Error: Internship with ID '" + internshipID + "' not found.");
                                 break;
                             }
+                             // Check if student already applied for this internship. 
+                             // The student shouldn't be able to apply again if they have an existing application (regardless of status).
+                            boolean alreadyApplied = myApplications.stream()
+                                .anyMatch(a -> a.getInternshipID().equals(internshipID));
+
+                            if (alreadyApplied) {
+                                System.out.println("You have already applied for this internship.");
+                                break;
+                            }
                             // Validate that student can apply (year/level restrictions, application limit, etc.)
                             boolean canApply = ((Student)curUser).canApply(internshipToApply);
                             if(canApply){
                                 applicationManager.apply((Student)curUser, internshipToApply);
+                                applicationManager.saveTofile(); // Save applications after applying
                                 System.out.println("Application submitted successfully for Internship ID: " + internshipID);
                             } else {
                                 System.out.println("Cannot apply for this internship. See message above for details.");
@@ -263,12 +274,21 @@ public class Main {
                                 selected.setStatus(Application.ApplicationStatus.WITHDRAW_REQUESTED);
                                 System.out.println("Withdrawn request sent. Please wait for approval.");
                             }
+                            break;
                         }
-                        case 0 -> // Logout
+
+                        case 0 -> {
                             userManager.logout();
+                            break; // Student log out
+                        }        
                     }
+                    if (userManager.getCurrentUser() == null) {
+                    break; // exits outer loop, returns to login menu
                 }
-                     
+    
+            }
+            break;
+
                  case CareerCenterStaff: // Current user is Career Center Staff
                      // Loop the staff menu until logout
                      while (true) {
