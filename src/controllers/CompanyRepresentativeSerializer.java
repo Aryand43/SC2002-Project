@@ -6,8 +6,7 @@ import models.CompanyRepresentative;
  * <p>
  * 
  * Responsible for converting CompanyRepresentative objects to and from their string representation<br>
- * to the correct format to be written back into the file, as well as providing file <br>
- * related metadata such as filepath and header.<br><br>
+ * to the correct format to be written back into the file, as well as providing file related metadata such as filepath and header.<br><br>
  * CompanyRepresentative is the type of entity to be serialized and deserialized
  * 
  */
@@ -15,7 +14,7 @@ public class CompanyRepresentativeSerializer implements Serializer<CompanyRepres
 	
 	/**
 	 * Deserializes the given string into the CompanyRepresentative by creating <br>
-	 * a new instance of CompanyRepresentative by separting the line by commas into:
+	 * a new instance of CompanyRepresentative by separting the line by commas into:<br>
 	 * <ol>
 	 * <li>CompanyRepresentativeID</li>
 	 * <li>Name</li>

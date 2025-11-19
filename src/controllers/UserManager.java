@@ -70,7 +70,7 @@ public class UserManager {
 
     // /**
     //  * Method to get list of user type at login stage, where there is no current user in the program.<br>
-    //  * User's ID decides which list is used. 
+    //  * User's ID decides which list is used. <br>
     //  * <ol>
     //  * <li>If the ID inputted by the user starts with "U"/"u", user is a student</li>
     //  * <li>If the ID inputted by the user starts with "CR"/"cr", user is a company representative</li>

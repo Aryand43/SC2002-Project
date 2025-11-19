@@ -1,14 +1,14 @@
 package controllers;
 
-import models.Internship;
-import models.Internship.InternshipLevel;
-import models.Internship.InternshipStatus;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import models.Internship;
+import models.Internship.InternshipLevel;
+import models.Internship.InternshipStatus;
 
 /**
- * Handles read-only query and filtering operations on internships.
+ * Handles read-only query and filtering operations on internships.<br>
  * Single Responsibility: Search, filter, and query internships.
  */
 public class InternshipQueryService {

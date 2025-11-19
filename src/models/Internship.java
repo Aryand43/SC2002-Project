@@ -138,7 +138,7 @@ public class Internship {
     }
 
     /**
-     * Checks if student is elgible to apply for this specific internship. Based on requirements:
+     * Checks if student is elgible to apply for this specific internship. Based on requirements:<br>
      * <ul>
      * <li>Year 1 and 2 students can ONLY apply for BASIC internships.</li>
      * <li>Year 3 and above students can apply for ALL levels (Basic, Intermediate, Advanced).

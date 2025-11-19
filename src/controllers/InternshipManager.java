@@ -7,7 +7,7 @@ import models.Internship.InternshipLevel;
 import models.Internship.InternshipStatus;
 
 /**
- * InternshipManager coordinates between the @see InternshipRepository, @see InternshipApprovalService, and @see InternshipQueryService.
+ * InternshipManager coordinates between the @see InternshipRepository, @see InternshipApprovalService, and @see InternshipQueryService.<br>
  * The requirements are extracted to policies (@see StandardPolicy which implements @see ListingPolicy) that can be swapped out for different implementations.<br>
  * Depends on interfaces, not concrete implementations (Dependency Inversion).
  */

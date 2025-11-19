@@ -5,16 +5,15 @@ import models.CareerCenterStaff;
  * Implements the serializing and deserializing of staff entity and the relevant metadata for its file
  * <p>
  * 
- * Responsible for converting CareerCenterStaff objects to and from their string representation
- * to the correct format to be written back into the file, as well as providing file related metadata such as 
- * filepath and header.<br><br>
+ * Responsible for converting CareerCenterStaff objects to and from their string representation to the correct<br>
+ * format to be written back into the file, as well as providing file related metadata such as filepath and header.<br><br>
  * CareerCenterStaff is the type of entity to be serialized and deserialized
  * 
  */
 public class StaffSerializer implements Serializer<CareerCenterStaff>{
 	/**
 	 * Deserializes the given string into the CareerCenterStaff by creating a<br> 
-	 * new instance of CareerCenterStaff  by separting the line by commas into: 
+	 * new instance of CareerCenterStaff  by separting the line by commas into: <br>
 	 * <ol>
 	 * <li>StaffID</li>
 	 * <li>Name</li>

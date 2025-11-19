@@ -8,8 +8,7 @@ import java.util.Scanner;
 /**
  * Handles reading and writing serialized entities to a file. 
  * <p>
- * This class uses a {@link Serializer} to convert entities
- * to and from string representations
+ * This class uses a {@link Serializer} to convert entities to and from string representations
  * 
  * @param <T> the type of entity handled by this FileHandler
  * @author KaiQiang

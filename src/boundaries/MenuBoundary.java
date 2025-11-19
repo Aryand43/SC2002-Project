@@ -4,8 +4,11 @@ import java.util.List;
 import models.Application;
 import models.Internship;
 
+/**
+ * MenuBoundary handles the display of various menus and lists in the Internship Management System. <br>
+ * It provides methods to show different user menus and formatted lists of internships and applications.
+ */
 public class MenuBoundary {
-
     /**
      * Print section header
      */
@@ -35,6 +38,9 @@ public class MenuBoundary {
 		printSeparator();
     }
 
+    /**
+     * Displays Internship Filter Menu
+     */
     public void displayInternshipFilterMenu(){
         printSectionHeader("Filter By");
         System.out.println(" 1. Date Range");
@@ -43,7 +49,7 @@ public class MenuBoundary {
         printSeparator();
     }
     /**
-     * Display Career Center Staff Internship Menu
+     * Displays Career Center Staff Internship Menu
      */
     public void displayStaffInternshipMenu() {
         printSectionHeader("Career Center Staff - Menu");
@@ -59,7 +65,7 @@ public class MenuBoundary {
     }
 
     /**
-     * Display Company Representative Internship Menu
+     * Displays Company Representative Internship Menu
      */
     public void displayCompanyRepInternshipMenu() {
         printSectionHeader("Company Representative - Internship Management");
@@ -73,7 +79,7 @@ public class MenuBoundary {
     }
 
     /**
-     * Display Student Internship Menu
+     * Displays Student Internship Menu
      */
     public void displayStudentInternshipMenu() {
         printSectionHeader("Student Internship Menu");
@@ -106,7 +112,7 @@ public class MenuBoundary {
     }
 
     /**
-     * Displays formatted list of applications associated with the parameter 
+     * Displays a formatted list of applications associated with the parameter 
      * @param applications List of applications to display
      */
     public void displayApplicationList(List<Application> applications) {

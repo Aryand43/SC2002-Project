@@ -10,10 +10,9 @@ import models.Internship;
 import models.Student;
 
 /**
- * <b>REPORT GENERATOR CLASS</b><br>
  * A ReportGenerator object provides comprehensive reporting capabilities for the internship management system.<br>
  * <br>
- * Key functionalities include:
+ * Key functionalities include:<br>
  * <ul>
  * <li>Generate reports filtered by internship status</li>
  * <li>Generate reports filtered by preferred major</li>

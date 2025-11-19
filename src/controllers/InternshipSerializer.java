@@ -23,7 +23,7 @@ public class InternshipSerializer implements Serializer<Internship>{
 
 	/**
 	 * Deserializes the given string into the Internship by creating a <br>
-	 * new instance of Internship by separating the line by commas into:
+	 * new instance of Internship by separating the line by commas into:<br>
 	 * <ol>
 	 * <li>ListingID</li>
 	 * <li>Title</li>

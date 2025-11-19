@@ -7,7 +7,7 @@ import models.*;
  * ApplicationManager manages application workflows using FSM.
  * The Application model enforces valid state transitions via StateTransition enum.
  * <br><br>
- * Valid state transitions (defined in Application.StateTransition):
+ * Valid state transitions (defined in Application.StateTransition):<br>
  * - ACCEPT: PENDING to SUCCESSFUL <br>
  * - REJECT_APPLICATION: PENDING to UNSUCCESSFUL <br>
  * - REQUEST_WITHDRAWAL: SUCCESSFUL to WITHDRAW_REQUESTED <br>

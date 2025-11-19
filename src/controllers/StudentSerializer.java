@@ -16,7 +16,7 @@ public class StudentSerializer implements Serializer<Student> {
 	
 	/**
 	 * Deserializes the given string into the Student Object by creating a 
-	 * new instance of Student by separting the line by commas into: 
+	 * new instance of Student by separting the line by commas into:<br>
 	 * <ol>
 	 * <li>StudentID</li>
 	 * <li>Name</li>

@@ -6,16 +6,16 @@ import java.util.ArrayList;
  * Represents a Student user in the Internship Management System.<br>
  * <br>
  * A student holds and manages a collection of their internship applications.
- * The Student class focuses on student-specific data and validation rules:
+ * The Student class focuses on student-specific data and validation rules:<br>
  * <ul>
- *   <li>Year of Study (1–4): determines which internship levels can be accessed</li>
+ *   <li>Year of Study (1 to 4): determines which internship levels can be accessed</li>
  *   <li>Major (CSC, EEE, MAE, etc.): for categorization and filtering</li>
  *   <li>Application History: collection of submitted applications</li>
  * </ul>
  * <br>
- * Application Restrictions:
+ * Application Restrictions:<br>
  * <ul>
- *   <li>Year 1–2: can only apply for Basic-level internships</li>
+ *   <li>Year 1 to 2: can only apply for Basic-level internships</li>
  *   <li>Year 3: can apply for any level (Basic, Intermediate, Advanced)</li>
  *   <li>Maximum 3 active applications at any time</li>
  *   <li>Only 1 internship offer can be accepted (managed by ApplicationManager)</li>
@@ -92,11 +92,12 @@ public class Student extends User {
 
     /**
      * Validates if a student can apply for an internship.<br>
-     * Checks:
-     * 1. Application limit (max 3 active applications)
-     * 2. Year of Study restriction (Years 1–2 can only apply for BASIC level)
-     * 3. Internship validity
-     * 
+     * Checks:<br>
+     * <ul>
+     * <li>Application limit (max 3 active applications) </li>
+     * <li>Year of Study restriction (Years 1–2 can only apply for BASIC level) </li>
+     * <li>Internship validity </li>
+     * </ul><br>
      * This method is for validation only. The actual application creation
      * and persistence is handled by ApplicationManager.apply().
      * 
