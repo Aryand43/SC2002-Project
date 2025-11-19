@@ -107,7 +107,7 @@ public class MenuBoundary {
 
     /**
      * Displays formatted list of applications associated with the parameter 
-     * @param internships List of internships to display
+     * @param applications List of applications to display
      */
     public void displayApplicationList(List<Application> applications) {
         printSectionHeader("Viewing My Applications");

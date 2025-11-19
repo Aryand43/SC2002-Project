@@ -7,8 +7,8 @@ import models.CompanyRepresentative;
  * 
  * Responsible for converting CompanyRepresentative objects to and from their string representation<br>
  * to the correct format to be written back into the file, as well as providing file <br>
- * related metadata such as filepath and header
- * @param CompanyRepresentative the type of entity to be serialized and deserialized
+ * related metadata such as filepath and header.<br><br>
+ * CompanyRepresentative is the type of entity to be serialized and deserialized
  * 
  */
 public class CompanyRepresentativeSerializer implements Serializer<CompanyRepresentative>{

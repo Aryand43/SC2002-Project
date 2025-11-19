@@ -12,8 +12,8 @@ import models.Internship.InternshipStatus;
  * 
  * Responsible for converting Internship objects to and from their string representation
  * to the correct format to be written back into the file, as well as providing file related metadata such as 
- * filepath and header
- * @param Internship the type of entity to be serialized and deserialized
+ * filepath and header.<br><br>
+ * Internship is the type of entity to be serialized and deserialized
  * 
  */
 public class InternshipSerializer implements Serializer<Internship>{
@@ -26,7 +26,7 @@ public class InternshipSerializer implements Serializer<Internship>{
 	 * new instance of Internship by separating the line by commas into:
 	 * <ol>
 	 * <li>ListingID</li>
-	 * <liTitle</li>
+	 * <li>Title</li>
 	 * <li>Description</li>
 	 * <li>Level</li>
 	 * <li>PreferredMajor</li>

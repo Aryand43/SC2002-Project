@@ -3,8 +3,8 @@ package models;
 import java.util.ArrayList;
 
 /**
- * Represents a Student user in the Internship Management System.
- * <p>
+ * Represents a Student user in the Internship Management System.<br>
+ * <br>
  * A student holds and manages a collection of their internship applications.
  * The Student class focuses on student-specific data and validation rules:
  * <ul>
@@ -12,8 +12,7 @@ import java.util.ArrayList;
  *   <li>Major (CSC, EEE, MAE, etc.): for categorization and filtering</li>
  *   <li>Application History: collection of submitted applications</li>
  * </ul>
- * </p>
- * <p>
+ * <br>
  * Application Restrictions:
  * <ul>
  *   <li>Year 1–2: can only apply for Basic-level internships</li>
@@ -21,10 +20,7 @@ import java.util.ArrayList;
  *   <li>Maximum 3 active applications at any time</li>
  *   <li>Only 1 internship offer can be accepted (managed by ApplicationManager)</li>
  * </ul>
- * </p>
- * <p>
- * </p>
- * 
+
  * This class extends {@link models.User}.
  * @author Joel Lee
  */

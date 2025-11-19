@@ -34,7 +34,6 @@ public class FileHandler<T>{
 	 * Read line by line from a file, ignoring the header line.
 	 * 
 	 * @return an array list of entities after it has been deserialised from the file
-	 * @throws FileNotFoundException if the file does not exist
 	 */
 	public ArrayList<T> readFromFile() {
 		ArrayList<T> arrayList = new ArrayList<>();
@@ -61,9 +60,7 @@ public class FileHandler<T>{
 	/**
 	 * Writes line by line to the same filepath including the header
 	 * 
-	 * 
 	 * @param arrayList takes in an array list of the entity to be written back to the file including
-	 * @throws FileNotFoundException if the file does not exist
 	 */
 	public void writeToFile(ArrayList<T> arrayList) {
 		try(PrintWriter pw = new PrintWriter(filePath)){

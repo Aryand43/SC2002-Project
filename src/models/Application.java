@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Application {
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    
+    /*
+     * Defines valid states for an application.
+     */
     public enum ApplicationStatus {ACCEPTED, PENDING, SUCCESSFUL, UNSUCCESSFUL, WITHDRAWN, WITHDRAW_REQUESTED}
     
     /**
@@ -62,10 +67,11 @@ public class Application {
 
     /**
      * Convenience constructor used by some serializers (id, studentId, internshipId, statusAsString)
-     * @param id
-     * @param studentID
-     * @param internshipID
-     * @param status
+     * @param id Application ID
+     * @param studentID Student ID
+     * @param internshipID Internship ID
+     * @param status Current status of application
+     * @param date Date of application
      */
     public Application(String id, String studentID, String internshipID, String status, String date) {
         this.id = id;
@@ -79,13 +85,12 @@ public class Application {
         this.appliedDate = date;
     }
     
+    
     /**
      * Simple constructor for apply() when student and internship objects are available
-     * @param studentID
-     * @param internshipID
+     * @param studentID Student ID
+     * @param internshipID Internship ID
      */
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
     public Application(String studentID, String internshipID) {
         this.id = "APP" + System.currentTimeMillis();
         this.studentID = studentID;
@@ -123,7 +128,7 @@ public class Application {
     }
 
     /**
-     * Validates if am application state transition is allowed according to FSM rules.
+     * Validates if the application state transition is allowed according to FSM rules.
      * @param transition The desired transition
      * @return true if the transition is valid from the current state
      */

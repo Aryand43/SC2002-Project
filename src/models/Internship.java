@@ -143,6 +143,7 @@ public class Internship {
      * <li>Year 1 and 2 students can ONLY apply for BASIC internships.</li>
      * <li>Year 3 and above students can apply for ALL levels (Basic, Intermediate, Advanced).
      * <li>Students can only see internships of the SAME major
+     * </ul>
      */
     public boolean isStudentEligible(int yearOfStudy) {
         // Check eligibility based on year of study
