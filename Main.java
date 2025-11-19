@@ -220,16 +220,8 @@ public class Main {
                                 System.out.println("Error: Internship with ID '" + internshipID + "' not found.");
                                 break;
                             }
-                             // Check if student already applied for this internship. 
-                             // The student shouldn't be able to apply again if they have an existing application (regardless of status).
-                            boolean alreadyApplied = myApplications.stream()
-                                .anyMatch(a -> a.getInternshipID().equals(internshipID));
-
-                            if (alreadyApplied) {
-                                System.out.println("You have already applied for this internship.");
-                                break;
-                            }
                             // Validate that student can apply (year/level restrictions, application limit, etc.)
+                            // If false is returned, appropriate error message is printed by canApply().
                             boolean canApply = ((Student)curUser).canApply(internshipToApply);
                             if(canApply){
                                 applicationManager.apply((Student)curUser, internshipToApply);
