@@ -2,8 +2,7 @@ package models;
 import java.util.Scanner;
 
 /**
- * <b>USER CLASS</b><br>
- * A User object will contain
+ * Represents an User object. A User will contain:
  * <ol>   
  * <li>User ID</li>
  * <li>Name</li>

@@ -1,8 +1,8 @@
 package controllers;
 
 /**
- * Standard implementation of ListingPolicy with hard limits.
- * Can be extended or replaced for different business rules.
+ * Standard implementation of ListingPolicy with the required limits by assignment briefing.<br>
+ * Can be extended or replaced for different implementations.
  */
 public class StandardListingPolicy implements ListingPolicy {
     private static final int MAX_LISTINGS_PER_REP = 5;

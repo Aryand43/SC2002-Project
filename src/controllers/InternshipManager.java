@@ -7,9 +7,8 @@ import models.Internship.InternshipLevel;
 import models.Internship.InternshipStatus;
 
 /**
- * Refactored InternshipManager using Dependency Injection and service composition.
- * Single Responsibility: Coordinates between repository, approval service, and query service.
- * Follows Open/Closed Principle: Business rules are extracted to policies and strategies.
+ * InternshipManager coordinates between the @see InternshipRepository, @see InternshipApprovalService, and @see InternshipQueryService.
+ * The requirements are extracted to policies (@see StandardPolicy which implements @see ListingPolicy) that can be swapped out for different implementations.<br>
  * Depends on interfaces, not concrete implementations (Dependency Inversion).
  */
 public class InternshipManager {
@@ -18,9 +17,6 @@ public class InternshipManager {
     private InternshipQueryService queryService;
     private ListingPolicy listingPolicy;
 
-    /**
-     * Constructor with dependency injection
-     */
     public InternshipManager() {
         DataPersistence<Internship> persistence = new FileInternshipPersistence();
         this.repository = new InternshipRepository(persistence);
@@ -44,8 +40,8 @@ public class InternshipManager {
     }
 
     /**
-     * Create a new internship listing
-     * Validates against business rules defined in ListingPolicy
+     * Create a new internship listing<br>
+     * Validates against the current requirements defined in StandardListingPolicy<br>
      * @return the created internship, or null if validation fails
      */
     public Internship createListing(
@@ -116,7 +112,7 @@ public class InternshipManager {
     }
 
     /**
-     * Change the status of listing (delegated to approval service)
+     * Change the status of listing, using @see InternshipApprovalService
      */
     public void changeInternshipStatus(String internshipID, InternshipStatus update) {
         try {
@@ -127,7 +123,7 @@ public class InternshipManager {
     }
 
     /**
-     * Get pending internships (delegated to query service)
+     * Get pending internships, using @see InternshipQueryService
      */
     public List<Internship> getPendingInternships() {
         return queryService.getPendingInternships();
@@ -148,21 +144,21 @@ public class InternshipManager {
     }
 
     /**
-     * Get internships by representative (delegated to repository)
+     * Get internships by representative
      */
     public List<Internship> getInternshipsByRep(String companyRepId) {
         return repository.getByRepresentative(companyRepId);
     }
 
     /**
-     * Get visible internships for students (delegated to query service)
+     * Get visible internships for students, using @see InternshipQueryService
      */
     public List<Internship> getVisibleInternshipsForStudent(int yearOfStudy, String major) {
         return queryService.getVisibleInternshipsForStudent(yearOfStudy, major);
     }
 
     /**
-     * Approve a listing (delegated to approval service)
+     * Approve a listing, using @see InternshipApprovalService
      */
     public boolean approveListing(String internshipId) {
         try {
@@ -174,7 +170,7 @@ public class InternshipManager {
     }
 
     /**
-     * Reject a listing (delegated to approval service)
+     * Reject a listing, using @see InternshipApprovalService
      */
     public boolean rejectListing(String internshipId) {
         try {
@@ -224,8 +220,7 @@ public class InternshipManager {
     }
 
     /**
-     * Update internship when slot is confirmed
-     * Delegated to Internship domain method for better encapsulation
+     * Update internship when slot is confirmed 
      */
     public void updateListingOnConfirmation(String internshipId) {
         try {
@@ -240,7 +235,6 @@ public class InternshipManager {
 
     /**
      * Update internship when withdrawal is approved
-     * Delegated to Internship domain method for better encapsulation
      */
     public void updateListingOnWithdrawal(String internshipId) {
         try {
@@ -287,7 +281,7 @@ public class InternshipManager {
     }
 
     /**
-     * Filter internships (delegated to query service)
+     * Filter internships, using @see InternshipQueryService
      */
     public List<Internship> filterInternships(
             InternshipStatus status,
@@ -298,14 +292,14 @@ public class InternshipManager {
     }
 
     /**
-     * Search internships (delegated to query service)
+     * Search internships, using @see InternshipQueryService
      */
     public List<Internship> search(String keyword) {
         return queryService.search(keyword);
     }
 
     /**
-     * Save to file
+     * Save to file, using @see InternshipRepository
      */
     public void saveToFile() {
         try {

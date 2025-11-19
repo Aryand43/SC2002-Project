@@ -15,8 +15,16 @@ public class StaffSerializer implements Serializer<CareerCenterStaff>{
 	
 	
 	/**
-	 * Deserializes the given string into the CareerCenterStaff by creating a new instance of CareerCenterStaff 
-	 * by separting the line by commas into StaffID, Name, Role, Department & Email
+	 * Deserializes the given string into the CareerCenterStaff by creating a<br> 
+	 * new instance of CareerCenterStaff  by separting the line by commas into: 
+	 * <ol>
+	 * <li>StaffID</li>
+	 * <li>Name</li>
+	 * <li>Role</li>
+	 * <li>Department</li>
+	 * <li>Email</li>
+	 * <li>Password</li>
+	 * </ol>
 	 * 
 	 * @param line the line to deserialize
 	 * @return the CareerCenterStaff reconstructed from the line of text
@@ -29,7 +37,7 @@ public class StaffSerializer implements Serializer<CareerCenterStaff>{
 	
 	
 	/**
-	 * Serializes the CareerCenterStaff into a string of information to be stored into the corresponding file
+	 * Serializes the CareerCenterStaff into a string of information to be stored into the corresponding file<br>
 	 * by retrieving the ID, Name, Role, Department and Email of the CareerCenterStaff
 	 * 
 	 * @param staff the CareerCenterStaff to serialize

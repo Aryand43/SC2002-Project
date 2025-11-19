@@ -1,7 +1,6 @@
 package models;
 
 /**
- * <b>CAREER CENTER STAFF CLASS</b><br>
  * Represents a Career Center Staff user in the internship management system. Registration is automatic by reading in from the staff list csv file.
  * <br><br>
  * Responsibilities include:

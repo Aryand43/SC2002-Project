@@ -22,8 +22,24 @@ public class InternshipSerializer implements Serializer<Internship>{
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	/**
-	 * Deserializes the given string into the Internship by creating a new instance of Internship
-	 * by separting the line by commas into 
+	 * Deserializes the given string into the Internship by creating a <br>
+	 * new instance of Internship by separating the line by commas into:
+	 * <ol>
+	 * <li>ListingID</li>
+	 * <liTitle</li>
+	 * <li>Description</li>
+	 * <li>Level</li>
+	 * <li>PreferredMajor</li>
+	 * <li>OpeningDate</li>
+	 * <li>ClosingDate</li>
+	 * <li>Status</li>
+	 * <li>CompanyName</li>
+	 * <li>CompanyRepId</li>
+	 * <li>TotalSlots</li>
+	 * <li>AvailableSlots</li>
+	 * <li>ConfirmedSlots</li>
+	 * <li>Visible</li>
+	 * </ol>
 	 * 
 	 * @param line the line to deserialize
 	 * @return the Internship Object reconstructed from the line of text
@@ -35,8 +51,6 @@ public class InternshipSerializer implements Serializer<Internship>{
 		return internship;
 	}
 	
-	
-
 	/**
 	 * Serializes the Internship Object into a string of information to be stored into the corresponding file
 	 * by retrieving the 

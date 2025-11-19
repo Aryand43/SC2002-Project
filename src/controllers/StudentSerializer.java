@@ -15,8 +15,16 @@ import models.Student;
 public class StudentSerializer implements Serializer<Student> {
 	
 	/**
-	 * Deserializes the given string into the Student Object by creating a new instance of Student
-	 * by separting the line by commas into StudentID, Name , Major, Year and Email
+	 * Deserializes the given string into the Student Object by creating a 
+	 * new instance of Student by separting the line by commas into: 
+	 * <ol>
+	 * <li>StudentID</li>
+	 * <li>Name</li>
+	 * <li>Major</li>
+	 * <li>Year</li>
+	 * <li>Email</li>
+	 * <li>Password</li>
+	 * </ol>
 	 * 
 	 * @param line the line to deserialize
 	 * @return the Student reconstructed from the line of text
@@ -45,7 +53,7 @@ public class StudentSerializer implements Serializer<Student> {
 
 	/**
 	 * Serializes the Student into a string of information to be stored into the corresponding file
-	 * by retrieving the StudentID, Name , Major, Year and Email of the Student
+	 * by retrieving the StudentID, Name , Major, Year, Email and password of the Student
 	 * 
 	 * @param Student the student object to serialize
 	 * @return a string that is comma delimited for csv file

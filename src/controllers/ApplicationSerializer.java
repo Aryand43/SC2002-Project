@@ -25,9 +25,15 @@ public class ApplicationSerializer implements Serializer<Application>{
     }
 
 	/**
-	 * Deserializes the given string into the Application by creating a new instance of Application
-	 * by separting the line by commas into 
-	 * 
+	 * Deserializes the given string into the Application by creating a<br> 
+	 * new instance of Application by separting the line by commas into:
+	 * <ol>
+	 * <li>App id</li>
+	 * <li>Student ID</li>
+	 * <li>Internship ID</li>
+	 * <li>Status</li>
+	 * <li>Applied Date</li>
+	 * </ol>
 	 * @param line the line to deserialize
 	 * @return the Application Object reconstructed from the line of text
 	 */

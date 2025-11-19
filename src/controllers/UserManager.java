@@ -7,7 +7,6 @@ import models.Student;
 import models.User;
 
 /**
- * <b>USER MANAGER CLASS</b><br>
  * The User Manager will be in charge of logging in and logging out. 
  * <br>User Manager will also be used in authorizing the company representative only if a staff account is used.<br>
  * @author Shayne Low

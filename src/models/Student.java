@@ -74,7 +74,7 @@ public class Student extends User {
     public String getMajor() { return major; }
     public ArrayList<Application> getApplications() { return applications; }
     /**
-     * Returns the number of active (non-withdrawn) applications.
+     * Returns the number of active (non-withdrawn) applications.<br>
      * Withdrawn applications are not counted towards the 3-application limit.
      */
     public int noOfApplications() {
@@ -95,7 +95,7 @@ public class Student extends User {
     // -----------------------------
 
     /**
-     * Validates if a student can apply for an internship.
+     * Validates if a student can apply for an internship.<br>
      * Checks:
      * 1. Application limit (max 3 active applications)
      * 2. Year of Study restriction (Years 1–2 can only apply for BASIC level)

@@ -5,19 +5,26 @@ import models.CompanyRepresentative;
  * Implements the serializing and deserializing of CompanyRepresentative entity and the relevant metadata for its file
  * <p>
  * 
- * Responsible for converting CompanyRepresentative objects to and from their string representation
- * to the correct format to be written back into the file, as well as providing file related metadata such as 
- * filepath and header
+ * Responsible for converting CompanyRepresentative objects to and from their string representation<br>
+ * to the correct format to be written back into the file, as well as providing file <br>
+ * related metadata such as filepath and header
  * @param CompanyRepresentative the type of entity to be serialized and deserialized
  * 
  */
 public class CompanyRepresentativeSerializer implements Serializer<CompanyRepresentative>{
 	
 	/**
-	 * Deserializes the given string into the CompanyRepresentative by creating a new instance of CompanyRepresentative
-	 * by separting the line by commas into CompanyRepresentativeID, Name, CompanyName, Department, Position,
-	 * Email and application status 
-	 * 
+	 * Deserializes the given string into the CompanyRepresentative by creating <br>
+	 * a new instance of CompanyRepresentative by separting the line by commas into:
+	 * <ol>
+	 * <li>CompanyRepresentativeID</li>
+	 * <li>Name</li>
+	 * <li>CompanyName</li>
+	 * <li>Department</li>
+	 * <li>Position</li>
+	 * <li>Email</li>
+	 * <li>Application status</li>
+	 * </ol>
 	 * @param line the line to deserialize
 	 * @return the CompanyRepresentative Object reconstructed from the line of text
 	 */
@@ -47,9 +54,9 @@ public class CompanyRepresentativeSerializer implements Serializer<CompanyRepres
 	
 
 	/**
-	 * Serializes the CompanyRepresentative into a string of information to be stored into the corresponding file
-	 * by retrieving the CompanyRepresentativeID, Name, CompanyName, Department, Position,Email and application status 
-	 * of the CompanyRepresentative
+	 * Serializes the CompanyRepresentative into a string of information to be stored into the corresponding file<br>
+	 * by retrieving the CompanyRepresentativeID, Name, CompanyName, Department, Position,Email and application status<br>
+	 * of the CompanyRepresentative<br>
 	 * 
 	 * @param cr the CompanyRepresentative to serialize
 	 * @return a string that is comma delimited for csv file
