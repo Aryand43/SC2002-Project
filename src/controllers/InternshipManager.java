@@ -294,8 +294,8 @@ public class InternshipManager {
     /**
      * Search internships, using @see InternshipQueryService
      */
-    public List<Internship> search(String keyword) {
-        return queryService.search(keyword);
+    public List<Internship> search(String keyword, List<Internship> baseList) {
+        return queryService.search(keyword, baseList);
     }
 
     /**

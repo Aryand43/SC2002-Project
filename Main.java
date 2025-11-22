@@ -120,14 +120,16 @@ public class Main {
                
                 switch(currentPermission){
                     case Student: // Current user is student
+                    // Base visible listings (unfiltered) and a working filtered view that persists across menu interactions
+                    int studentYr = ((Student)curUser).getYearOfStudy();
+                    String studentMajor = ((Student)curUser).getMajor();
+                    List <Internship> ListingsVisibleToStudent = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
+                    List<Internship> filteredList = ListingsVisibleToStudent; // filtered view (may be narrowed by user)
                     while (true){
                     UI.displayStudentInternshipMenu();
                     choice = main.inputInteger("Enter choice: ", 0, 6);
-                    int studentYr = ((Student)curUser).getYearOfStudy();
-                    String studentMajor = ((Student)curUser).getMajor();
                     System.out.printf("\n%s current year of study: %d", curUser.getUserName(), studentYr);
                     System.out.printf("\n%s current major: %s\n\n", curUser.getUserName(), studentMajor);
-                    List <Internship> ListingsVisibleToStudent = internshipManager.getVisibleInternshipsForStudent(studentYr, studentMajor);
 
                     List<Application> myApplications = applicationManager.getApplicationList().stream()
                             .filter(a -> a.getStudentID().equals(curUser.getID()))
@@ -142,16 +144,17 @@ public class Main {
                         case 1 -> {
                             // View & Filter Available Internships
 
-                            UI.displayInternshipList(ListingsVisibleToStudent);
+                            // Show current filtered view (may be full base list if no filters applied yet)
+                            UI.displayInternshipList(filteredList);
 
                             System.out.println("\nFilter internships");
                             System.out.println("1. Level (BASIC/INTERMEDIATE/ADVANCED)");
                             System.out.println("2. Company Name");
                             System.out.println("3. Both Level and Company");
-                            System.out.println("0. Clear Filter or No Filter / Back");
-                            int filterChoice = main.inputInteger("Select filter option: ", 0, 3);
+                            System.out.println("4. Clear Filter");
+                            System.out.println("0. No Filter / Back");
+                            int filterChoice = main.inputInteger("Select filter option: ", 0, 4);
                                 
-                            List<Internship> filteredList = ListingsVisibleToStudent;
 
                             if (filterChoice == 1) {
                                 System.out.print("Enter level (BASIC/INTERMEDIATE/ADVANCED): ");
@@ -186,21 +189,27 @@ public class Main {
                                     System.out.println("Invalid level. Please use BASIC, INTERMEDIATE, or ADVANCED.");
                                     filteredList = java.util.Collections.emptyList();
                                 }
-                            } else if (filterChoice == 0) {
-                                // No filter, show all
+                            } else if (filterChoice == 4) {
+                                // Clear filter, restore full base list
+                                filteredList = ListingsVisibleToStudent;
+                            }
+                            else{
+                                // No filter / Back - do nothing, retain current filtered view
                             }
 
+                            // Persist filtered view for subsequent menu interactions
+                            filteredList = (filteredList == null) ? java.util.Collections.emptyList() : filteredList;
                             System.out.println("\nResults:");
                             UI.displayInternshipList(filteredList == null ? Collections.emptyList() : filteredList);
-                            ListingsVisibleToStudent = filteredList;
                         }
 
                         case 2 -> {
                             // Search Internships (By keyword)
-                            UI.displayInternshipList(ListingsVisibleToStudent);
+                            // Display current filtered view before keyword search
+                            UI.displayInternshipList(filteredList);
                             System.out.print("Enter keyword to search: ");
                             String keywordSearch = sc.nextLine().trim();
-                            List<Internship> keywordList = internshipManager.search(keywordSearch);
+                            List<Internship> keywordList = internshipManager.search(keywordSearch, filteredList);
                             System.out.print("Displaying search results for keyword: " + keywordSearch);
                             UI.displayInternshipList(keywordList);
                         }

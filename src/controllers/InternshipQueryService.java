@@ -64,10 +64,10 @@ public class InternshipQueryService {
     /**
      * Search internships by keyword in title and description
      */
-    public List<Internship> search(String keyword) {
+    public List<Internship> search(String keyword, List<Internship> baseList) {
         String searchTerm = keyword.toLowerCase().trim();
         
-        return repository.getAll().stream()
+        return baseList.stream()
             .filter(i -> i.getTitle().toLowerCase().contains(searchTerm) 
                     || i.getDescription().toLowerCase().contains(searchTerm))
             .sorted(Comparator.comparing(Internship::getTitle))

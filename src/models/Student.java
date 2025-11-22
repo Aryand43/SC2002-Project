@@ -136,7 +136,7 @@ public class Student extends User {
         for (Application a : this.getApplications()) {
             Internship appliedInternship = a.getInternship();
             if (appliedInternship != null && appliedInternship.getInternshipID() != null && internship.getInternshipID() != null) {
-                if (appliedInternship.getInternshipID().equals(internship.getInternshipID())) {
+                if (appliedInternship.getInternshipID().equals(internship.getInternshipID()) && a.getStatus() != Application.ApplicationStatus.WITHDRAWN) {
                     System.out.print("You have already applied for this internship!");
                     return false;
                 }
