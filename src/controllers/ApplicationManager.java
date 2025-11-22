@@ -161,7 +161,6 @@ public class ApplicationManager {
             return false;
         }
 
-        internship.confirmSlot(); // Decrement available, increment confirmed, handle status/visibility
         internshipManager.updateInternship(internship);
         if (repository != null) repository.update(application);
         return true;

@@ -217,7 +217,7 @@ public class CompanyRepBoundary {
         if (action == 1) {
             boolean success = applicationManager.companyRepAcceptApplication(app, internshipManager);
             if (success) {
-                System.out.println("Application Approved. Student informed and internship slots updated.");
+                System.out.println("Application Approved. Waiting for Student acceptance.");
             } else {
                 System.out.println("Failed to approve application. Please check internship slots and application status.");
             }
