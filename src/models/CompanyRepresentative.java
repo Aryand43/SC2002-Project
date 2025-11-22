@@ -34,7 +34,7 @@ public class CompanyRepresentative extends User {
      * @param status Status of the account creation
      * @param password Password of the Company Representative
      */
-    public CompanyRepresentative(String ID, String name, String email, String companyName, String department, String position, Boolean status, String password){
+    public CompanyRepresentative(String ID, String name, String companyName, String department, String position,String email, Boolean status, String password){
         super(ID, name, email,password);
         this.companyName = companyName;
         this.department = department;
@@ -54,7 +54,7 @@ public class CompanyRepresentative extends User {
      * @param position Which position the Company Representative holds
      * @param status Status of the account creation
      */
-    public CompanyRepresentative(String ID, String name, String email, String companyName, String department, String position, Boolean status){
+    public CompanyRepresentative(String ID, String name, String companyName, String department, String position,String email, Boolean status){
         super(ID, name, email);
         this.companyName = companyName;
         this.department = department;
