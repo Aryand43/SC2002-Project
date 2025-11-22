@@ -1,14 +1,31 @@
 package models;
 
 /**
- * Represents a Career Center Staff user in the internship management system. Registration is automatic by reading in from the staff list csv file.
- * <br><br>
- * Responsibilities include:
- * <ul>
- * <li>Authorizing or rejecting Company Representative account creation
- * </ul>
- * 
+ * Represents a Career Center Staff user in the internship management system. 
+ * Registration is automatic by reading in from the staff list CSV file.
  * Inherits basic functions like login, logout, and change password from {@link models.User}.
+ * <br><br>
+ * <b>Responsibilities:</b>
+ * <ul>
+ * <li><b>Company Representative Account Management</b> - Implemented in {@link controllers.UserManager}
+ *     <ul>
+ *     <li>View/Approve/Reject pending Company Representative accounts</li>
+ *     </ul>
+ * </li>
+ * <li><b>Internship Opportunity Management</b> - Implemented in {@link controllers.InternshipManager}
+ *     <ul>
+ *     <li>View/Approve/Reject pending internship postings</li>
+ *     </ul>
+ * </li>
+ * <li><b>Student Withdrawal Management</b> - Implemented in {@link controllers.ApplicationManager}
+ *     <ul>
+ *     <li>View/Approve/Reject student withdrawal requests</li>
+ *     </ul>
+ * </li>
+ * <li><b>Report Generation</b> - Implemented in {@link controllers.ReportGenerator}
+ * </li>
+ * </ul>
+ * <br>
  * 
  * @author Hanyue
  */
@@ -18,27 +35,11 @@ public class CareerCenterStaff extends User {
     private String role;
 
     /**
-     * Class Constructor
+     * Constructor
      * @param ID Sets the staff ID
      * @param name Sets the staff name
      * @param role Sets the staff role
-     * @param department Sets the staff department (e.g. Career Services Office)
-     * @param email Sets the staff email<br><br>
-     * User type is automatically set to CareerCenterStaff.
-     */
-    public CareerCenterStaff(String ID, String name, String role, String department,String email) {
-        super(ID, name, email);
-        this.role = role;
-        this.userType = TypesOfUser.CareerCenterStaff;
-        this.department = department;
-    }
-    
-    /**
-     * Convenient Constructor for Serializer with extra Parameter of password
-     * @param ID Sets the staff ID
-     * @param name Sets the staff name
-     * @param role Sets the staff role
-     * @param department Sets the staff department (e.g. Career Services Office)
+     * @param department Sets the staff department
      * @param email Sets the staff email
      * @param password User's password<br><br>
      */
@@ -74,8 +75,5 @@ public class CareerCenterStaff extends User {
      * @param role The role to set
      */
     public void setRole(String role) {this.role = role;}
-
-    //Approve/reject company representative account is in user manager.
-
 }
 
