@@ -148,9 +148,9 @@ public class Main {
                             System.out.println("1. Level (BASIC/INTERMEDIATE/ADVANCED)");
                             System.out.println("2. Company Name");
                             System.out.println("3. Both Level and Company");
-                            System.out.println("0. No Filter / Back");
+                            System.out.println("0. Clear Filter or No Filter / Back");
                             int filterChoice = main.inputInteger("Select filter option: ", 0, 3);
-
+                                
                             List<Internship> filteredList = ListingsVisibleToStudent;
 
                             if (filterChoice == 1) {
@@ -192,6 +192,7 @@ public class Main {
 
                             System.out.println("\nResults:");
                             UI.displayInternshipList(filteredList == null ? Collections.emptyList() : filteredList);
+                            ListingsVisibleToStudent = filteredList;
                         }
 
                         case 2 -> {
