@@ -139,6 +139,35 @@ public class ApplicationManager {
     }
 
     /**
+     * Approves a pending application by a Company Representative.
+     * Transitions state: PENDING -> SUCCESSFUL.
+     * Handles slot updates in the associated Internship.
+     * @param application The application to approve
+     * @param internshipManager The InternshipManager to update internship details
+     * @return true if transition and updates succeeded, false otherwise
+     */
+    public boolean companyRepAcceptApplication(Application application, InternshipManager internshipManager) {
+        if (application == null || internshipManager == null) return false;
+
+        Internship internship = internshipManager.findInternshipByID(application.getInternshipID());
+        if (internship == null || internship.getAvailableSlots() <= 0) {
+            System.out.println("Error: Internship not found or no available slots.");
+            return false;
+        }
+
+        boolean transitioned = application.accept(); // PENDING -> SUCCESSFUL
+        if (!transitioned) {
+            System.out.println("Error: Application could not be accepted. Current status: " + application.getStatus());
+            return false;
+        }
+
+        internship.confirmSlot(); // Decrement available, increment confirmed, handle status/visibility
+        internshipManager.updateInternship(internship);
+        if (repository != null) repository.update(application);
+        return true;
+    }
+
+    /**
      * Approves a student withdrawal request by application ID.
      * @param applicationID The ID of the application
      * @return true if withdrawal was approved, false otherwise
