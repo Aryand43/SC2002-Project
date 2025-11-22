@@ -47,7 +47,6 @@ public class StudentSerializer implements Serializer<Student> {
     }
     String email = rowData[4].trim();
     String password = rowData[5].trim();
-	System.out.println("current data: " + name);
     return new Student(id, name, major, year, email, password);
 }
 
