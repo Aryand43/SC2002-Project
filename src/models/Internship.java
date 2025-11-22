@@ -122,6 +122,10 @@ public class Internship {
     public void setCompanyName(String companyName) { this.companyName = companyName; }
     public void setVisible() { this.visible = true; }
     public void setInvisible() { this.visible = false; }
+    public void setTotalSlots(int totalSlots) {
+        this.totalSlots = totalSlots;
+        this.availableSlots = totalSlots - this.confirmedSlots;
+    }
     
     /**
      * Check if internship is open for applications. IF date is before opening date, listing should not be visible.<br>

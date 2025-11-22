@@ -215,11 +215,19 @@ public class CompanyRepBoundary {
         int action = inputInteger("Choose action: ", 1, 2);
 
         if (action == 1) {
-            currentUser.approveApplication(app);
-            System.out.println("Application Approved. Student informed.");
+            boolean success = applicationManager.companyRepAcceptApplication(app, internshipManager);
+            if (success) {
+                System.out.println("Application Approved. Student informed and internship slots updated.");
+            } else {
+                System.out.println("Failed to approve application. Please check internship slots and application status.");
+            }
         } else if (action == 2) {
-            currentUser.rejectApplication(app);
-            System.out.println("Application Rejected. Student informed.");
+            boolean success = applicationManager.rejectApplication(app);
+            if (success) {
+                System.out.println("Application Rejected. Student informed.");
+            } else {
+                System.out.println("Failed to reject application. Please check application status.");
+            }
         }
         inputString("Press Enter to continue...");
     }
@@ -240,8 +248,62 @@ public class CompanyRepBoundary {
             return;
         }
 
-        // TODO: Implement actual editing logic here (for now, just a placeholder)
-        System.out.println("Internship " + id + " is eligible for editing. (Editing logic not yet implemented)");
+        System.out.println("\n--- Editing Internship: " + internship.getTitle() + " (" + internship.getInternshipID() + ") ---");
+        System.out.println("Enter new values (leave blank to keep current value):");
+
+        String newTitle = inputString("Title (" + internship.getTitle() + "): ");
+        if (!newTitle.isEmpty()) {
+            internship.setTitle(newTitle);
+        }
+
+        String newDescription = inputString("Description (" + internship.getDescription() + "): ");
+        if (!newDescription.isEmpty()) {
+            internship.setDescription(newDescription);
+        }
+
+        String newMajor = inputString("Preferred Major (" + internship.getPreferredMajor() + "): ");
+        if (!newMajor.isEmpty()) {
+            internship.setPreferredMajor(newMajor);
+        }
+
+        System.out.println("Current Level: " + internship.getLevel());
+        System.out.println("Select New Internship Level:");
+        System.out.println("1. BASIC\n2. INTERMEDIATE\n3. ADVANCED\n0. Keep current");
+        int levelChoice = inputInteger("Enter Level (0-3): ", 0, 3);
+        if (levelChoice != 0) {
+            InternshipLevel newLevel = switch (levelChoice) {
+                case 1 -> InternshipLevel.BASIC;
+                case 2 -> InternshipLevel.INTERMEDIATE;
+                case 3 -> InternshipLevel.ADVANCED;
+                default -> internship.getLevel(); // Should not happen with validation
+            };
+            internship.setLevel(newLevel);
+        }
+
+        LocalDate newOpenDate = inputDate("Opening Date (" + internship.getOpeningDate().format(DATE_FORMATTER) + ")");
+        if (newOpenDate != null) {
+            internship.setOpeningDate(newOpenDate);
+        }
+
+        LocalDate newCloseDate = inputDate("Closing Date (" + internship.getClosingDate().format(DATE_FORMATTER) + ")");
+        if (newCloseDate != null) {
+            internship.setClosingDate(newCloseDate);
+        }
+
+        // Handling total slots: ensure new total slots are not less than confirmed slots
+        System.out.println("Current Total Slots: " + internship.getTotalSlots() + ", Confirmed Slots: " + internship.getConfirmedSlots());
+        int newTotalSlots = inputInteger("Enter New Total Slots (>= " + internship.getConfirmedSlots() + "): ", internship.getConfirmedSlots(), 100); // Assuming max 100 slots
+        // If newTotalSlots is different from current, update it
+        if (newTotalSlots != internship.getTotalSlots()) {
+            internship.setTotalSlots(newTotalSlots);
+        }
+
+        boolean updated = internshipManager.updateInternship(internship);
+        if (updated) {
+            System.out.println("Internship listing updated successfully!");
+        } else {
+            System.out.println("Failed to update internship listing.");
+        }
         inputString("Press Enter to continue...");
     }
 
