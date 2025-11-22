@@ -112,11 +112,11 @@ public class CompanyRepBoundary {
         if (myInternships.isEmpty()) {
             System.out.println("You have no active internship listings.");
         } else {
-            System.out.printf("%-10s %-30s %-10s %-12s %-12s%n", "ID", "Title", "Level", "Status", "Visible");
+            System.out.printf("%-10s %-30s %-10s %-12s %-12s %-5s %-5s%n", "ID", "Title", "Level", "Status", "Visible", " Confirmed Slots", "Total Slots");
             System.out.println("-".repeat(75));
             for (Internship i : myInternships) {
-                 System.out.printf("%-10s %-30s %-10s %-12s %-12s%n", 
-                    i.getInternshipID(), i.getTitle(), i.getLevel(), i.getStatus(), i.isVisible() ? "Yes" : "No");
+                 System.out.printf("%-10s %-30s %-10s %-12s %-12s %-5d %-5d %n", 
+                    i.getInternshipID(), i.getTitle(), i.getLevel(), i.getStatus(), i.isVisible() ? "Yes" : "No", i.getConfirmedSlots(), i.getTotalSlots());
             }
         }
         inputString("Press Enter to continue...");
