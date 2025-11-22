@@ -21,5 +21,8 @@ INT0021,Network Systems Intern,Configure and test network protocols,BASIC,CE,01/
 INT0022,Hardware Testing Intern,Perform validation and reliability tests,INTERMEDIATE,CE,01/11/2024,25/12/2025,APPROVED,TestWorks,julian.lim@testworks.sg,3,3,0,true
 INT0023,Aerodynamics Intern,Run CFD simulations for wing designs,ADVANCED,MAE,01/11/2024,24/12/2025,APPROVED,AeroTech Solutions,li.na@aerotech.com,2,2,0,true
 INT0024,Thermal Analysis Intern,Perform thermal modelling and analysis,INTERMEDIATE,MAE,15/11/2024,12/12/2025,APPROVED,HeatFlow Lab,simon.koh@heatflow.sg,3,3,0,true
-INT0025,Materials Testing Intern,Conduct tensile and fatigue tests,BASIC,MAE,01/12/2024,11/12/2025,PENDING,MatTest Co,olivia.ng@mattest.com,4,4,0,false
+INT0025,Materials Testing Intern,Conduct tensile and fatigue tests,BASIC,MAE,01/12/2024,11/12/2025,APPROVED,MatTest Co,olivia.ng@mattest.com,4,4,0,false
 INT0026,CAD Optimization Intern,Optimize CAD models for manufacturability,BASIC,MAE,01/11/2024,20/12/2025,APPROVED,DesignWorks,kelly.choi@designworks.sg,3,3,0,true
+INT0025,Test Intern 1,NA,INTERMEDIATE,CE,01/01/2026,01/02/2026,PENDING,Embedded Solutions,cheng.wu@embedsol.com,3,3,0,false
+INT0026,Test Intern 1,NA,INTERMEDIATE,CE,01/01/2026,01/02/2026,PENDING,Embedded Solutions,cheng.wu@embedsol.com,4,4,0,false
+INT0027,INT0019,,INTERMEDIATE,,01/06/2026,01/08/2026,PENDING,Embedded Solutions,cheng.wu@embedsol.com,3,3,0,false

@@ -74,6 +74,8 @@ public class MenuBoundary {
         System.out.println("3. Toggle Internship Visibility");
         System.out.println("4. View Applications");
         System.out.println("5. Approve/Reject Applications");
+        System.out.println("6. Edit Internship");
+        System.out.println("7. Delete Internship");
         System.out.println("0. Logout");
         printSeparator();
     }

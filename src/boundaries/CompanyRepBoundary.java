@@ -85,7 +85,7 @@ public class CompanyRepBoundary {
         int choice = -1;
         while (choice != 0) {
             new MenuBoundary().displayCompanyRepInternshipMenu();
-            choice = inputInteger("Enter choice: ", 0, 5);
+            choice = inputInteger("Enter choice: ", 0, 7);
             
             switch (choice) {
                 case 1 -> viewMyInternships();
@@ -93,6 +93,8 @@ public class CompanyRepBoundary {
                 case 3 -> toggleInternshipVisibility();
                 case 4 -> viewApplications();
                 case 5 -> approveRejectApplications();
+                case 6 -> editInternship();
+                case 7 -> deleteInternship();
                 case 0 -> {
                     // Logout handled by the main program logic after this method returns
                     System.out.println("Logging out...");
@@ -105,7 +107,7 @@ public class CompanyRepBoundary {
     }
 
     private void viewMyInternships() {
-        List<Internship> myInternships = internshipManager.getInternshipsByRep(currentUser.getID());
+        List<Internship> myInternships = internshipManager.getInternshipsByRep(currentUser.getEmail());
         System.out.println("\n--- My Internship Listings ---");
         if (myInternships.isEmpty()) {
             System.out.println("You have no active internship listings.");
@@ -143,7 +145,7 @@ public class CompanyRepBoundary {
         if (level != null) {
             String listingID = "INT" + String.format("%04d", internshipManager.getAllInternships().size() + 1);
             internshipManager.createListing(
-                currentUser.getID(), title, description, level, major, 
+                currentUser.getEmail(), title, description, level, major, 
                 openDate, closeDate, currentUser.getCompanyName(), slots, listingID
             );
         } else {
@@ -154,15 +156,15 @@ public class CompanyRepBoundary {
 
     private void toggleInternshipVisibility() {
         String id = inputString("Enter Internship ID to toggle visibility: ");
-        internshipManager.toggleVisibility(id, currentUser.getID());
+        internshipManager.toggleVisibility(id, currentUser.getEmail());
         inputString("Press Enter to continue...");
     }
 
     private void viewApplications() {
         List<Application> allApplications = applicationManager.getApplicationList().stream()
-            .filter(app -> app.getInternship() != null && app.getInternship().getCompanyRepId().equals(currentUser.getID()))
+            .filter(app -> app.getInternship() != null && app.getInternship().getCompanyRepId().equals(currentUser.getEmail()))
             .toList();
-        List<Internship> myInternships = internshipManager.getInternshipsByRep(currentUser.getID());
+        List<Internship> myInternships = internshipManager.getInternshipsByRep(currentUser.getEmail());
         System.out.println("\n--- Applications for My Internships ---");
         if (myInternships.isEmpty()) {
             System.out.println("You have no internships to view applications for.");
@@ -198,7 +200,7 @@ public class CompanyRepBoundary {
             return;
         }
         
-        if (app.getInternship() == null || !app.getInternship().getCompanyRepId().equals(currentUser.getID())) {
+        if (app.getInternship() == null || !app.getInternship().getCompanyRepId().equals(currentUser.getEmail())) {
             System.out.println("Error: This application is not associated with your company's listings.");
             return;
         }
@@ -219,6 +221,34 @@ public class CompanyRepBoundary {
             currentUser.rejectApplication(app);
             System.out.println("Application Rejected. Student informed.");
         }
+        inputString("Press Enter to continue...");
+    }
+
+    private void editInternship() {
+        System.out.println("\n--- Edit Internship Listing ---");
+        String id = inputString("Enter Internship ID to edit: ");
+        Internship internship = internshipManager.findInternshipByID(id);
+        if (internship == null) {
+            System.out.println("Error: Internship not found.");
+            inputString("Press Enter to continue...");
+            return;
+        }
+
+        if (internship.getStatus() == Internship.InternshipStatus.APPROVED) {
+            System.out.println("Error: Approved internships cannot be edited.");
+            inputString("Press Enter to continue...");
+            return;
+        }
+
+        // TODO: Implement actual editing logic here (for now, just a placeholder)
+        System.out.println("Internship " + id + " is eligible for editing. (Editing logic not yet implemented)");
+        inputString("Press Enter to continue...");
+    }
+
+    private void deleteInternship() {
+        System.out.println("\n--- Delete Internship Listing ---");
+        String id = inputString("Enter Internship ID to delete: ");
+        internshipManager.deleteInternship(id, currentUser.getEmail());
         inputString("Press Enter to continue...");
     }
 }
