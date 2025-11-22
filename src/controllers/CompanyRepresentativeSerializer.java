@@ -39,14 +39,14 @@ public class CompanyRepresentativeSerializer implements Serializer<CompanyRepres
 		if (rowData.length > 7 && rowData[7] != null && !rowData[7].isEmpty()) {
 		    // rowData[7] exists and has a value
 		    cr = new CompanyRepresentative(
-		            rowData[0], rowData[1], rowData[5], rowData[2], rowData[3],
-		            rowData[4], status, rowData[7]
+		            rowData[0], rowData[1], rowData[2], rowData[3],
+		            rowData[4],rowData[5], status, rowData[7]
 		    );
 		} else {
 		    // rowData[7] is missing or empty → use another function
 			 cr = new CompanyRepresentative(
-			            rowData[0], rowData[1], rowData[5], rowData[2], rowData[3],
-			            rowData[4], status);
+			            rowData[0], rowData[1], rowData[2], rowData[3],
+			            rowData[4], rowData[5], status);
 		}
 		return cr;
 	}
